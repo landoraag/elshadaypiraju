@@ -4,19 +4,24 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>El Shaday Pizzaria | A pizza perfeita para cada momento</title>
-<meta name="description" content="Ingredientes selecionados, massa artesanal e muito amor em cada fatia. Peça sua pizza na El Shaday Pizzaria, Montes Claros - MG.">
+<meta name="description" content="Ingredientes selecionados, massa artesanal e muito amor em cada fatia. Peça sua pizza na El Shaday Pizzaria, Piraju - SP.">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="favicon-192.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="theme-color" content="#120b07">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Montserrat:wght@300;400;500;600&family=Pinyon+Script&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
+@font-face{font-family:'Amsterdam Signature';src:url(fonts/AmsterdamSignature.otf) format('opentype');font-weight:400;font-style:normal;font-display:swap}
 :root{
   --laranja:#f26a1b; --laranja-esc:#d4540c; --carvao:#120b07; --brasa:#1c110a;
   --creme:#f4ede2; --papel:#faf6ef; --texto:#2a1e16; --suave:#6e5e52;
-  --serif:'Cormorant Garamond',Georgia,serif; --sans:'Montserrat',system-ui,sans-serif; --script:'Pinyon Script',cursive;
+  --serif:'Cormorant Garamond',Georgia,serif; --sans:'Montserrat',system-ui,sans-serif; --script:'Amsterdam Signature','Brush Script MT',cursive;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
-body{font-family:var(--sans);color:var(--texto);background:url(img/fundo.jpg) left top/auto repeat #f4ede2;line-height:1.6}
+body{font-family:var(--sans);color:var(--texto);background:#f4ede2;line-height:1.6}
 a{color:inherit;text-decoration:none}
 ul{list-style:none}
 .wrap{width:min(1180px,100% - 48px);margin-inline:auto}
@@ -47,11 +52,9 @@ nav a:hover,nav a.on{color:var(--laranja);border-color:var(--laranja)}
 .hero p{margin:22px 0 30px;max-width:470px;font-size:14.5px;font-weight:300;color:#f1e6da}
 .hero .cta{display:flex;gap:16px;flex-wrap:wrap}
 .hero-art{position:relative;height:380px}
-.assina{position:absolute;top:-10px;left:14%;font-family:var(--script);font-size:34px;line-height:1.1;transform:rotate(-8deg);z-index:4;color:#fff}
-.assina::after{content:"";display:block;height:3px;width:78%;margin:6px 0 0 20px;background:var(--laranja);border-radius:3px;transform:rotate(-4deg)}
 
 /* cardápio */
-.menu{background:url(img/fundo.jpg) left top/auto repeat #f4ede2;padding:44px 0 56px;position:relative}
+.menu{background:url(img/fundo.jpg) center/100% 100% no-repeat #f4ede2;padding:44px 0 56px;position:relative}
 .menu-top{display:flex;align-items:flex-start;gap:40px;flex-wrap:wrap}
 .titulo{min-width:200px}
 .titulo small{display:block;font-family:var(--sans);font-size:11px;letter-spacing:.34em;color:var(--laranja);text-transform:uppercase;margin-bottom:2px}
@@ -81,13 +84,10 @@ nav a:hover,nav a.on{color:var(--laranja);border-color:var(--laranja)}
 .oferta .wrap{position:relative;z-index:3;padding:40px 0}
 .oferta h2{font-family:var(--serif);font-size:clamp(38px,5.4vw,62px);font-weight:700;letter-spacing:.03em;text-transform:uppercase;line-height:1.05}
 .oferta h2 em{font-style:normal;color:var(--laranja);font-weight:500;margin:0 8px}
-.oferta .sc{font-family:var(--script);font-size:34px;margin:6px 0 22px;display:block;color:#f3e6d6}
-.selo{position:absolute;z-index:4;right:17%;top:150px;background:var(--laranja);color:#fff;padding:14px 34px 16px;transform:rotate(-8deg);text-align:center;clip-path:polygon(0 8%,6% 0,96% 6%,100% 20%,97% 92%,88% 100%,4% 94%,0 70%);font-family:var(--serif)}
-.selo small{display:block;font-family:var(--sans);font-size:11px;letter-spacing:.2em}
-.selo strong{font-size:50px;line-height:1;font-weight:700}
+.oferta .sc{font-family:var(--script);font-size:50px;line-height:1.1;margin:8px 0 22px;display:block;color:#f3e6d6}
 
 /* avaliações */
-.aval{background:url(img/fundo.jpg) left top/auto repeat #f4ede2;padding:44px 0 48px}
+.aval{background:url(img/fundo.jpg) center/100% 100% no-repeat #f4ede2;padding:44px 0 48px}
 .aval .titulo h2{font-size:54px}
 .revs{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-top:20px}
 .rev{background:#faf6ef;border-radius:8px;padding:16px 18px;box-shadow:0 3px 12px rgba(60,35,15,.1);font-size:13px}
@@ -103,14 +103,14 @@ footer{background:var(--carvao);color:#fff;padding:26px 0 24px}
 .f-logo img{height:90px;display:block;border-radius:6px}
 .social{display:flex;gap:18px;margin-top:12px}
 .social a:hover{color:var(--laranja)}
-.info{display:flex;gap:0;justify-content:center;align-items:center;flex-wrap:wrap}
-.info div{display:flex;align-items:center;gap:12px;padding:0 24px;font-size:12.5px;line-height:1.4}
+.info{display:flex;gap:0;justify-content:center;align-items:center;flex-wrap:nowrap}
+.info div{display:flex;align-items:center;gap:12px;padding:0 20px;font-size:12.5px;line-height:1.4}
 .info div+div{border-left:1px solid rgba(255,255,255,.2)}
 .info svg{width:28px;height:28px;color:var(--laranja)}
 .info b{display:block;font-weight:500;font-size:13px}
 .info span{color:#d9cbbd}
 .f-cta{text-align:right}
-.f-cta .sc{display:block;font-family:var(--script);color:var(--laranja);font-size:26px;line-height:1.2;margin-top:12px;transform:rotate(-5deg)}
+.info div:nth-child(2){max-width:300px}
 
 /* responsivo */
 @media (max-width:980px){
@@ -121,12 +121,12 @@ footer{background:var(--carvao);color:#fff;padding:26px 0 24px}
   .hero{background-position:70% center}
   .cards,.revs{grid-template-columns:repeat(2,1fr)}
   .f-in{grid-template-columns:1fr;text-align:center}.f-logo img{margin:auto}.social{justify-content:center}
-  .f-cta{text-align:center}.info div{padding:8px 16px;border:0!important}
-  .selo{right:6%;top:10px;transform:rotate(-8deg) scale(.8)}
+  .info{flex-wrap:wrap}.f-cta{text-align:center}.info div{padding:8px 16px;border:0!important}
 }
 @media (max-width:560px){
+  .menu,.aval{background-size:cover;background-position:center}
   .cards,.revs{grid-template-columns:1fr}
-  .titulo h2{font-size:42px}.ver{display:none}.assina{display:none}
+  .titulo h2{font-size:42px}.ver{display:none}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
 </style>
@@ -177,7 +177,6 @@ footer{background:var(--carvao);color:#fff;padding:26px 0 24px}
       </div>
     </div>
     <div class="hero-art" aria-hidden="true">
-      <span class="assina">Pizza de<br>verdade é aqui!</span>
       
     </div>
   </div>
@@ -214,7 +213,6 @@ footer{background:var(--carvao);color:#fff;padding:26px 0 24px}
     <span class="sc">A combinação perfeita!</span>
     <a class="btn btn-line" href="#cardapio">Ver Promoções<svg class="i"><use href="#seta"/></svg></a>
   </div>
-  <div class="selo" aria-label="A partir de R$59,90"><small>A PARTIR DE</small><strong>R$59,90</strong></div>
 </section>
 
 <!-- AVALIAÇÕES -->
@@ -242,13 +240,12 @@ footer{background:var(--carvao);color:#fff;padding:26px 0 24px}
       </div>
     </div>
     <div class="info">
-      <div><svg class="i"><use href="#fone"/></svg><p><b>(38) 99999-9999</b><span>Peça pelo WhatsApp</span></p></div>
-      <div><svg class="i"><use href="#pin"/></svg><p><b>Rua Principal, 123</b><span>Montes Claros - MG</span></p></div>
-      <div><svg class="i"><use href="#rel"/></svg><p><b>Aberto todos os dias</b><span>das 18h às 23h</span></p></div>
+      <div><svg class="i"><use href="#fone"/></svg><p><b>(14) 99844-4694</b><span>Peça pelo WhatsApp</span></p></div>
+      <div><svg class="i"><use href="#pin"/></svg><p><b>R. Esteves Kristensen, 462-470</b><span>Jardim Jurumirim, Piraju - SP, 18800-000</span></p></div>
+      <div><svg class="i"><use href="#rel"/></svg><p><b>Aberto de terça a domingo</b><span>das 18:30 às 00:00</span></p></div>
     </div>
     <div class="f-cta">
       <a class="btn btn-or sm" href="#cardapio"><svg class="i"><use href="#moto"/></svg>Pedir Agora<svg class="i"><use href="#seta"/></svg></a>
-      <span class="sc">Mais que pizza,<br>é paixão! ♡</span>
     </div>
   </div>
 </footer>
