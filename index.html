@@ -117,7 +117,7 @@ footer{background:var(--carvao);color:#fff;padding:26px 0 24px}
   nav{position:absolute;top:100%;left:0;right:0;background:rgba(18,11,7,.97);display:none;padding:16px 24px}
   nav.open{display:block}nav ul{flex-direction:column;gap:14px}
   .burger{display:block}header .btn{display:none}
-  .hero-in{grid-template-columns:1fr}.hero-art{height:300px}
+  .hero-in{grid-template-columns:1fr}.hero-art{display:none}
   .hero{background-position:70% center}
   .cards,.revs{grid-template-columns:repeat(2,1fr)}
   .f-in{grid-template-columns:1fr;text-align:center}.f-logo img{margin:auto}.social{justify-content:center}
@@ -127,6 +127,44 @@ footer{background:var(--carvao);color:#fff;padding:26px 0 24px}
   .menu,.aval{background-size:cover;background-position:center}
   .cards,.revs{grid-template-columns:1fr}
   .titulo h2{font-size:42px}.ver{display:none}
+}
+/* ===== MOBILE ===== */
+@media (max-width:700px){
+  html,body{overflow-x:hidden}
+  .wrap{width:calc(100% - 40px)}
+  .logo img{height:58px}
+  header{padding:14px 0}
+  .hero{min-height:0;background:linear-gradient(180deg,rgba(14,8,4,.75) 0,rgba(14,8,4,0) 110px),linear-gradient(180deg,rgba(18,11,7,0) 180px,#120b07 300px),url(img/hero.jpg) 80% top/auto 300px no-repeat #120b07}
+  .hero-in{padding:172px 0 40px}
+  .eyebrow{font-size:10px;letter-spacing:.26em}
+  .hero h1{font-size:34px;line-height:1.08}
+  .hero p{font-size:13.5px;margin:16px 0 22px}
+  .hero .cta{gap:10px}
+  .hero .cta .btn{flex:1 1 auto;justify-content:center;padding:13px 18px;font-size:11px}
+  .menu{padding:34px 0 40px}
+  .menu-top{flex-direction:column;align-items:center;gap:20px}
+  .titulo{text-align:center;min-width:0}
+  .titulo h2{font-size:42px}
+  .titulo h2::after{margin-inline:auto;background-position:center}
+  .tabs{flex:none;width:calc(100% + 16px);margin:0 -8px;gap:1.8vw;justify-content:space-between;align-items:flex-end;overflow:visible;padding:0;font-size:2.6vw}
+  .tabs button{padding:0;font-size:inherit}
+  .tabs .todas{gap:4px}
+  .tabs .todas span{width:34px;height:34px}
+  .sub{font-size:16px;letter-spacing:.12em;margin:26px 0 14px}
+  .aval{padding:34px 0 40px}
+  .aval .titulo h2{font-size:38px}
+  .oferta{min-height:0;background:linear-gradient(180deg,rgba(12,7,4,.8),rgba(12,7,4,.5)),url(img/oferta.jpg) 78% center/cover no-repeat #150c07}
+  .oferta .wrap{padding:34px 0 38px}
+  .oferta h2{font-size:6vw;letter-spacing:.02em;white-space:nowrap}
+  .oferta h2 em{margin:0 4px}
+  .oferta .sc{font-size:30px;margin:6px 0 18px}
+  .f-in{gap:26px}
+  .info{display:grid;grid-template-columns:1fr 1fr;gap:20px 12px;width:100%;max-width:380px;margin-inline:auto;text-align:left}
+  .info div{padding:0!important;border:0!important;gap:10px;font-size:11.5px}
+  .info svg{width:24px;height:24px}
+  .info div:nth-child(1){order:1}
+  .info div:nth-child(3){order:2}
+  .info div:nth-child(2){order:3;grid-column:1/-1;max-width:none;border-top:1px solid rgba(255,255,255,.14)!important;padding-top:18px!important}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
 </style>
@@ -170,7 +208,7 @@ footer{background:var(--carvao);color:#fff;padding:26px 0 24px}
     <div>
       <p class="eyebrow">Tradição, sabor e qualidade</p>
       <h1>A pizza perfeita <span>para cada momento</span></h1>
-      <p>Ingredientes selecionados, massa artesanal<br>e muito amor em cada fatia. Aqui, cada pizza<br>é feita para tornar seu momento ainda mais especial!</p>
+      <p>Ingredientes selecionados, massa artesanal e muito amor em cada fatia. Aqui, cada pizza é feita para tornar seu momento ainda mais especial!</p>
       <div class="cta">
         <a class="btn btn-or" href="#cardapio"><svg class="i"><use href="#moto"/></svg>Pedir Agora<svg class="i"><use href="#seta"/></svg></a>
         <a class="btn btn-line" href="#cardapio">Ver Cardápio<svg class="i"><use href="#seta"/></svg></a>
