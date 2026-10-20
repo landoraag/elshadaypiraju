@@ -117,7 +117,7 @@ footer{background:var(--carvao);color:#fff;padding:26px 0 24px}
   nav{position:absolute;top:100%;left:0;right:0;background:rgba(18,11,7,.97);display:none;padding:16px 24px}
   nav.open{display:block}nav ul{flex-direction:column;gap:14px}
   .burger{display:block}header .btn{display:none}
-  .hero-in{grid-template-columns:1fr}.hero-art{height:300px}
+  .hero-in{grid-template-columns:1fr}.hero-art{display:none}
   .hero{background-position:70% center}
   .cards,.revs{grid-template-columns:repeat(2,1fr)}
   .f-in{grid-template-columns:1fr;text-align:center}.f-logo img{margin:auto}.social{justify-content:center}
@@ -127,6 +127,114 @@ footer{background:var(--carvao);color:#fff;padding:26px 0 24px}
   .menu,.aval{background-size:cover;background-position:center}
   .cards,.revs{grid-template-columns:1fr}
   .titulo h2{font-size:42px}.ver{display:none}
+}
+/* ===== MOBILE ===== */
+@media (max-width:700px){
+  html,body{overflow-x:hidden}
+  .wrap{width:calc(100% - 40px)}
+  .logo img{height:58px}
+  header{padding:14px 0}
+  .hero{min-height:0;background:linear-gradient(180deg,rgba(14,8,4,.75) 0,rgba(14,8,4,0) 110px),linear-gradient(180deg,rgba(18,11,7,0) 180px,#120b07 300px),url(img/hero.jpg) 80% top/auto 300px no-repeat #120b07}
+  .hero-in{padding:172px 0 40px}
+  .eyebrow{font-size:10px;letter-spacing:.26em}
+  .hero h1{font-size:34px;line-height:1.08}
+  .hero p{font-size:13.5px;margin:16px 0 22px}
+  .hero .cta{gap:10px}
+  .hero .cta .btn{flex:1 1 auto;justify-content:center;padding:13px 18px;font-size:11px}
+  .menu{padding:34px 0 40px}
+  .menu-top{flex-direction:column;align-items:center;gap:20px}
+  .titulo{text-align:center;min-width:0}
+  .titulo h2{font-size:42px}
+  .titulo h2::after{margin-inline:auto;background-position:center}
+  .tabs{flex:none;width:calc(100% + 16px);margin:0 -8px;gap:1.8vw;justify-content:space-between;align-items:flex-end;overflow:visible;padding:0;font-size:2.6vw}
+  .tabs button{padding:0;font-size:inherit}
+  .tabs .todas{gap:4px}
+  .tabs .todas span{width:34px;height:34px}
+  .sub{font-size:16px;letter-spacing:.12em;margin:26px 0 14px}
+  .aval{padding:34px 0 40px}
+  .aval .titulo h2{font-size:38px}
+  .oferta{min-height:0;background:linear-gradient(180deg,rgba(12,7,4,.8),rgba(12,7,4,.5)),url(img/oferta.jpg) 78% center/cover no-repeat #150c07}
+  .oferta .wrap{padding:34px 0 38px}
+  .oferta h2{font-size:6vw;letter-spacing:.02em;white-space:nowrap}
+  .oferta h2 em{margin:0 4px}
+  .oferta .sc{font-size:30px;margin:6px 0 18px}
+  .f-in{gap:26px}
+  .info{display:grid;grid-template-columns:1fr 1fr;gap:20px 12px;width:100%;max-width:380px;margin-inline:auto;text-align:left}
+  .info div{padding:0!important;border:0!important;gap:10px;font-size:11.5px}
+  .info svg{width:24px;height:24px}
+  .info div:nth-child(1){order:1}
+  .info div:nth-child(3){order:2}
+  .info div:nth-child(2){order:3;grid-column:1/-1;max-width:none;border-top:1px solid rgba(255,255,255,.14)!important;padding-top:18px!important}
+}
+
+/* ===== CARRINHO / DETALHES ===== */
+.card img{cursor:pointer}
+.card h3{cursor:pointer}
+.card .acoes{display:flex;gap:8px;margin-top:auto}
+.card .acoes .btn{flex:1;margin:0}
+.btn-det{background:transparent;color:var(--laranja);border:1px solid var(--laranja)}
+.btn-det:hover{background:rgba(242,106,27,.08)}
+.cart-btn{position:relative;background:none;border:1px solid rgba(255,255,255,.4);color:#fff;border-radius:999px;width:46px;height:46px;display:grid;place-items:center;cursor:pointer}
+.cart-btn:hover{border-color:var(--laranja);color:var(--laranja)}
+.cart-btn svg{width:22px;height:22px}
+.badge{position:absolute;top:-4px;right:-4px;min-width:20px;height:20px;padding:0 5px;border-radius:10px;background:var(--laranja);color:#fff;font-size:11px;font-weight:600;display:grid;place-items:center}
+.badge[data-n="0"]{display:none}
+.fab{position:fixed;right:18px;bottom:18px;z-index:40;background:var(--laranja);color:#fff;border:0;border-radius:999px;padding:14px 20px;display:none;align-items:center;gap:10px;font:500 13px var(--sans);box-shadow:0 8px 24px rgba(0,0,0,.3);cursor:pointer}
+.fab.on{display:inline-flex}
+.fab .badge{position:static;background:#fff;color:var(--laranja)}
+.veu{position:fixed;inset:0;background:rgba(10,6,3,.6);z-index:50;opacity:0;pointer-events:none;transition:opacity .25s}
+.veu.on{opacity:1;pointer-events:auto}
+.gaveta{position:fixed;top:0;right:0;bottom:0;width:min(420px,100%);background:var(--papel);z-index:60;transform:translateX(100%);transition:transform .3s;display:flex;flex-direction:column;box-shadow:-10px 0 30px rgba(0,0,0,.25)}
+.gaveta.on{transform:none}
+.g-top{display:flex;align-items:center;justify-content:space-between;padding:20px 22px;border-bottom:1px solid #e6dccd}
+.g-top h2{font-family:var(--serif);font-size:28px;text-transform:uppercase;letter-spacing:.06em}
+.x{background:none;border:0;font-size:28px;line-height:1;cursor:pointer;color:var(--suave);padding:4px 8px}
+.x:hover{color:var(--laranja)}
+.itens{flex:1;overflow:auto;padding:12px 22px}
+.vazio{text-align:center;color:var(--suave);padding:50px 10px;font-size:14px}
+.item{display:grid;grid-template-columns:64px 1fr auto;gap:12px;padding:14px 0;border-bottom:1px solid #eee3d4;align-items:center}
+.item img{width:64px;height:64px;object-fit:cover;border-radius:6px}
+.item h4{font-family:var(--serif);font-size:17px;text-transform:uppercase;letter-spacing:.06em;line-height:1.1}
+.item small{display:block;color:var(--suave);font-size:11.5px}
+.item .obs{font-style:italic}
+.qtd{display:inline-flex;align-items:center;border:1px solid #dccfbd;border-radius:999px;margin-top:6px}
+.qtd button{background:none;border:0;width:28px;height:28px;cursor:pointer;font-size:16px;color:var(--texto)}
+.qtd button:hover{color:var(--laranja)}
+.qtd span{min-width:22px;text-align:center;font-size:13px;font-weight:500}
+.item .dir{text-align:right;font-size:13.5px;font-weight:600}
+.rm{display:block;margin-top:8px;background:none;border:0;color:var(--suave);font-size:11px;text-decoration:underline;cursor:pointer;margin-left:auto}
+.rm:hover{color:#c0392b}
+.g-fim{padding:18px 22px 22px;border-top:1px solid #e6dccd;background:#fff8ef}
+.total{display:flex;justify-content:space-between;font-family:var(--serif);font-size:24px;font-weight:700;margin-bottom:12px}
+.g-fim .btn{width:100%;justify-content:center}
+.g-fim .btn[disabled]{opacity:.45;pointer-events:none}
+.g-fim .limpar{display:block;margin:10px auto 0;background:none;border:0;color:var(--suave);font-size:12px;text-decoration:underline;cursor:pointer}
+.modal{position:fixed;z-index:60;left:50%;top:50%;transform:translate(-50%,-46%) scale(.97);width:min(760px,calc(100% - 32px));max-height:calc(100% - 32px);overflow:auto;background:var(--papel);border-radius:12px;opacity:0;pointer-events:none;transition:opacity .25s,transform .25s;display:grid;grid-template-columns:1fr 1fr;box-shadow:0 20px 60px rgba(0,0,0,.4)}
+.modal.on{opacity:1;pointer-events:auto;transform:translate(-50%,-50%)}
+.modal>img{width:100%;height:100%;min-height:320px;object-fit:cover}
+.m-c{padding:26px 26px 24px;display:flex;flex-direction:column;gap:12px;position:relative}
+.m-c .x{position:absolute;top:10px;right:10px}
+.m-c h3{font-family:var(--serif);font-size:32px;text-transform:uppercase;letter-spacing:.06em;line-height:1;padding-right:30px}
+.m-c .desc{font-size:13.5px;color:var(--suave)}
+.m-c label.t{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--laranja);font-weight:600}
+.tam{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.tam label{border:1.5px solid #dccfbd;border-radius:8px;padding:10px 12px;cursor:pointer;font-size:13px;display:flex;flex-direction:column}
+.tam label b{font-size:14px}
+.tam input{position:absolute;opacity:0}
+.tam input:checked+label{border-color:var(--laranja);background:#fff1e6}
+.tam input:focus-visible+label{outline:3px solid #ffd2b0}
+.m-c textarea{width:100%;border:1px solid #dccfbd;border-radius:8px;padding:10px;font:13px var(--sans);resize:vertical;min-height:62px;background:#fff}
+.m-fim{display:flex;gap:12px;align-items:center;margin-top:4px}
+.m-fim .qtd{margin:0}
+.m-fim .btn{flex:1;justify-content:center;padding:13px 16px}
+.toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,20px);background:var(--carvao);color:#fff;padding:12px 20px;border-radius:999px;font-size:13px;z-index:80;opacity:0;transition:.25s;pointer-events:none}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+@media (max-width:700px){
+  .modal{grid-template-columns:1fr;top:auto;bottom:0;left:0;width:100%;max-height:92%;border-radius:16px 16px 0 0;transform:translateY(100%)}
+  .modal.on{transform:none}
+  .modal>img{min-height:0;height:200px}
+  .m-c h3{font-size:26px}
+  .cart-btn{width:40px;height:40px}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
 </style>
@@ -162,6 +270,7 @@ footer{background:var(--carvao);color:#fff;padding:26px 0 24px}
         </ul>
       </nav>
       <a class="btn btn-or sm" href="#cardapio"><svg class="i"><use href="#moto"/></svg>Pedir Agora<svg class="i"><use href="#seta"/></svg></a>
+      <button class="cart-btn" data-abrir-carrinho aria-label="Abrir carrinho"><svg class="i"><use href="#cart"/></svg><span class="badge" data-n="0">0</span></button>
       <button class="burger" id="burger" aria-label="Abrir menu" aria-expanded="false">☰</button>
     </div>
   </header>
@@ -170,7 +279,7 @@ footer{background:var(--carvao);color:#fff;padding:26px 0 24px}
     <div>
       <p class="eyebrow">Tradição, sabor e qualidade</p>
       <h1>A pizza perfeita <span>para cada momento</span></h1>
-      <p>Ingredientes selecionados, massa artesanal<br>e muito amor em cada fatia. Aqui, cada pizza<br>é feita para tornar seu momento ainda mais especial!</p>
+      <p>Ingredientes selecionados, massa artesanal e muito amor em cada fatia. Aqui, cada pizza é feita para tornar seu momento ainda mais especial!</p>
       <div class="cta">
         <a class="btn btn-or" href="#cardapio"><svg class="i"><use href="#moto"/></svg>Pedir Agora<svg class="i"><use href="#seta"/></svg></a>
         <a class="btn btn-line" href="#cardapio">Ver Cardápio<svg class="i"><use href="#seta"/></svg></a>
@@ -196,12 +305,7 @@ footer{background:var(--carvao);color:#fff;padding:26px 0 24px}
     </div>
 
     <h3 class="sub">Pizzas Tradicionais</h3>
-    <div class="cards">
-      <article class="card"><img src="img/marguerita.jpg" alt="Pizza Marguerita"><div class="c"><h3>Marguerita</h3><p>Molho de tomate, mussarela, tomate e manjericão.</p><div class="precos"><span><b>M</b>R$ 49,90</span><span><b>G</b>R$ 64,90</span></div><a class="btn btn-or" href="#"><svg class="i"><use href="#cart"/></svg>Adicionar</a></div></article>
-      <article class="card"><img src="img/pepperoni.jpg" alt="Pizza Pepperoni"><div class="c"><h3>Pepperoni</h3><p>Molho de tomate, mussarela e pepperoni.</p><div class="precos"><span><b>M</b>R$ 54,90</span><span><b>G</b>R$ 69,90</span></div><a class="btn btn-or" href="#"><svg class="i"><use href="#cart"/></svg>Adicionar</a></div></article>
-      <article class="card"><img src="img/quatro-queijos.jpg" alt="Pizza Quatro Queijos"><div class="c"><h3>Quatro Queijos</h3><p>Mussarela, provolone, parmesão e gorgonzola.</p><div class="precos"><span><b>M</b>R$ 56,90</span><span><b>G</b>R$ 71,90</span></div><a class="btn btn-or" href="#"><svg class="i"><use href="#cart"/></svg>Adicionar</a></div></article>
-      <article class="card"><img src="img/calabresa.jpg" alt="Pizza Calabresa"><div class="c"><h3>Calabresa</h3><p>Molho de tomate, mussarela e calabresa.</p><div class="precos"><span><b>M</b>R$ 52,90</span><span><b>G</b>R$ 67,90</span></div><a class="btn btn-or" href="#"><svg class="i"><use href="#cart"/></svg>Adicionar</a></div></article>
-    </div>
+    <div class="cards" id="cards"></div>
   </div>
 </section>
 
@@ -250,10 +354,142 @@ footer{background:var(--carvao);color:#fff;padding:26px 0 24px}
   </div>
 </footer>
 
+
+<!-- CARRINHO -->
+<div class="veu" id="veu"></div>
+<aside class="gaveta" id="gaveta" aria-label="Carrinho" aria-hidden="true">
+  <div class="g-top"><h2>Seu pedido</h2><button class="x" data-fechar aria-label="Fechar carrinho">&times;</button></div>
+  <div class="itens" id="itens"></div>
+  <div class="g-fim">
+    <div class="total"><span>Total</span><span id="total">R$ 0,00</span></div>
+    <button class="btn btn-or" id="finalizar"><svg class="i"><use href="#zap"/></svg>Finalizar pelo WhatsApp</button>
+    <button class="limpar" id="limpar">Esvaziar carrinho</button>
+  </div>
+</aside>
+
+<!-- DETALHES -->
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="m-nome" aria-hidden="true">
+  <img id="m-img" src="" alt="">
+  <div class="m-c">
+    <button class="x" data-fechar aria-label="Fechar">&times;</button>
+    <h3 id="m-nome"></h3>
+    <p class="desc" id="m-desc"></p>
+    <label class="t">Tamanho</label>
+    <div class="tam" id="m-tam"></div>
+    <label class="t" for="m-obs">Observação</label>
+    <textarea id="m-obs" placeholder="Ex.: sem cebola, bem assada..."></textarea>
+    <div class="m-fim">
+      <div class="qtd"><button id="m-menos" aria-label="Diminuir">−</button><span id="m-qtd">1</span><button id="m-mais" aria-label="Aumentar">+</button></div>
+      <button class="btn btn-or" id="m-add"><svg class="i"><use href="#cart"/></svg><span id="m-btn">Adicionar</span></button>
+    </div>
+  </div>
+</div>
+
+<button class="fab" id="fab" data-abrir-carrinho><svg class="i"><use href="#cart"/></svg>Ver carrinho<span class="badge" data-n="0">0</span></button>
+<div class="toast" id="toast" role="status"></div>
+
 <script>
   const b=document.getElementById('burger'),m=document.getElementById('menu');
   b.addEventListener('click',()=>{const o=m.classList.toggle('open');b.setAttribute('aria-expanded',o)});
   m.addEventListener('click',e=>{if(e.target.tagName==='A'){m.classList.remove('open');b.setAttribute('aria-expanded',false)}});
+
+/* ===== CARDÁPIO ===== */
+const WHATSAPP='5514998444694';
+const PIZZAS=[
+  {id:'marguerita',nome:'Marguerita',img:'img/marguerita.jpg',resumo:'Molho de tomate, mussarela, tomate e manjericão.',
+   desc:'A clássica italiana: molho de tomate artesanal, mussarela derretida, rodelas de tomate fresco e folhas de manjericão.',precos:{M:49.90,G:64.90}},
+  {id:'pepperoni',nome:'Pepperoni',img:'img/pepperoni.jpg',resumo:'Molho de tomate, mussarela e pepperoni.',
+   desc:'Molho de tomate, muita mussarela e fatias generosas de pepperoni levemente apimentado.',precos:{M:54.90,G:69.90}},
+  {id:'quatro-queijos',nome:'Quatro Queijos',img:'img/quatro-queijos.jpg',resumo:'Mussarela, provolone, parmesão e gorgonzola.',
+   desc:'Combinação cremosa de mussarela, provolone, parmesão e gorgonzola sobre nossa massa artesanal.',precos:{M:56.90,G:71.90}},
+  {id:'calabresa',nome:'Calabresa',img:'img/calabresa.jpg',resumo:'Molho de tomate, mussarela e calabresa.',
+   desc:'Molho de tomate, mussarela e calabresa fatiada, finalizada com cebola e orégano.',precos:{M:52.90,G:67.90}}
+];
+const TAM={M:'Média',G:'Grande'};
+const brl=v=>v.toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
+const $=id=>document.getElementById(id);
+const esc=t=>String(t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+$('cards').innerHTML=PIZZAS.map(p=>`
+  <article class="card" data-id="${p.id}">
+    <img src="${p.img}" alt="Pizza ${p.nome}" data-det loading="lazy">
+    <div class="c"><h3 data-det>${p.nome}</h3><p>${p.resumo}</p>
+      <div class="precos"><span><b>M</b>${brl(p.precos.M)}</span><span><b>G</b>${brl(p.precos.G)}</span></div>
+      <div class="acoes"><button class="btn btn-det" data-det>Detalhes</button><button class="btn btn-or" data-det><svg class="i"><use href="#cart"/></svg>Adicionar</button></div>
+    </div>
+  </article>`).join('');
+$('cards').addEventListener('click',e=>{if(e.target.closest('[data-det]'))abrirDetalhe(e.target.closest('.card').dataset.id)});
+
+/* ===== CARRINHO (salvo no navegador) ===== */
+let carrinho=[];
+try{carrinho=JSON.parse(localStorage.getItem('elshaday-carrinho'))||[]}catch(e){}
+const salvar=()=>{try{localStorage.setItem('elshaday-carrinho',JSON.stringify(carrinho))}catch(e){}};
+
+function adicionar(id,tam,qtd,obs){
+  const igual=carrinho.find(i=>i.id===id&&i.tam===tam&&i.obs===obs);
+  if(igual)igual.qtd+=qtd;else carrinho.push({id,tam,qtd,obs});
+  atualizar();
+}
+function atualizar(){
+  salvar();
+  const n=carrinho.reduce((a,i)=>a+i.qtd,0);
+  document.querySelectorAll('.badge').forEach(b=>{b.textContent=n;b.dataset.n=n});
+  $('fab').classList.toggle('on',n>0&&!$('gaveta').classList.contains('on'));
+  let total=0;
+  $('itens').innerHTML=carrinho.length?carrinho.map((i,k)=>{
+    const p=PIZZAS.find(x=>x.id===i.id);const sub=p.precos[i.tam]*i.qtd;total+=sub;
+    return `<div class="item"><img src="${p.img}" alt=""><div><h4>${p.nome}</h4><small>${TAM[i.tam]} · ${brl(p.precos[i.tam])}</small>${i.obs?`<small class="obs">"${esc(i.obs)}"</small>`:''}
+      <div class="qtd"><button data-k="${k}" data-d="-1" aria-label="Diminuir">−</button><span>${i.qtd}</span><button data-k="${k}" data-d="1" aria-label="Aumentar">+</button></div></div>
+      <div class="dir">${brl(sub)}<button class="rm" data-rm="${k}">remover</button></div></div>`}).join('')
+    :'<p class="vazio">Seu carrinho está vazio.<br>Escolha uma pizza no cardápio!</p>';
+  $('total').textContent=brl(total);
+  $('finalizar').disabled=$('limpar').hidden=!carrinho.length;
+}
+$('itens').addEventListener('click',e=>{
+  const t=e.target;
+  if(t.dataset.d){const i=carrinho[t.dataset.k];i.qtd+=+t.dataset.d;if(i.qtd<1)carrinho.splice(t.dataset.k,1);atualizar()}
+  if(t.dataset.rm){carrinho.splice(t.dataset.rm,1);atualizar()}
+});
+$('limpar').onclick=()=>{if(confirm('Esvaziar o carrinho?')){carrinho=[];atualizar()}};
+$('finalizar').onclick=()=>{
+  let total=0;
+  const linhas=carrinho.map(i=>{const p=PIZZAS.find(x=>x.id===i.id);const sub=p.precos[i.tam]*i.qtd;total+=sub;
+    return `• ${i.qtd}x ${p.nome} (${TAM[i.tam]}) — ${brl(sub)}${i.obs?`\n   Obs.: ${i.obs}`:''}`});
+  const msg=`Olá! Gostaria de fazer um pedido:\n\n${linhas.join('\n')}\n\n*Total: ${brl(total)}*`;
+  window.open(`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}`,'_blank');
+};
+
+/* ===== PAINÉIS ===== */
+let ultimoFoco=null;
+function abrir(el){ultimoFoco=document.activeElement;el.classList.add('on');el.setAttribute('aria-hidden','false');$('veu').classList.add('on');document.body.style.overflow='hidden';$('fab').classList.remove('on');setTimeout(()=>el.querySelector('.x').focus(),50)}
+function fechar(){['gaveta','modal'].forEach(i=>{$(i).classList.remove('on');$(i).setAttribute('aria-hidden','true')});$('veu').classList.remove('on');document.body.style.overflow='';atualizar();ultimoFoco&&ultimoFoco.focus()}
+document.querySelectorAll('[data-abrir-carrinho]').forEach(b=>b.onclick=()=>{fechar();abrir($('gaveta'))});
+document.querySelectorAll('[data-fechar]').forEach(b=>b.onclick=fechar);
+$('veu').onclick=fechar;
+document.addEventListener('keydown',e=>{if(e.key==='Escape')fechar()});
+
+/* ===== DETALHES ===== */
+let atual=null,qtdM=1;
+function precoModal(){const t=document.querySelector('input[name=tam]:checked').value;$('m-btn').textContent='Adicionar · '+brl(atual.precos[t]*qtdM)}
+function abrirDetalhe(id){
+  atual=PIZZAS.find(p=>p.id===id);qtdM=1;
+  $('m-img').src=atual.img;$('m-img').alt='Pizza '+atual.nome;
+  $('m-nome').textContent=atual.nome;$('m-desc').textContent=atual.desc;
+  $('m-tam').innerHTML=Object.keys(atual.precos).map((t,i)=>`<div><input type="radio" name="tam" id="t${t}" value="${t}" ${t==='G'?'checked':''}><label for="t${t}"><b>${TAM[t]}</b>${brl(atual.precos[t])}</label></div>`).join('');
+  $('m-obs').value='';$('m-qtd').textContent=1;precoModal();
+  abrir($('modal'));
+}
+$('m-tam').addEventListener('change',precoModal);
+$('m-menos').onclick=()=>{if(qtdM>1){qtdM--;$('m-qtd').textContent=qtdM;precoModal()}};
+$('m-mais').onclick=()=>{qtdM++;$('m-qtd').textContent=qtdM;precoModal()};
+$('m-add').onclick=()=>{
+  const t=document.querySelector('input[name=tam]:checked').value;
+  adicionar(atual.id,t,qtdM,$('m-obs').value.trim());
+  fechar();toast(`${qtdM}x ${atual.nome} (${TAM[t]}) adicionada ao carrinho`);
+};
+let tt;function toast(m){$('toast').textContent=m;$('toast').classList.add('on');clearTimeout(tt);tt=setTimeout(()=>$('toast').classList.remove('on'),2400)}
+
+atualizar();
 </script>
 </body>
 </html>
