@@ -251,17 +251,10 @@ footer{background:var(--carvao);color:#fff;padding:26px 0 24px}
 .pulo{animation:pulo .45s ease}
 
 /* ===== SEÇÃO MONTE SUA PIZZA ===== */
-.monte{margin-top:6px;display:grid;grid-template-columns:1.15fr 1fr;align-items:center;background:radial-gradient(ellipse at 80% 60%,rgba(242,106,27,.35),transparent 55%),linear-gradient(110deg,#1c110a,#2c1609);color:#fff;border-radius:12px;overflow:hidden;box-shadow:0 8px 24px rgba(60,35,15,.25)}
-.monte-txt{padding:34px 40px}
-.monte-txt small{font-size:11px;letter-spacing:.34em;color:var(--laranja);text-transform:uppercase}
-.monte-txt h3{font-family:var(--serif);font-size:44px;line-height:1;text-transform:uppercase;letter-spacing:.04em;margin:6px 0 12px}
-.monte-txt p{font-size:13.5px;font-weight:300;color:#e9dccd;max-width:430px;margin-bottom:22px}
-.monte-art{height:250px;display:grid;place-items:center;perspective:700px}
-.monte-art .mini{position:relative;width:220px;height:220px;animation:mini-gira 30s linear infinite}
-@keyframes mini-gira{to{transform:rotate(360deg)}}
-.monte-art .mini img{position:absolute;inset:0;width:100%;filter:drop-shadow(0 12px 18px rgba(0,0,0,.6))}
-.monte-art .mini .disco{position:absolute;inset:0;border-radius:50%;box-shadow:0 14px 0 #6e3f1e,0 24px 30px rgba(0,0,0,.5)}
-.monte-art .mini svg{position:absolute;inset:20px;filter:drop-shadow(0 4px 6px rgba(40,15,0,.5))}
+.monte{margin-top:44px;padding:46px 24px 50px;text-align:center;border-top:1px solid rgba(160,130,95,.35)}
+.monte small{display:block;font-size:11px;letter-spacing:.34em;color:var(--laranja);text-transform:uppercase;margin-bottom:6px}
+.monte h3{font-family:var(--serif);font-size:clamp(32px,4.4vw,50px);line-height:1.05;font-weight:700;letter-spacing:.02em;color:var(--carvao)}
+.monte p{font-size:14.5px;font-weight:300;color:var(--suave);max-width:520px;margin:14px auto 26px}
 
 /* ===== MONTADOR ===== */
 .montar{position:fixed;inset:0;z-index:70;background:#120b07;color:#fff;display:flex;flex-direction:column;opacity:0;visibility:hidden;transition:opacity .35s,visibility .35s}
@@ -283,17 +276,11 @@ footer{background:var(--carvao);color:#fff;padding:26px 0 24px}
 @keyframes balanco{from{transform:scale(var(--esc,1)) rotateX(56deg) rotateZ(-26deg)}to{transform:scale(var(--esc,1)) rotateX(54deg) rotateZ(-2deg)}}
 .tabua{position:absolute;inset:0;filter:drop-shadow(0 18px 26px rgba(0,0,0,.6));transition:transform .7s cubic-bezier(.5,0,.8,.4)}
 .tabua.fora{transform:translateY(700px)}
-.lam{position:absolute;inset:0;transform-style:preserve-3d}
-.lam .disco{position:absolute;inset:0;border-radius:50%;background:#6a3b1b}
-.lam .cabo{position:absolute;left:50%;top:93%;width:62px;height:150px;margin-left:-31px;border-radius:4px 4px 20px 20px;background:#6a3b1b}
-.lam.topo .disco,.lam.topo .cabo,.monte-art .mini .disco{background:radial-gradient(circle at 50% 50%,rgba(0,0,0,0) 58%,rgba(55,25,5,.38) 100%),repeating-linear-gradient(93deg,#c48e57 0 7px,#b67d46 7px 10px,#cc9963 10px 19px,#ba8249 19px 22px,#c69058 22px 30px)}
-.lam.topo .cabo{background:linear-gradient(90deg,rgba(55,25,5,.3),transparent 25%,transparent 75%,rgba(55,25,5,.3)),repeating-linear-gradient(93deg,#c48e57 0 7px,#b67d46 7px 10px,#cc9963 10px 19px,#ba8249 19px 22px)}
-.lam.topo .cabo::after{content:"";position:absolute;left:50%;bottom:22px;width:14px;height:14px;margin-left:-7px;border-radius:50%;background:#2a160a;box-shadow:inset 0 2px 3px #000}
-.sombra{position:absolute;left:45px;top:45px;width:270px;height:270px;border-radius:50%;background:radial-gradient(circle,rgba(30,12,2,.55) 55%,rgba(30,12,2,0) 72%);transform:translate3d(8px,10px,.5px)}
-.tabua.fora~.sombra{opacity:0}
 .tabua img{width:100%;height:100%;display:block}
-.pz{position:absolute;left:34px;top:34px;width:332px;height:332px;transform:translateZ(3px);filter:drop-shadow(0 6px 8px rgba(40,15,0,.55))}
+.pz{position:absolute;left:34px;top:34px;width:332px;height:332px;transform:translateZ(3px);filter:drop-shadow(0 1px 1.5px rgba(20,8,0,.7)) drop-shadow(3px 6px 5px rgba(0,0,0,.55))}
 .pz-l{position:absolute;inset:0}
+.pz-sombra{position:absolute;left:52px;top:52px;width:296px;height:296px;border-radius:50%;background:rgba(5,2,0,.92);transform:translate3d(15px,24px,1.5px);filter:blur(7px);transition:opacity .4s}
+.tabua.fora~.pz-sombra{opacity:0}
 .pz-l svg{width:100%;height:100%;display:block;overflow:visible}
 .pz [data-i]{transition:transform .8s cubic-bezier(.3,.7,.3,1)}
 .cortes line{stroke:rgba(80,40,12,.6);stroke-width:1.4;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:1;animation:risca .35s ease forwards}
@@ -334,7 +321,7 @@ footer{background:var(--carvao);color:#fff;padding:26px 0 24px}
 .sab{position:relative;display:flex;gap:10px;align-items:center;text-align:left;background:#fff;border:1.5px solid #e2d5c3;border-radius:12px;padding:10px;cursor:pointer;font-family:var(--sans);color:var(--texto);transition:.2s}
 .sab:hover{border-color:var(--laranja)}
 .sab.on{border-color:var(--laranja);background:#fff1e6}
-.sab-img{width:34px;height:70px;object-fit:contain;flex:none;margin:-4px 7px;transform:rotate(180deg);filter:drop-shadow(0 2px 3px rgba(0,0,0,.3))}
+.sab-img{width:56px;height:56px;flex:none;border-radius:50%;filter:drop-shadow(0 2px 3px rgba(0,0,0,.3))}
 .sab strong{display:block;font-size:13px;line-height:1.2}
 .sab small{display:block;font-size:11px;color:var(--suave);line-height:1.3}
 .sab em{font-style:normal;font-size:11.5px;font-weight:600;color:var(--laranja)}
@@ -355,8 +342,6 @@ footer{background:var(--carvao);color:#fff;padding:26px 0 24px}
 .mt-bts .btn-or{flex:1}
 .mt-bts .btn[disabled]{opacity:.4;pointer-events:none}
 @media (max-width:900px){
-  .monte{grid-template-columns:1fr}.monte-txt{padding:28px 24px 6px;text-align:center}.monte-txt p{margin-inline:auto}
-  .monte-txt h3{font-size:34px}.monte-art{height:210px;order:-1}.monte-art .mini{width:180px;height:180px}.monte-art .mini svg{inset:16px}
   .mt-top{padding:10px 16px;gap:12px}.mt-top h2{font-size:22px}.mt-top small{display:none}
   .passos li{font-size:0;padding:0;gap:0}.passos li.on{background:none}
   .mt-corpo{display:flex;flex-direction:column}
@@ -441,12 +426,11 @@ footer{background:var(--carvao);color:#fff;padding:26px 0 24px}
     <h3 class="sub">Pizzas Tradicionais</h3>
     <div class="cards" id="cards"></div>
 
-    <h3 class="sub">Monte sua pizza</h3>
     <div class="monte">
-      <div class="monte-txt"><small>Do seu jeito</small><h3>Monte sua pizza</h3>
-        <p>Escolha em quantos pedaços cortar, até 3 sabores e os adicionais. A gente monta, corta e embala na hora.</p>
-        <button class="btn btn-or" id="abrir-montar"><svg class="i"><use href="#pizza"/></svg>Montar minha pizza<svg class="i"><use href="#seta"/></svg></button></div>
-      <div class="monte-art" aria-hidden="true"><div class="mini" id="monte-mini"></div></div>
+      <small>Do seu jeito</small>
+      <h3>Monte sua pizza do seu jeito!</h3>
+      <p>Escolha em quantos pedaços cortar, combine até 3 sabores e finalize com bordas e adicionais.</p>
+      <button class="btn btn-or" id="abrir-montar"><svg class="i"><use href="#pizza"/></svg>Montar minha pizza<svg class="i"><use href="#seta"/></svg></button>
     </div>
   </div>
 </section>
@@ -541,7 +525,8 @@ footer{background:var(--carvao);color:#fff;padding:26px 0 24px}
     <div class="palco">
       <div class="mesa" id="mesa">
         <div class="tabua" id="tabua"></div>
-                <div class="pz" id="pz"></div>
+                <div class="pz-sombra"></div>
+        <div class="pz" id="pz"></div>
         <div class="caixa" id="caixa">
           <div class="cx-fundo"></div>
           <div class="cx-p cx-tras"></div><div class="cx-p cx-esq"></div><div class="cx-p cx-dir"></div><div class="cx-p cx-frente"></div>
@@ -731,7 +716,6 @@ const FRAC={1:'',2:'½ ',3:'⅓ '};
    Massa: fotos reais (inteira e já cortada em 8/10/12).
    Sabores: fatias reais (img/sabores/*.webp), giradas e recortadas em cada pedaço. */
 const TAU=Math.PI*2,DEG=180/Math.PI;
-const FATIA={meia:14,cheia:11.5,r:90,w:43.5}; // ângulos em graus, medidas em unidades do SVG
 const f2=n=>n.toFixed(2);
 function setor(r,a0,a1){const g=a1-a0>Math.PI?1:0;return`M0 0L${f2(r*Math.cos(a0))} ${f2(r*Math.sin(a0))}A${r} ${r} 0 ${g} 1 ${f2(r*Math.cos(a1))} ${f2(r*Math.sin(a1))}Z`}
 function arco(r,a0,a1){return`M${f2(r*Math.cos(a0))} ${f2(r*Math.sin(a0))}A${r} ${r} 0 0 1 ${f2(r*Math.cos(a1))} ${f2(r*Math.sin(a1))}`}
@@ -739,8 +723,8 @@ function grupos(n,k){const g=[];let i=0;const b=Math.floor(n/k),x=n%k;for(let j=
 function offsets(cfg){
   const st=TAU/cfg.n,k=cfg.sabores.length,gs=k>1?grupos(cfg.n,k):null,res=[];
   for(let i=0;i<cfg.n;i++){let x=0,y=0;
-    if(cfg.cortada){const m=-Math.PI/2+(i+.5)*st;x+=2.2*Math.cos(m);y+=2.2*Math.sin(m)}
-    if(gs){const g=gs.find(g=>i>=g.ini&&i<g.fim),m=-Math.PI/2+((g.ini+g.fim)/2)*st;x+=3.6*Math.cos(m);y+=3.6*Math.sin(m)}
+    if(cfg.cortada){const m=-Math.PI/2+(i+.5)*st;x+=1.2*Math.cos(m);y+=1.2*Math.sin(m)}
+    if(gs){const g=gs.find(g=>i>=g.ini&&i<g.fim),m=-Math.PI/2+((g.ini+g.fim)/2)*st;x+=1.3*Math.cos(m);y+=1.3*Math.sin(m)}
     res.push([x,y])}
   return res;
 }
@@ -759,12 +743,8 @@ function svgPizza(cfg,{off=offsets(cfg),cortes=false}={}){
     let c=(inteira&&!cfg.cortada)?'':`<clipPath id="${id}c${i}"><path d="${setor(102,a0,a1)}"/></clipPath><g clip-path="url(#${id}c${i})">${massa}</g>`;
     const gi=gs.findIndex(g=>i>=g.ini&&i<g.fim),s=gi>=0?SAB[cfg.sabores[gi]]:null;
     if(s){
-      const wd=st*DEG,m=Math.max(1,Math.ceil(wd/23));
-      const vs=1-((i*7)%4)*.012;
-      const copias=(src,m)=>{let r='';for(let j=0;j<m;j++){
-        const ang=m===1?(a0+a1)/2*DEG:a0*DEG+FATIA.cheia+(wd-2*FATIA.cheia)*j/(m-1);
-        r+=`<image href="img/sabores/${src}.webp" x="${-FATIA.w/2}" y="${-FATIA.r}" width="${FATIA.w}" height="${FATIA.r}" preserveAspectRatio="none" transform="rotate(${f2(ang+90)}) scale(${(i+j)%2?-vs:vs} ${vs})"/>`}return r};
-      c+=`<clipPath id="${id}t${i}"><path d="${setor(FATIA.r,a0,a1)}"/></clipPath><g clip-path="url(#${id}t${i})">${copias(s.id,m)}${s.tier!=='doce'?ex.map(e=>copias('extra-'+e,Math.ceil(wd/40))).join(''):''}</g>`;
+      const ex2=s.tier!=='doce'?ex.map(e=>`<image href="img/sabores/extra-${e}.webp" x="-101" y="-101" width="202" height="202"/>`).join(''):'';
+      c+=`<clipPath id="${id}t${i}"><path d="${setor(102,a0,a1)}"/></clipPath><g clip-path="url(#${id}t${i})"><image href="img/sabores/${s.id}.webp" x="-101" y="-101" width="202" height="202"/>${ex2}</g>`;
     }
     if(borda)c+=`<clipPath id="${id}b${i}"><path d="${setor(102,a0,a1)}"/></clipPath><g clip-path="url(#${id}b${i})">${borda}</g>`;
     h+=`<g data-i="${i}" style="transform:translate(${f2(o[0])}px,${f2(o[1])}px)">${c}</g>`;
@@ -777,7 +757,6 @@ function svgPizza(cfg,{off=offsets(cfg),cortes=false}={}){
 $('tabua').innerHTML='<img src="img/tabua.webp" alt="">';
 
 /* arte da seção no cardápio */
-$('monte-mini').innerHTML='<img src="img/tabua.webp" alt="">'+svgPizza({n:8,cortada:true,sabores:['rucula','presunto'],borda:'',extras:[]});
 
 /* estado do montador */
 let cfg,passo=1,ocupado=false,ultimo=null,riscar=false;
