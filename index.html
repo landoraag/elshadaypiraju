@@ -194,6 +194,7 @@ footer{background:var(--carvao);color:#fff;padding:26px 0 24px}
 .vazio{text-align:center;color:var(--suave);padding:50px 10px;font-size:14px}
 .item{display:grid;grid-template-columns:64px 1fr auto;gap:12px;padding:14px 0;border-bottom:1px solid #eee3d4;align-items:center}
 .item img{width:64px;height:64px;object-fit:cover;border-radius:6px}
+.item-svg{width:64px;height:64px;display:block;border-radius:6px;background:#2a1a10}.item-svg svg{width:100%;height:100%;display:block}
 .item h4{font-family:var(--serif);font-size:17px;text-transform:uppercase;letter-spacing:.06em;line-height:1.1}
 .item small{display:block;color:var(--suave);font-size:11.5px}
 .item .obs{font-style:italic}
@@ -333,7 +334,7 @@ footer{background:var(--carvao);color:#fff;padding:26px 0 24px}
 .sab{position:relative;display:flex;gap:10px;align-items:center;text-align:left;background:#fff;border:1.5px solid #e2d5c3;border-radius:12px;padding:10px;cursor:pointer;font-family:var(--sans);color:var(--texto);transition:.2s}
 .sab:hover{border-color:var(--laranja)}
 .sab.on{border-color:var(--laranja);background:#fff1e6}
-.sab svg{width:48px;height:48px;flex:none}
+.sab-img{width:34px;height:70px;object-fit:contain;flex:none;margin:-4px 7px;transform:rotate(180deg);filter:drop-shadow(0 2px 3px rgba(0,0,0,.3))}
 .sab strong{display:block;font-size:13px;line-height:1.2}
 .sab small{display:block;font-size:11px;color:var(--suave);line-height:1.3}
 .sab em{font-style:normal;font-size:11.5px;font-weight:600;color:var(--laranja)}
@@ -650,7 +651,7 @@ function atualizar(){
   let total=0;
   $('itens').innerHTML=carrinho.length?carrinho.map((i,k)=>{
     const sub=i.preco*i.qtd;total+=sub;
-    return `<div class="item"><img src="${i.img}" alt=""><div><h4>${esc(i.nome)}</h4><small>${esc(i.det)} · ${brl(i.preco)}</small>${i.obs?`<small class="obs">"${esc(i.obs)}"</small>`:''}
+    return `<div class="item">${i.svg?`<span class="item-svg">${i.svg}</span>`:`<img src="${i.img}" alt="">`}<div><h4>${esc(i.nome)}</h4><small>${esc(i.det)} · ${brl(i.preco)}</small>${i.obs?`<small class="obs">"${esc(i.obs)}"</small>`:''}
       <div class="qtd"><button data-k="${k}" data-d="-1" aria-label="Diminuir">−</button><span>${i.qtd}</span><button data-k="${k}" data-d="1" aria-label="Aumentar">+</button></div></div>
       <div class="dir">${brl(sub)}<button class="rm" data-rm="${k}">remover</button></div></div>`}).join('')
     :'<p class="vazio">Seu carrinho está vazio.<br>Escolha uma pizza no cardápio!</p>';
@@ -707,15 +708,18 @@ $('m-add').onclick=()=>{
 const TIERS={trad:{8:44.90,10:54.90,12:64.90},esp:{8:49.90,10:59.90,12:69.90},doce:{8:46.90,10:56.90,12:66.90}};
 const TIER_NOME={trad:'Tradicionais',esp:'Especiais',doce:'Doces'};
 const SABORES=[
-  {id:'mussarela',nome:'Mussarela',ing:'Mussarela, azeitona e orégano',tier:'trad',base:'#f1c257',pat:['azeit','oreg',null,'oreg','azeit',null,'oreg']},
-  {id:'calabresa',nome:'Calabresa',ing:'Calabresa, cebola e orégano',tier:'trad',base:'#efbd55',pat:['calab','cebola','calab','oreg']},
-  {id:'marguerita',nome:'Marguerita',ing:'Molho, mussarela de búfala e manjericão',tier:'trad',base:'#c9452c',pat:['muss','manj','muss',null]},
-  {id:'portuguesa',nome:'Portuguesa',ing:'Presunto, ovo, ervilha, cebola e azeitona',tier:'esp',base:'#f0bf56',pat:['presunto','ovo','ervilha','azeit','presunto','cebola']},
-  {id:'frango',nome:'Frango c/ Catupiry',ing:'Frango desfiado e catupiry',tier:'esp',base:'#f3d58e',pat:['frango','catup','frango','oreg']},
-  {id:'pepperoni',nome:'Pepperoni',ing:'Pepperoni e mussarela',tier:'esp',base:'#eeb94f',pat:['pep','pep','oreg']},
-  {id:'bacon',nome:'Bacon',ing:'Bacon crocante, mussarela e cebola',tier:'esp',base:'#f0bf56',pat:['bacon','cebola','bacon','oreg']},
-  {id:'chocomorango',nome:'Chocolate c/ Morango',ing:'Chocolate ao leite e morangos',tier:'doce',base:'#4e2a18',pat:['morango','morango',null]},
-  {id:'brigadeiro',nome:'Brigadeiro',ing:'Chocolate e granulado',tier:'doce',base:'#5a321e',pat:['gran','gran',null,'gran']}
+  {id:'rucula',nome:'Rúcula',ing:'Mussarela, rúcula, tomate-cereja e parmesão',tier:'trad'},
+  {id:'alho-oleo',nome:'Alho e Óleo',ing:'Mussarela, alho dourado, azeite e salsinha',tier:'trad'},
+  {id:'presunto',nome:'Presunto e Mussarela',ing:'Presunto cozido e mussarela gratinada',tier:'trad'},
+  {id:'calabresa-mussarela',nome:'Calabresa c/ Mussarela',ing:'Calabresa fatiada, mussarela e orégano',tier:'trad'},
+  {id:'calabresa-cebola',nome:'Calabresa c/ Cebola',ing:'Calabresa, cebola em rodelas e orégano',tier:'trad'},
+  {id:'frango',nome:'Frango c/ Catupiry',ing:'Frango desfiado temperado e catupiry',tier:'esp'},
+  {id:'strogonoff',nome:'Strogonoff de Frango',ing:'Strogonoff cremoso de frango e mussarela',tier:'esp'},
+  {id:'quatro-queijos',nome:'4 Queijos',ing:'Mussarela, provolone, parmesão e gorgonzola',tier:'esp'},
+  {id:'pepperoni',nome:'Pepperoni',ing:'Pepperoni e mussarela',tier:'esp'},
+  {id:'brigadeiro',nome:'Chocolate c/ Granulado',ing:'Chocolate ao leite e granulado de brigadeiro',tier:'doce'},
+  {id:'branco-preto',nome:'Chocolate Branco e Preto',ing:'Chocolate ao leite e chocolate branco',tier:'doce'},
+  {id:'kitkat',nome:'Chocolate c/ Kit Kat',ing:'Chocolate ao leite e pedaços de Kit Kat',tier:'doce'}
 ];
 const SAB=Object.fromEntries(SABORES.map(s=>[s.id,s]));
 const BORDAS=[{id:'',nome:'Sem borda',preco:0},{id:'catupiry',nome:'Catupiry',preco:9.90,cor:'#fbf3df'},{id:'cheddar',nome:'Cheddar',preco:9.90,cor:'#f0952b'},{id:'chocolate',nome:'Chocolate',preco:11.90,cor:'#55301b'}];
@@ -723,33 +727,11 @@ const EXTRAS=[{id:'queijo',nome:'Mais queijo',preco:6},{id:'bacon',nome:'Bacon e
 const MAX={8:2,10:3,12:3};
 const FRAC={1:'',2:'½ ',3:'⅓ '};
 
-/* ingredientes desenhados em SVG (centrados na origem) */
-const ING={
-  calab:'<circle r="7" fill="#a8382a" stroke="#7a2118" stroke-width="1.2"/><circle r="4" fill="#bd4d3d"/><circle cx="-2" cy="1" r=".9" fill="#e9c7a6"/><circle cx="2" cy="-1.5" r=".8" fill="#e9c7a6"/>',
-  pep:'<circle r="6.5" fill="#b52d1d"/><circle r="5" fill="#c43a28"/><circle cx="-2" cy="-1" r="1" fill="#7c1c12"/><circle cx="2" cy="2" r=".9" fill="#7c1c12"/>',
-  cebola:'<path d="M-5 1A5 5 0 0 1 5 1" fill="none" stroke="#f6efe3" stroke-width="1.6" stroke-linecap="round"/><path d="M-3 2A3 3 0 0 1 3 2" fill="none" stroke="#ead9e6" stroke-width="1.2" stroke-linecap="round"/>',
-  azeit:'<circle r="3.2" fill="#2b2420"/><circle r="1.2" fill="#6d5a48"/>',
-  oreg:'<circle cx="-2" r=".8" fill="#4d6a29"/><circle cx="1.5" cy="1.5" r=".7" fill="#5c7a30"/><circle cx="1" cy="-2" r=".6" fill="#4d6a29"/>',
-  manj:'<path d="M-6 0Q0-5 6 0Q0 5-6 0Z" fill="#3e7d2d"/><path d="M-5 0H5" stroke="#5f9c43" stroke-width=".6"/>',
-  muss:'<ellipse rx="7.5" ry="6" fill="#fbf3dc"/><ellipse rx="4" ry="3" cx="-1.5" cy="-1" fill="#fff" opacity=".7"/>',
-  frango:'<ellipse rx="5.5" ry="2.6" fill="#d39b57"/><ellipse rx="4" ry="2" cx="2" cy="2" transform="rotate(40)" fill="#c7884a"/>',
-  catup:'<circle r="5.2" fill="#fffaf0"/><path d="M-2 0a2 2 0 1 1 2 2" fill="none" stroke="#eadbb9" stroke-width=".9"/>',
-  presunto:'<rect x="-5.5" y="-4" width="11" height="8" rx="2" fill="#e3989b"/><rect x="-3.5" y="-2" width="7" height="2" rx="1" fill="#f1b9ba"/>',
-  ovo:'<path d="M-6 0C-6-5 6-6 6 0S-6 5-6 0Z" fill="#fffdf6"/><circle r="2.6" fill="#f2b632"/>',
-  ervilha:'<circle cx="-1.6" r="1.9" fill="#6aa33a"/><circle cx="1.8" cy=".8" r="1.9" fill="#79b245"/>',
-  bacon:'<rect x="-7" y="-2.4" width="14" height="4.8" rx="1.8" fill="#99372a"/><path d="M-6 0Q-3-1.2 0 0T6 0" stroke="#efc3aa" stroke-width="1.1" fill="none"/>',
-  morango:'<path d="M0 6C-5 2-5-3-3-4.5Q0-5.5 3-4.5C5-3 5 2 0 6Z" fill="#d42f3d"/><path d="M-3-4.5Q0-7 3-4.5Q0-3.5-3-4.5Z" fill="#4f8a2e"/><circle cx="-1.5" r=".5" fill="#f7d36a"/><circle cx="1.5" cy="1.5" r=".5" fill="#f7d36a"/><circle cy="-2" r=".5" fill="#f7d36a"/>',
-  gran:'<rect x="-3" y="-.7" width="3.4" height="1.4" rx=".7" fill="#2a160c" transform="rotate(30)"/><rect x="0" y="1" width="3.4" height="1.4" rx=".7" fill="#3a2012" transform="rotate(-50)"/><rect x="-1" y="-3" width="3.4" height="1.4" rx=".7" fill="#22120a"/>',
-  qextra:'<ellipse rx="6.5" ry="4.5" fill="#fde39a" opacity=".95"/>'
-};
-
-/* posições fixas dos ingredientes (aleatório com semente: sempre igual) */
-const TAU=Math.PI*2;
-const PONTOS=(()=>{let s=7;const r=()=>(s=(s*16807)%2147483647)/2147483647;const pts=[];
-  for(let t=0;t<4000&&pts.length<130;t++){const rr=74*Math.sqrt(r()),a=r()*TAU,x=rr*Math.cos(a),y=rr*Math.sin(a);
-    if(pts.every(p=>(p.x-x)**2+(p.y-y)**2>13.5**2))pts.push({x,y,a,r:rr,rot:r()*360,s:.85+r()*.3})}
-  return pts.map((p,i)=>({...p,i}))})();
-
+/* ===== DESENHO DA PIZZA =====
+   Massa: fotos reais (inteira e já cortada em 8/10/12).
+   Sabores: fatias reais (img/sabores/*.webp), giradas e recortadas em cada pedaço. */
+const TAU=Math.PI*2,DEG=180/Math.PI;
+const FATIA={meia:14,cheia:11.5,r:90,w:43.5}; // ângulos em graus, medidas em unidades do SVG
 const f2=n=>n.toFixed(2);
 function setor(r,a0,a1){const g=a1-a0>Math.PI?1:0;return`M0 0L${f2(r*Math.cos(a0))} ${f2(r*Math.sin(a0))}A${r} ${r} 0 ${g} 1 ${f2(r*Math.cos(a1))} ${f2(r*Math.sin(a1))}Z`}
 function arco(r,a0,a1){return`M${f2(r*Math.cos(a0))} ${f2(r*Math.sin(a0))}A${r} ${r} 0 0 1 ${f2(r*Math.cos(a1))} ${f2(r*Math.sin(a1))}`}
@@ -757,50 +739,34 @@ function grupos(n,k){const g=[];let i=0;const b=Math.floor(n/k),x=n%k;for(let j=
 function offsets(cfg){
   const st=TAU/cfg.n,k=cfg.sabores.length,gs=k>1?grupos(cfg.n,k):null,res=[];
   for(let i=0;i<cfg.n;i++){let x=0,y=0;
-    if(cfg.cortada){const m=-Math.PI/2+(i+.5)*st;x+=2.6*Math.cos(m);y+=2.6*Math.sin(m)}
-    if(gs){const g=gs.find(g=>i>=g.ini&&i<g.fim),m=-Math.PI/2+((g.ini+g.fim)/2)*st;x+=4.5*Math.cos(m);y+=4.5*Math.sin(m)}
+    if(cfg.cortada){const m=-Math.PI/2+(i+.5)*st;x+=2.2*Math.cos(m);y+=2.2*Math.sin(m)}
+    if(gs){const g=gs.find(g=>i>=g.ini&&i<g.fim),m=-Math.PI/2+((g.ini+g.fim)/2)*st;x+=3.6*Math.cos(m);y+=3.6*Math.sin(m)}
     res.push([x,y])}
   return res;
 }
+const EXTRAS_IMG=['queijo','bacon','azeitona']; // ketchup e maionese vão em sachê
 let UID=0;
-function svgPizza(cfg,{camada=false,off=offsets(cfg),cortes=false,textura=false}={}){
-  const n=cfg.n,st=TAU/n,crua=!cfg.sabores.length,id='pz'+(++UID);
+function svgPizza(cfg,{off=offsets(cfg),cortes=false}={}){
+  const n=cfg.n,st=TAU/n,id='pz'+Date.now().toString(36)+(++UID);
   const k=cfg.sabores.length,gs=k?grupos(n,k):[];
-  const borda=BORDAS.find(b=>b.id===cfg.borda)||BORDAS[0],ex=new Set(cfg.extras||[]);
-  const corLado=crua?'#d4b07a':'#b4773a';
-  const costura=crua?'#ecd3a2':'#d9a35a';
+  const ex=EXTRAS_IMG.filter(e=>(cfg.extras||[]).includes(e)),borda=cfg.borda?`<image href="img/borda-${cfg.borda}.webp" x="-101" y="-101" width="202" height="202"/>`:'';
+  const massa=`<image href="img/${cfg.cortada?'massa-'+n:'massa'}.webp" x="-101" y="-101" width="202" height="202"/>`;
+  const inteira=off.every(o=>!o[0]&&!o[1]);
   let h=`<svg xmlns="http://www.w3.org/2000/svg" viewBox="-112 -112 224 224">`;
-  if(!camada)h+=`<defs><radialGradient id="${id}" gradientUnits="userSpaceOnUse" cx="0" cy="0" r="100">${crua
-      ?'<stop offset="0" stop-color="#f6e7c8"/><stop offset=".8" stop-color="#efd8a8"/><stop offset=".93" stop-color="#e4c18a"/><stop offset="1" stop-color="#d3ad74"/>'
-      :'<stop offset="0" stop-color="#f2d49a"/><stop offset=".8" stop-color="#e8b664"/><stop offset=".9" stop-color="#cf8f42"/><stop offset="1" stop-color="#a9692b"/>'}</radialGradient>
-    <radialGradient id="${id}b" gradientUnits="userSpaceOnUse" cx="0" cy="0" r="81"><stop offset="0" stop-color="#fff" stop-opacity=".22"/><stop offset=".7" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#5a2a08" stop-opacity=".18"/></radialGradient></defs>`;
-  const IMG='<image href="img/massa.webp" x="-101" y="-101" width="202" height="202"/>';
-  const inteira=textura&&off.every(o=>!o[0]&&!o[1]);
-  if(inteira)h+=IMG;
+  if(inteira&&!cfg.cortada)h+=massa;
   for(let i=0;i<n;i++){
     const a0=-Math.PI/2+i*st,a1=a0+st,o=off[i];
-    const semCorte=cfg.cortada?'':` stroke="${camada?corLado:costura}" stroke-width=".9"`;
-    let c=textura?(inteira?'':`<clipPath id="${id}c${i}"><path d="${setor(102,a0,a1)}"/></clipPath><g clip-path="url(#${id}c${i})">${IMG}</g>`)
-      :`<path d="${setor(100,a0,a1)}" fill="${camada?corLado:`url(#${id})`}"${semCorte}/>`;
-    if(!camada){
-      const gi=gs.findIndex(g=>i>=g.ini&&i<g.fim),s=gi>=0?SAB[cfg.sabores[gi]]:null;
-      if(s){
-        c+=`<path d="${setor(81,a0,a1)}" fill="${s.base}"${cfg.cortada?'':` stroke="${s.base}" stroke-width=".9"`}/><path d="${setor(81,a0,a1)}" fill="url(#${id}b)"/>`;
-        const salg=s.tier!=='doce';
-        for(const p of PONTOS){
-          const rel=((p.a-a0)%TAU+TAU)%TAU;
-          if(rel>=st||Math.min(rel,st-rel)*p.r<8)continue;
-          const tipos=[];
-          if(salg&&ex.has('queijo')&&p.i%4===1)tipos.push('qextra');
-          let t=s.pat[p.i%s.pat.length];
-          if(salg&&ex.has('bacon')&&p.i%5===2)t='bacon';
-          if(salg&&ex.has('azeitona')&&p.i%6===4)t='azeit';
-          if(t)tipos.push(t);
-          for(const t of tipos)c+=`<g transform="translate(${f2(p.x)} ${f2(p.y)}) rotate(${p.rot|0}) scale(${f2(p.s)})">${ING[t]}</g>`;
-        }
-      }
-      if(borda.id)c+=`<path d="${arco(90,a0+.03,a1-.03)}" fill="none" stroke="${borda.cor}" stroke-width="9" stroke-linecap="round"/><path d="${arco(92,a0+.05,a1-.05)}" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="1.6" stroke-linecap="round"/>`;
+    let c=(inteira&&!cfg.cortada)?'':`<clipPath id="${id}c${i}"><path d="${setor(102,a0,a1)}"/></clipPath><g clip-path="url(#${id}c${i})">${massa}</g>`;
+    const gi=gs.findIndex(g=>i>=g.ini&&i<g.fim),s=gi>=0?SAB[cfg.sabores[gi]]:null;
+    if(s){
+      const wd=st*DEG,m=Math.max(1,Math.ceil(wd/23));
+      const vs=1-((i*7)%4)*.012;
+      const copias=(src,m)=>{let r='';for(let j=0;j<m;j++){
+        const ang=m===1?(a0+a1)/2*DEG:a0*DEG+FATIA.cheia+(wd-2*FATIA.cheia)*j/(m-1);
+        r+=`<image href="img/sabores/${src}.webp" x="${-FATIA.w/2}" y="${-FATIA.r}" width="${FATIA.w}" height="${FATIA.r}" preserveAspectRatio="none" transform="rotate(${f2(ang+90)}) scale(${(i+j)%2?-vs:vs} ${vs})"/>`}return r};
+      c+=`<clipPath id="${id}t${i}"><path d="${setor(FATIA.r,a0,a1)}"/></clipPath><g clip-path="url(#${id}t${i})">${copias(s.id,m)}${s.tier!=='doce'?ex.map(e=>copias('extra-'+e,Math.ceil(wd/40))).join(''):''}</g>`;
     }
+    if(borda)c+=`<clipPath id="${id}b${i}"><path d="${setor(102,a0,a1)}"/></clipPath><g clip-path="url(#${id}b${i})">${borda}</g>`;
     h+=`<g data-i="${i}" style="transform:translate(${f2(o[0])}px,${f2(o[1])}px)">${c}</g>`;
   }
   if(cortes){h+='<g class="cortes">';for(let i=0;i<n;i++){const a=-Math.PI/2+i*st;h+=`<line x1="0" y1="0" x2="${f2(101*Math.cos(a))}" y2="${f2(101*Math.sin(a))}" pathLength="1" style="animation-delay:${i*70}ms"/>`}h+='</g>'}
@@ -811,13 +777,13 @@ function svgPizza(cfg,{camada=false,off=offsets(cfg),cortes=false,textura=false}
 $('tabua').innerHTML='<img src="img/tabua.webp" alt="">';
 
 /* arte da seção no cardápio */
-$('monte-mini').innerHTML='<img src="img/tabua.webp" alt="">'+svgPizza({n:8,cortada:true,sabores:['calabresa','marguerita'],borda:'',extras:[]},{textura:true});
+$('monte-mini').innerHTML='<img src="img/tabua.webp" alt="">'+svgPizza({n:8,cortada:true,sabores:['rucula','presunto'],borda:'',extras:[]});
 
 /* estado do montador */
 let cfg,passo=1,ocupado=false,ultimo=null,riscar=false;
 function desenhar(animar){
   const nova=offsets(cfg),ini=animar&&ultimo&&ultimo.n===cfg.n?ultimo.off:nova;
-  const h=`<div class="pz-l">${svgPizza(cfg,{off:ini,cortes:riscar,textura:true})}</div>`;
+  const h=`<div class="pz-l">${svgPizza(cfg,{off:ini,cortes:riscar})}</div>`;
   $('pz').innerHTML=h;ultimo={n:cfg.n,off:nova};
   if(ini!==nova){void $('pz').offsetWidth;requestAnimationFrame(()=>$('pz').querySelectorAll('[data-i]').forEach(g=>{const o=nova[g.dataset.i];g.style.transform=`translate(${f2(o[0])}px,${f2(o[1])}px)`}))}
   $('pz-tag').innerHTML=cfg.cortada?`<b>${cfg.n}</b> pedaços${cfg.sabores.length?` · <b>${cfg.sabores.length}</b> sabor${cfg.sabores.length>1?'es':''}`:''}`:'Massa artesanal';
@@ -852,7 +818,7 @@ function irPara(n){
     const k=cfg.sabores.length,mx=MAX[cfg.n];
     c.innerHTML=`<h3 class="mt-h">Escolha até ${mx} sabores</h3><p class="mt-p">${k}/${mx} escolhido${k===1?'':'s'}${k>1?' · cada sabor fica com uma parte da pizza':''}. Vale o preço do sabor mais caro.</p>
       ${Object.keys(TIER_NOME).map(t=>`<p class="sab-tit">${TIER_NOME[t]}</p><div class="sab-grid">${SABORES.filter(s=>s.tier===t).map(s=>{const o=cfg.sabores.indexOf(s.id);
-        return`<button class="sab${o>=0?' on':''}" data-s="${s.id}" aria-pressed="${o>=0}">${svgPizza({n:4,cortada:false,sabores:[s.id],borda:'',extras:[]})}<span><strong>${s.nome}</strong><small>${s.ing}</small><em>${brl(TIERS[t][cfg.n])}</em></span><i>${o+1}</i></button>`}).join('')}</div>`).join('')}`;
+        return`<button class="sab${o>=0?' on':''}" data-s="${s.id}" aria-pressed="${o>=0}"><img class="sab-img" src="img/sabores/${s.id}.webp" alt="" loading="lazy"><span><strong>${s.nome}</strong><small>${s.ing}</small><em>${brl(TIERS[t][cfg.n])}</em></span><i>${o+1}</i></button>`}).join('')}</div>`).join('')}`;
   }else{
     c.innerHTML=`<h3 class="mt-h">Adicionais</h3><p class="mt-p">Deixe do seu jeito. Tudo opcional.</p>
       <p class="sab-tit">Borda recheada</p><div class="chips">${BORDAS.map(b=>`<button class="chip${cfg.borda===b.id?' on':''}" data-b="${b.id}" aria-pressed="${cfg.borda===b.id}">${b.cor?`<span class="bola" style="background:${b.cor}"></span>`:''}${b.nome}${b.preco?` <small>+${brl(b.preco)}</small>`:''}</button>`).join('')}</div>
@@ -907,7 +873,7 @@ async function embalar(){
   $('caixa').classList.add('fechada');
   await sleep(1250);
   const item={k:'m|'+Date.now(),nome:'Pizza montada',det:descricao(),preco:preco(),qtd:1,obs:'',
-    img:'data:image/svg+xml;charset=utf-8,'+encodeURIComponent(svgPizza(cfg))};
+    svg:svgPizza(cfg)};
   const r=$('caixa').getBoundingClientRect(),lado=Math.min(r.width,r.height)*.85;
   const voo=document.createElement('div');voo.className='voo voo-caixa';voo.innerHTML='<img src="img/logo.png" alt="">';
   $('montar').classList.add('saindo');
