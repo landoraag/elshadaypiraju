@@ -236,6 +236,137 @@ footer{background:var(--carvao);color:#fff;padding:26px 0 24px}
   .m-c h3{font-size:26px}
   .cart-btn{width:40px;height:40px}
 }
+
+/* ===== TAMANHO NO CARD / VOO ===== */
+.precos .tchip{background:none;border:1px solid transparent;border-radius:999px;padding:3px 10px 3px 4px;font:500 12.5px var(--sans);color:var(--texto);cursor:pointer;display:inline-flex;align-items:center;transition:.2s}
+.precos .tchip:hover{border-color:#e6c9ad}
+.precos .tchip.on{border-color:var(--laranja);background:#fff1e6}
+.precos .tchip.on b{background:var(--laranja);color:#fff}
+.voo{position:fixed;left:0;top:0;z-index:95;pointer-events:none;transform-origin:center}
+.voo-img{object-fit:cover;border-radius:50%;box-shadow:0 10px 30px rgba(0,0,0,.35)}
+.voo-caixa{background:linear-gradient(160deg,#ddb47c,#c18f55);border-radius:8px;box-shadow:0 14px 34px rgba(0,0,0,.45),inset 0 0 0 2px rgba(120,70,25,.25);display:grid;place-items:center}
+.voo-caixa img{width:55%;border-radius:50%}
+@keyframes pulo{40%{transform:scale(1.3)}}
+.pulo{animation:pulo .45s ease}
+
+/* ===== SEÇÃO MONTE SUA PIZZA ===== */
+.monte{margin-top:6px;display:grid;grid-template-columns:1.15fr 1fr;align-items:center;background:radial-gradient(ellipse at 80% 60%,rgba(242,106,27,.35),transparent 55%),linear-gradient(110deg,#1c110a,#2c1609);color:#fff;border-radius:12px;overflow:hidden;box-shadow:0 8px 24px rgba(60,35,15,.25)}
+.monte-txt{padding:34px 40px}
+.monte-txt small{font-size:11px;letter-spacing:.34em;color:var(--laranja);text-transform:uppercase}
+.monte-txt h3{font-family:var(--serif);font-size:44px;line-height:1;text-transform:uppercase;letter-spacing:.04em;margin:6px 0 12px}
+.monte-txt p{font-size:13.5px;font-weight:300;color:#e9dccd;max-width:430px;margin-bottom:22px}
+.monte-art{height:250px;display:grid;place-items:center;perspective:700px}
+.monte-art .mini{position:relative;width:230px;height:230px;transform:rotateX(52deg) rotateZ(-18deg);animation:mini-gira 14s linear infinite}
+@keyframes mini-gira{to{transform:rotateX(52deg) rotateZ(342deg)}}
+.monte-art .mini .disco{position:absolute;inset:0;border-radius:50%;box-shadow:0 14px 0 #6e3f1e,0 24px 30px rgba(0,0,0,.5)}
+.monte-art .mini svg{position:absolute;inset:16px}
+
+/* ===== MONTADOR ===== */
+.montar{position:fixed;inset:0;z-index:70;background:#120b07;color:#fff;display:flex;flex-direction:column;opacity:0;visibility:hidden;transition:opacity .35s,visibility .35s}
+.montar.on{opacity:1;visibility:visible}
+.montar.saindo{opacity:0}
+.mt-top{display:flex;align-items:center;gap:24px;padding:14px 26px;border-bottom:1px solid rgba(255,255,255,.08)}
+.mt-top small{font-size:10.5px;letter-spacing:.34em;color:var(--laranja);text-transform:uppercase}
+.mt-top h2{font-family:var(--serif);font-size:32px;line-height:1;text-transform:uppercase;letter-spacing:.05em}
+.passos{display:flex;gap:8px;margin-left:auto;list-style:none;counter-reset:p}
+.passos li{counter-increment:p;display:flex;align-items:center;gap:8px;font-size:12px;letter-spacing:.08em;color:#9c8c7e;padding:6px 12px 6px 6px;border-radius:999px}
+.passos li::before{content:counter(p);width:22px;height:22px;border-radius:50%;display:grid;place-items:center;border:1px solid #5a4636;font-size:11px}
+.passos li.on{color:#fff;background:rgba(242,106,27,.15)}
+.passos li.on::before,.passos li.feito::before{background:var(--laranja);border-color:var(--laranja);color:#fff}
+.passos li.feito::before{content:"✓"}
+.montar .x{color:#cbb9a8}
+.mt-corpo{flex:1;min-height:0;display:grid;grid-template-columns:1.15fr minmax(360px,1fr)}
+.palco{position:relative;overflow:hidden;perspective:1100px;background:radial-gradient(ellipse at 50% 62%,rgba(242,106,27,.32),rgba(242,106,27,0) 55%),radial-gradient(ellipse at 50% 120%,#3a1a08,transparent 60%),#160d07}
+.mesa{--esc:1.18;position:absolute;left:50%;top:42%;width:360px;height:360px;margin:-180px 0 0 -180px;transform-style:preserve-3d;transform:scale(var(--esc,1)) rotateX(56deg) rotateZ(-14deg);animation:balanco 7s ease-in-out infinite alternate}
+@keyframes balanco{from{transform:scale(var(--esc,1)) rotateX(56deg) rotateZ(-26deg)}to{transform:scale(var(--esc,1)) rotateX(54deg) rotateZ(-2deg)}}
+.tabua{position:absolute;inset:0;transform-style:preserve-3d;transition:transform .7s cubic-bezier(.5,0,.8,.4)}
+.tabua.fora{transform:translateY(700px)}
+.lam{position:absolute;inset:0;transform-style:preserve-3d}
+.lam .disco{position:absolute;inset:0;border-radius:50%;background:#6a3b1b}
+.lam .cabo{position:absolute;left:50%;top:93%;width:62px;height:150px;margin-left:-31px;border-radius:4px 4px 20px 20px;background:#6a3b1b}
+.lam.topo .disco,.lam.topo .cabo,.monte-art .mini .disco{background:radial-gradient(circle at 50% 50%,rgba(0,0,0,0) 58%,rgba(55,25,5,.38) 100%),repeating-linear-gradient(93deg,#c48e57 0 7px,#b67d46 7px 10px,#cc9963 10px 19px,#ba8249 19px 22px,#c69058 22px 30px)}
+.lam.topo .cabo{background:linear-gradient(90deg,rgba(55,25,5,.3),transparent 25%,transparent 75%,rgba(55,25,5,.3)),repeating-linear-gradient(93deg,#c48e57 0 7px,#b67d46 7px 10px,#cc9963 10px 19px,#ba8249 19px 22px)}
+.lam.topo .cabo::after{content:"";position:absolute;left:50%;bottom:22px;width:14px;height:14px;margin-left:-7px;border-radius:50%;background:#2a160a;box-shadow:inset 0 2px 3px #000}
+.sombra{position:absolute;left:45px;top:45px;width:270px;height:270px;border-radius:50%;background:radial-gradient(circle,rgba(30,12,2,.55) 55%,rgba(30,12,2,0) 72%);transform:translate3d(8px,10px,.5px)}
+.tabua.fora~.sombra{opacity:0}
+.pz{position:absolute;left:35px;top:35px;width:290px;height:290px;transform-style:preserve-3d}
+.pz-l{position:absolute;inset:0}
+.pz-l svg{width:100%;height:100%;display:block;overflow:visible}
+.pz [data-i]{transition:transform .8s cubic-bezier(.3,.7,.3,1)}
+.cortes line{stroke:rgba(80,40,12,.6);stroke-width:1.4;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:1;animation:risca .35s ease forwards}
+@keyframes risca{to{stroke-dashoffset:0}}
+.caixa{position:absolute;left:30px;top:30px;width:300px;height:300px;transform-style:preserve-3d;visibility:hidden;transform:translateZ(-80px);transition:transform .55s cubic-bezier(.3,.7,.3,1)}
+.caixa.on{visibility:visible;transform:none}
+.cx-fundo{position:absolute;inset:0;background:#c3935a;transform:translateZ(.5px)}
+.cx-p{position:absolute;background:linear-gradient(#c99760,#a87440)}
+.cx-frente{left:0;bottom:0;width:300px;height:44px;transform-origin:bottom;transform:rotateX(-90deg)}
+.cx-tras{left:0;top:0;width:300px;height:44px;transform-origin:top;transform:rotateX(90deg)}
+.cx-esq{left:0;top:0;width:44px;height:300px;transform-origin:left;transform:rotateY(-90deg)}
+.cx-dir{right:0;top:0;width:44px;height:300px;transform-origin:right;transform:rotateY(90deg)}
+.cx-tampa{position:absolute;inset:0;transform-origin:top;transform:translateZ(44px) rotateX(112deg);transition:transform 1.1s cubic-bezier(.6,0,.3,1);background:radial-gradient(circle,rgba(0,0,0,0) 60%,rgba(90,50,15,.25)),#d8ad75;box-shadow:inset 0 0 0 4px rgba(120,70,25,.3);display:grid;place-items:center;transform-style:preserve-3d}
+.caixa.fechada .cx-tampa{transform:translateZ(44px)}
+.cx-logo{text-align:center;backface-visibility:hidden;transform:translateZ(.5px)}
+.cx-logo img{width:120px;border-radius:50%;display:block;margin:auto}
+.cx-logo span{font-family:var(--script);font-size:30px;color:#5a2f12}
+.pz-tag{position:absolute;left:18px;top:18px;background:rgba(18,11,7,.7);border:1px solid rgba(242,106,27,.5);border-radius:999px;padding:7px 14px;font-size:12px;letter-spacing:.06em;display:flex;align-items:center;gap:8px}
+.pz-tag b{color:var(--laranja);font-size:15px}
+.carregando{position:absolute;inset:0;display:grid;place-content:center;justify-items:center;gap:14px;background:rgba(18,11,7,.55);backdrop-filter:blur(2px);opacity:0;visibility:hidden;transition:.25s;z-index:5}
+.carregando.on{opacity:1;visibility:visible}
+.carregando p{font-family:var(--serif);font-size:22px;font-style:italic}
+.roda{width:54px;height:54px;border-radius:50%;border:4px solid rgba(255,255,255,.15);border-top-color:var(--laranja);animation:gira .8s linear infinite}
+@keyframes gira{to{transform:rotate(360deg)}}
+.mt-painel{background:var(--papel);color:var(--texto);display:flex;flex-direction:column;min-height:0}
+.mt-conteudo{flex:1;overflow:auto;padding:26px 28px}
+.mt-h{font-family:var(--serif);font-size:28px;text-transform:uppercase;letter-spacing:.05em;line-height:1.1}
+.mt-p{font-size:13px;color:var(--suave);margin:4px 0 18px}
+.opc-ped{display:grid;gap:12px}
+.ped{display:grid;grid-template-columns:auto 1fr;grid-template-rows:auto auto;column-gap:16px;align-items:center;text-align:left;background:#fff;border:1.5px solid #e2d5c3;border-radius:12px;padding:14px 18px;cursor:pointer;font-family:var(--sans);color:var(--texto);transition:.2s}
+.ped:hover{border-color:var(--laranja)}
+.ped.on{border-color:var(--laranja);background:#fff1e6}
+.ped b{grid-row:span 2;font-family:var(--serif);font-size:44px;line-height:1;color:var(--laranja);width:52px;text-align:center}
+.ped span{font-size:15px;font-weight:600}
+.ped small{font-size:12px;color:var(--suave)}
+.sab-tit{font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--laranja);font-weight:600;margin:16px 0 8px}
+.sab-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.sab{position:relative;display:flex;gap:10px;align-items:center;text-align:left;background:#fff;border:1.5px solid #e2d5c3;border-radius:12px;padding:10px;cursor:pointer;font-family:var(--sans);color:var(--texto);transition:.2s}
+.sab:hover{border-color:var(--laranja)}
+.sab.on{border-color:var(--laranja);background:#fff1e6}
+.sab svg{width:48px;height:48px;flex:none}
+.sab strong{display:block;font-size:13px;line-height:1.2}
+.sab small{display:block;font-size:11px;color:var(--suave);line-height:1.3}
+.sab em{font-style:normal;font-size:11.5px;font-weight:600;color:var(--laranja)}
+.sab i{position:absolute;top:-8px;right:-8px;width:24px;height:24px;border-radius:50%;background:var(--laranja);color:#fff;font-style:normal;font-size:12px;font-weight:600;display:none;place-items:center;box-shadow:0 2px 6px rgba(0,0,0,.2)}
+.sab.on i{display:grid}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{background:#fff;border:1.5px solid #e2d5c3;border-radius:999px;padding:9px 14px;font:500 13px var(--sans);color:var(--texto);cursor:pointer;display:inline-flex;gap:8px;align-items:center;transition:.2s}
+.chip:hover{border-color:var(--laranja)}
+.chip.on{border-color:var(--laranja);background:#fff1e6}
+.chip small{color:var(--suave);font-weight:400}
+.chip .bola{width:14px;height:14px;border-radius:50%;border:1px solid rgba(0,0,0,.15)}
+.mt-rodape{border-top:1px solid #e6dccd;padding:14px 28px 18px;background:#fff8ef}
+.mt-resumo{display:flex;justify-content:space-between;align-items:baseline;gap:14px;margin-bottom:12px}
+.mt-resumo span{font-size:12px;color:var(--suave);line-height:1.4}
+.mt-resumo b{font-family:var(--serif);font-size:28px;white-space:nowrap}
+.mt-bts{display:flex;gap:10px}
+.mt-bts .btn{justify-content:center;padding:13px 18px}
+.mt-bts .btn-or{flex:1}
+.mt-bts .btn[disabled]{opacity:.4;pointer-events:none}
+@media (max-width:900px){
+  .monte{grid-template-columns:1fr}.monte-txt{padding:28px 24px 6px;text-align:center}.monte-txt p{margin-inline:auto}
+  .monte-txt h3{font-size:34px}.monte-art{height:210px;order:-1}.monte-art .mini{width:180px;height:180px}
+  .mt-top{padding:10px 16px;gap:12px}.mt-top h2{font-size:22px}.mt-top small{display:none}
+  .passos li{font-size:0;padding:0;gap:0}.passos li.on{background:none}
+  .mt-corpo{display:flex;flex-direction:column}
+  .palco{flex:none;height:min(300px,40vh)}
+  .mesa{--esc:.62;top:42%}
+  .mt-painel{flex:1}
+  .mt-conteudo{padding:18px 16px}
+  .mt-rodape{padding:12px 16px 14px}
+  .mt-h{font-size:22px}
+  .sab-grid{grid-template-columns:1fr}
+  .pz-tag{left:10px;top:10px;font-size:11px;padding:5px 11px}
+}
+@media (max-height:420px) and (max-width:900px){.palco{height:200px}.mesa{--esc:.42}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
 </style>
 </head>
@@ -306,6 +437,14 @@ footer{background:var(--carvao);color:#fff;padding:26px 0 24px}
 
     <h3 class="sub">Pizzas Tradicionais</h3>
     <div class="cards" id="cards"></div>
+
+    <h3 class="sub">Monte sua pizza</h3>
+    <div class="monte">
+      <div class="monte-txt"><small>Do seu jeito</small><h3>Monte sua pizza</h3>
+        <p>Escolha em quantos pedaços cortar, até 3 sabores e os adicionais. A gente monta, corta e embala na hora.</p>
+        <button class="btn btn-or" id="abrir-montar"><svg class="i"><use href="#pizza"/></svg>Montar minha pizza<svg class="i"><use href="#seta"/></svg></button></div>
+      <div class="monte-art" aria-hidden="true"><div class="mini" id="monte-mini"></div></div>
+    </div>
   </div>
 </section>
 
@@ -388,13 +527,53 @@ footer{background:var(--carvao);color:#fff;padding:26px 0 24px}
 <button class="fab" id="fab" data-abrir-carrinho><svg class="i"><use href="#cart"/></svg>Ver carrinho<span class="badge" data-n="0">0</span></button>
 <div class="toast" id="toast" role="status"></div>
 
+<!-- MONTE SUA PIZZA -->
+<div class="montar" id="montar" role="dialog" aria-modal="true" aria-labelledby="mt-tit" aria-hidden="true">
+  <div class="mt-top">
+    <div><small>Do seu jeito</small><h2 id="mt-tit">Monte sua pizza</h2></div>
+    <ol class="passos" id="passos"><li>Pedaços</li><li>Sabores</li><li>Adicionais</li></ol>
+    <button class="x" id="mt-fechar" aria-label="Fechar">&times;</button>
+  </div>
+  <div class="mt-corpo">
+    <div class="palco">
+      <div class="mesa" id="mesa">
+        <div class="tabua" id="tabua"></div>
+        <div class="sombra"></div>
+        <div class="pz" id="pz"></div>
+        <div class="caixa" id="caixa">
+          <div class="cx-fundo"></div>
+          <div class="cx-p cx-tras"></div><div class="cx-p cx-esq"></div><div class="cx-p cx-dir"></div><div class="cx-p cx-frente"></div>
+          <div class="cx-tampa"><div class="cx-logo"><img src="img/logo.png" alt=""><span>El Shaday</span></div></div>
+        </div>
+      </div>
+      <div class="pz-tag" id="pz-tag"></div>
+      <div class="carregando" id="carregando"><div class="roda"></div><p id="carr-txt"></p></div>
+    </div>
+    <div class="mt-painel">
+      <div class="mt-conteudo" id="mt-conteudo"></div>
+      <div class="mt-rodape">
+        <div class="mt-resumo"><span id="mt-desc"></span><b id="mt-preco"></b></div>
+        <div class="mt-bts"><button class="btn btn-det" id="mt-voltar">Voltar</button><button class="btn btn-or" id="mt-avancar">Avançar</button></div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script>
   const b=document.getElementById('burger'),m=document.getElementById('menu');
   b.addEventListener('click',()=>{const o=m.classList.toggle('open');b.setAttribute('aria-expanded',o)});
   m.addEventListener('click',e=>{if(e.target.tagName==='A'){m.classList.remove('open');b.setAttribute('aria-expanded',false)}});
 
-/* ===== CARDÁPIO ===== */
+
+/* ===== UTILIDADES ===== */
 const WHATSAPP='5514998444694';
+const brl=v=>v.toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
+const $=id=>document.getElementById(id);
+const esc=t=>String(t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+let tt;function toast(m){$('toast').textContent=m;$('toast').classList.add('on');clearTimeout(tt);tt=setTimeout(()=>$('toast').classList.remove('on'),2600)}
+
+/* ===== PIZZAS PRONTAS ===== */
 const PIZZAS=[
   {id:'marguerita',nome:'Marguerita',img:'img/marguerita.jpg',resumo:'Molho de tomate, mussarela, tomate e manjericão.',
    desc:'A clássica italiana: molho de tomate artesanal, mussarela derretida, rodelas de tomate fresco e folhas de manjericão.',precos:{M:49.90,G:64.90}},
@@ -406,39 +585,71 @@ const PIZZAS=[
    desc:'Molho de tomate, mussarela e calabresa fatiada, finalizada com cebola e orégano.',precos:{M:52.90,G:67.90}}
 ];
 const TAM={M:'Média',G:'Grande'};
-const brl=v=>v.toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
-const $=id=>document.getElementById(id);
-const esc=t=>String(t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 
 $('cards').innerHTML=PIZZAS.map(p=>`
   <article class="card" data-id="${p.id}">
     <img src="${p.img}" alt="Pizza ${p.nome}" data-det loading="lazy">
     <div class="c"><h3 data-det>${p.nome}</h3><p>${p.resumo}</p>
-      <div class="precos"><span><b>M</b>${brl(p.precos.M)}</span><span><b>G</b>${brl(p.precos.G)}</span></div>
-      <div class="acoes"><button class="btn btn-det" data-det>Detalhes</button><button class="btn btn-or" data-det><svg class="i"><use href="#cart"/></svg>Adicionar</button></div>
+      <div class="precos" role="group" aria-label="Tamanho">${['M','G'].map(t=>`<button class="tchip${t==='G'?' on':''}" data-t="${t}" aria-pressed="${t==='G'}" title="${TAM[t]}"><b>${t}</b>${brl(p.precos[t])}</button>`).join('')}</div>
+      <div class="acoes"><button class="btn btn-det" data-det>Detalhes</button><button class="btn btn-or" data-add><svg class="i"><use href="#cart"/></svg>Adicionar</button></div>
     </div>
   </article>`).join('');
-$('cards').addEventListener('click',e=>{if(e.target.closest('[data-det]'))abrirDetalhe(e.target.closest('.card').dataset.id)});
+
+$('cards').addEventListener('click',e=>{
+  const card=e.target.closest('.card');if(!card)return;
+  const p=PIZZAS.find(x=>x.id===card.dataset.id);
+  const chip=e.target.closest('.tchip');
+  if(chip){card.querySelectorAll('.tchip').forEach(c=>{c.classList.toggle('on',c===chip);c.setAttribute('aria-pressed',c===chip)});return}
+  const t=card.querySelector('.tchip.on').dataset.t;
+  if(e.target.closest('[data-add]')){enviarPronta(p,t,1,'',card.querySelector('img'));return}
+  if(e.target.closest('[data-det]'))abrirDetalhe(p.id,t);
+});
+
+function enviarPronta(p,t,qtd,obs,imgEl){
+  const r=imgEl.getBoundingClientRect(),lado=Math.min(r.width,r.height);
+  const im=new Image();im.src=p.img;im.className='voo voo-img';
+  voar({left:r.left+(r.width-lado)/2,top:r.top+(r.height-lado)/2,width:lado,height:lado},im)
+    .then(()=>addItem({k:`p|${p.id}|${t}|${obs}`,nome:p.nome,det:TAM[t],preco:p.precos[t],img:p.img,qtd,obs}));
+  toast(`${qtd}x ${p.nome} (${TAM[t]}) indo para o carrinho`);
+}
+
+/* ===== ANIMAÇÃO ATÉ O CARRINHO ===== */
+function alvoCarrinho(){
+  const h=document.querySelector('header .cart-btn'),r=h.getBoundingClientRect();
+  if(r.width&&r.bottom>0&&r.top<innerHeight)return h;
+  $('fab').classList.add('on');return $('fab');
+}
+function voar(r0,el){
+  const alvo=alvoCarrinho(),r1=alvo.getBoundingClientRect();
+  Object.assign(el.style,{width:r0.width+'px',height:r0.height+'px'});
+  document.body.appendChild(el);
+  const s=Math.max(26/r0.width,.08);
+  const x1=r1.left+r1.width/2-r0.width/2,y1=r1.top+r1.height/2-r0.height/2;
+  const mx=(r0.left+x1)/2,my=Math.min(r0.top,y1)-110;
+  const a=el.animate([
+    {transform:`translate(${r0.left}px,${r0.top}px) scale(1)`},
+    {transform:`translate(${mx}px,${my}px) scale(${(1+s)/2}) rotate(-10deg)`,offset:.45},
+    {transform:`translate(${x1}px,${y1}px) scale(${s}) rotate(6deg)`,opacity:.7}
+  ],{duration:900,easing:'cubic-bezier(.45,0,.25,1)',fill:'forwards'});
+  return a.finished.then(()=>{el.remove();alvo.classList.remove('pulo');void alvo.offsetWidth;alvo.classList.add('pulo')});
+}
 
 /* ===== CARRINHO (salvo no navegador) ===== */
 let carrinho=[];
-try{carrinho=JSON.parse(localStorage.getItem('elshaday-carrinho'))||[]}catch(e){}
-const salvar=()=>{try{localStorage.setItem('elshaday-carrinho',JSON.stringify(carrinho))}catch(e){}};
+try{carrinho=JSON.parse(localStorage.getItem('elshaday-carrinho-v2'))||[]}catch(e){}
+const salvar=()=>{try{localStorage.setItem('elshaday-carrinho-v2',JSON.stringify(carrinho))}catch(e){}};
+function addItem(it){const ig=carrinho.find(i=>i.k===it.k);if(ig)ig.qtd+=it.qtd;else carrinho.push(it);atualizar()}
+const algumAberto=()=>['gaveta','modal','montar'].some(i=>$(i).classList.contains('on'));
 
-function adicionar(id,tam,qtd,obs){
-  const igual=carrinho.find(i=>i.id===id&&i.tam===tam&&i.obs===obs);
-  if(igual)igual.qtd+=qtd;else carrinho.push({id,tam,qtd,obs});
-  atualizar();
-}
 function atualizar(){
   salvar();
   const n=carrinho.reduce((a,i)=>a+i.qtd,0);
   document.querySelectorAll('.badge').forEach(b=>{b.textContent=n;b.dataset.n=n});
-  $('fab').classList.toggle('on',n>0&&!$('gaveta').classList.contains('on'));
+  $('fab').classList.toggle('on',n>0&&!algumAberto());
   let total=0;
   $('itens').innerHTML=carrinho.length?carrinho.map((i,k)=>{
-    const p=PIZZAS.find(x=>x.id===i.id);const sub=p.precos[i.tam]*i.qtd;total+=sub;
-    return `<div class="item"><img src="${p.img}" alt=""><div><h4>${p.nome}</h4><small>${TAM[i.tam]} · ${brl(p.precos[i.tam])}</small>${i.obs?`<small class="obs">"${esc(i.obs)}"</small>`:''}
+    const sub=i.preco*i.qtd;total+=sub;
+    return `<div class="item"><img src="${i.img}" alt=""><div><h4>${esc(i.nome)}</h4><small>${esc(i.det)} · ${brl(i.preco)}</small>${i.obs?`<small class="obs">"${esc(i.obs)}"</small>`:''}
       <div class="qtd"><button data-k="${k}" data-d="-1" aria-label="Diminuir">−</button><span>${i.qtd}</span><button data-k="${k}" data-d="1" aria-label="Aumentar">+</button></div></div>
       <div class="dir">${brl(sub)}<button class="rm" data-rm="${k}">remover</button></div></div>`}).join('')
     :'<p class="vazio">Seu carrinho está vazio.<br>Escolha uma pizza no cardápio!</p>';
@@ -453,8 +664,8 @@ $('itens').addEventListener('click',e=>{
 $('limpar').onclick=()=>{if(confirm('Esvaziar o carrinho?')){carrinho=[];atualizar()}};
 $('finalizar').onclick=()=>{
   let total=0;
-  const linhas=carrinho.map(i=>{const p=PIZZAS.find(x=>x.id===i.id);const sub=p.precos[i.tam]*i.qtd;total+=sub;
-    return `• ${i.qtd}x ${p.nome} (${TAM[i.tam]}) — ${brl(sub)}${i.obs?`\n   Obs.: ${i.obs}`:''}`});
+  const linhas=carrinho.map(i=>{const sub=i.preco*i.qtd;total+=sub;
+    return `• ${i.qtd}x ${i.nome} (${i.det}) — ${brl(sub)}${i.obs?`\n   Obs.: ${i.obs}`:''}`});
   const msg=`Olá! Gostaria de fazer um pedido:\n\n${linhas.join('\n')}\n\n*Total: ${brl(total)}*`;
   window.open(`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}`,'_blank');
 };
@@ -466,16 +677,16 @@ function fechar(){['gaveta','modal'].forEach(i=>{$(i).classList.remove('on');$(i
 document.querySelectorAll('[data-abrir-carrinho]').forEach(b=>b.onclick=()=>{fechar();abrir($('gaveta'))});
 document.querySelectorAll('[data-fechar]').forEach(b=>b.onclick=fechar);
 $('veu').onclick=fechar;
-document.addEventListener('keydown',e=>{if(e.key==='Escape')fechar()});
+document.addEventListener('keydown',e=>{if(e.key!=='Escape')return;if($('montar').classList.contains('on')){if(!ocupado)fecharMontar()}else fechar()});
 
 /* ===== DETALHES ===== */
 let atual=null,qtdM=1;
 function precoModal(){const t=document.querySelector('input[name=tam]:checked').value;$('m-btn').textContent='Adicionar · '+brl(atual.precos[t]*qtdM)}
-function abrirDetalhe(id){
+function abrirDetalhe(id,tam='G'){
   atual=PIZZAS.find(p=>p.id===id);qtdM=1;
   $('m-img').src=atual.img;$('m-img').alt='Pizza '+atual.nome;
   $('m-nome').textContent=atual.nome;$('m-desc').textContent=atual.desc;
-  $('m-tam').innerHTML=Object.keys(atual.precos).map((t,i)=>`<div><input type="radio" name="tam" id="t${t}" value="${t}" ${t==='G'?'checked':''}><label for="t${t}"><b>${TAM[t]}</b>${brl(atual.precos[t])}</label></div>`).join('');
+  $('m-tam').innerHTML=Object.keys(atual.precos).map(t=>`<div><input type="radio" name="tam" id="t${t}" value="${t}" ${t===tam?'checked':''}><label for="t${t}"><b>${TAM[t]}</b>${brl(atual.precos[t])}</label></div>`).join('');
   $('m-obs').value='';$('m-qtd').textContent=1;precoModal();
   abrir($('modal'));
 }
@@ -483,11 +694,240 @@ $('m-tam').addEventListener('change',precoModal);
 $('m-menos').onclick=()=>{if(qtdM>1){qtdM--;$('m-qtd').textContent=qtdM;precoModal()}};
 $('m-mais').onclick=()=>{qtdM++;$('m-qtd').textContent=qtdM;precoModal()};
 $('m-add').onclick=()=>{
-  const t=document.querySelector('input[name=tam]:checked').value;
-  adicionar(atual.id,t,qtdM,$('m-obs').value.trim());
-  fechar();toast(`${qtdM}x ${atual.nome} (${TAM[t]}) adicionada ao carrinho`);
+  const t=document.querySelector('input[name=tam]:checked').value,img=$('m-img'),r=img.getBoundingClientRect();
+  const fake={getBoundingClientRect:()=>r};
+  fechar();enviarPronta(atual,t,qtdM,$('m-obs').value.trim(),fake);
 };
-let tt;function toast(m){$('toast').textContent=m;$('toast').classList.add('on');clearTimeout(tt);tt=setTimeout(()=>$('toast').classList.remove('on'),2400)}
+
+/* =====================================================
+   MONTE SUA PIZZA
+   Sabores fictícios — depois virão do painel administrativo.
+   ===================================================== */
+const TIERS={trad:{8:44.90,10:54.90,12:64.90},esp:{8:49.90,10:59.90,12:69.90},doce:{8:46.90,10:56.90,12:66.90}};
+const TIER_NOME={trad:'Tradicionais',esp:'Especiais',doce:'Doces'};
+const SABORES=[
+  {id:'mussarela',nome:'Mussarela',ing:'Mussarela, azeitona e orégano',tier:'trad',base:'#f1c257',pat:['azeit','oreg',null,'oreg','azeit',null,'oreg']},
+  {id:'calabresa',nome:'Calabresa',ing:'Calabresa, cebola e orégano',tier:'trad',base:'#efbd55',pat:['calab','cebola','calab','oreg']},
+  {id:'marguerita',nome:'Marguerita',ing:'Molho, mussarela de búfala e manjericão',tier:'trad',base:'#c9452c',pat:['muss','manj','muss',null]},
+  {id:'portuguesa',nome:'Portuguesa',ing:'Presunto, ovo, ervilha, cebola e azeitona',tier:'esp',base:'#f0bf56',pat:['presunto','ovo','ervilha','azeit','presunto','cebola']},
+  {id:'frango',nome:'Frango c/ Catupiry',ing:'Frango desfiado e catupiry',tier:'esp',base:'#f3d58e',pat:['frango','catup','frango','oreg']},
+  {id:'pepperoni',nome:'Pepperoni',ing:'Pepperoni e mussarela',tier:'esp',base:'#eeb94f',pat:['pep','pep','oreg']},
+  {id:'bacon',nome:'Bacon',ing:'Bacon crocante, mussarela e cebola',tier:'esp',base:'#f0bf56',pat:['bacon','cebola','bacon','oreg']},
+  {id:'chocomorango',nome:'Chocolate c/ Morango',ing:'Chocolate ao leite e morangos',tier:'doce',base:'#4e2a18',pat:['morango','morango',null]},
+  {id:'brigadeiro',nome:'Brigadeiro',ing:'Chocolate e granulado',tier:'doce',base:'#5a321e',pat:['gran','gran',null,'gran']}
+];
+const SAB=Object.fromEntries(SABORES.map(s=>[s.id,s]));
+const BORDAS=[{id:'',nome:'Sem borda',preco:0},{id:'catupiry',nome:'Catupiry',preco:9.90,cor:'#fbf3df'},{id:'cheddar',nome:'Cheddar',preco:9.90,cor:'#f0952b'},{id:'chocolate',nome:'Chocolate',preco:11.90,cor:'#55301b'}];
+const EXTRAS=[{id:'queijo',nome:'Mais queijo',preco:6},{id:'bacon',nome:'Bacon extra',preco:7},{id:'azeitona',nome:'Azeitona extra',preco:3},{id:'ketchup',nome:'Ketchup (sachês)',preco:2},{id:'maionese',nome:'Maionese (sachês)',preco:2}];
+const MAX={8:2,10:3,12:3};
+const FRAC={1:'',2:'½ ',3:'⅓ '};
+
+/* ingredientes desenhados em SVG (centrados na origem) */
+const ING={
+  calab:'<circle r="7" fill="#a8382a" stroke="#7a2118" stroke-width="1.2"/><circle r="4" fill="#bd4d3d"/><circle cx="-2" cy="1" r=".9" fill="#e9c7a6"/><circle cx="2" cy="-1.5" r=".8" fill="#e9c7a6"/>',
+  pep:'<circle r="6.5" fill="#b52d1d"/><circle r="5" fill="#c43a28"/><circle cx="-2" cy="-1" r="1" fill="#7c1c12"/><circle cx="2" cy="2" r=".9" fill="#7c1c12"/>',
+  cebola:'<path d="M-5 1A5 5 0 0 1 5 1" fill="none" stroke="#f6efe3" stroke-width="1.6" stroke-linecap="round"/><path d="M-3 2A3 3 0 0 1 3 2" fill="none" stroke="#ead9e6" stroke-width="1.2" stroke-linecap="round"/>',
+  azeit:'<circle r="3.2" fill="#2b2420"/><circle r="1.2" fill="#6d5a48"/>',
+  oreg:'<circle cx="-2" r=".8" fill="#4d6a29"/><circle cx="1.5" cy="1.5" r=".7" fill="#5c7a30"/><circle cx="1" cy="-2" r=".6" fill="#4d6a29"/>',
+  manj:'<path d="M-6 0Q0-5 6 0Q0 5-6 0Z" fill="#3e7d2d"/><path d="M-5 0H5" stroke="#5f9c43" stroke-width=".6"/>',
+  muss:'<ellipse rx="7.5" ry="6" fill="#fbf3dc"/><ellipse rx="4" ry="3" cx="-1.5" cy="-1" fill="#fff" opacity=".7"/>',
+  frango:'<ellipse rx="5.5" ry="2.6" fill="#d39b57"/><ellipse rx="4" ry="2" cx="2" cy="2" transform="rotate(40)" fill="#c7884a"/>',
+  catup:'<circle r="5.2" fill="#fffaf0"/><path d="M-2 0a2 2 0 1 1 2 2" fill="none" stroke="#eadbb9" stroke-width=".9"/>',
+  presunto:'<rect x="-5.5" y="-4" width="11" height="8" rx="2" fill="#e3989b"/><rect x="-3.5" y="-2" width="7" height="2" rx="1" fill="#f1b9ba"/>',
+  ovo:'<path d="M-6 0C-6-5 6-6 6 0S-6 5-6 0Z" fill="#fffdf6"/><circle r="2.6" fill="#f2b632"/>',
+  ervilha:'<circle cx="-1.6" r="1.9" fill="#6aa33a"/><circle cx="1.8" cy=".8" r="1.9" fill="#79b245"/>',
+  bacon:'<rect x="-7" y="-2.4" width="14" height="4.8" rx="1.8" fill="#99372a"/><path d="M-6 0Q-3-1.2 0 0T6 0" stroke="#efc3aa" stroke-width="1.1" fill="none"/>',
+  morango:'<path d="M0 6C-5 2-5-3-3-4.5Q0-5.5 3-4.5C5-3 5 2 0 6Z" fill="#d42f3d"/><path d="M-3-4.5Q0-7 3-4.5Q0-3.5-3-4.5Z" fill="#4f8a2e"/><circle cx="-1.5" r=".5" fill="#f7d36a"/><circle cx="1.5" cy="1.5" r=".5" fill="#f7d36a"/><circle cy="-2" r=".5" fill="#f7d36a"/>',
+  gran:'<rect x="-3" y="-.7" width="3.4" height="1.4" rx=".7" fill="#2a160c" transform="rotate(30)"/><rect x="0" y="1" width="3.4" height="1.4" rx=".7" fill="#3a2012" transform="rotate(-50)"/><rect x="-1" y="-3" width="3.4" height="1.4" rx=".7" fill="#22120a"/>',
+  qextra:'<ellipse rx="6.5" ry="4.5" fill="#fde39a" opacity=".95"/>'
+};
+
+/* posições fixas dos ingredientes (aleatório com semente: sempre igual) */
+const TAU=Math.PI*2;
+const PONTOS=(()=>{let s=7;const r=()=>(s=(s*16807)%2147483647)/2147483647;const pts=[];
+  for(let t=0;t<4000&&pts.length<130;t++){const rr=80*Math.sqrt(r()),a=r()*TAU,x=rr*Math.cos(a),y=rr*Math.sin(a);
+    if(pts.every(p=>(p.x-x)**2+(p.y-y)**2>13.5**2))pts.push({x,y,a,r:rr,rot:r()*360,s:.85+r()*.3})}
+  return pts.map((p,i)=>({...p,i}))})();
+
+const f2=n=>n.toFixed(2);
+function setor(r,a0,a1){const g=a1-a0>Math.PI?1:0;return`M0 0L${f2(r*Math.cos(a0))} ${f2(r*Math.sin(a0))}A${r} ${r} 0 ${g} 1 ${f2(r*Math.cos(a1))} ${f2(r*Math.sin(a1))}Z`}
+function arco(r,a0,a1){return`M${f2(r*Math.cos(a0))} ${f2(r*Math.sin(a0))}A${r} ${r} 0 0 1 ${f2(r*Math.cos(a1))} ${f2(r*Math.sin(a1))}`}
+function grupos(n,k){const g=[];let i=0;const b=Math.floor(n/k),x=n%k;for(let j=0;j<k;j++){const t=b+(j<x?1:0);g.push({ini:i,fim:i+t});i+=t}return g}
+function offsets(cfg){
+  const st=TAU/cfg.n,k=cfg.sabores.length,gs=k>1?grupos(cfg.n,k):null,res=[];
+  for(let i=0;i<cfg.n;i++){let x=0,y=0;
+    if(cfg.cortada){const m=-Math.PI/2+(i+.5)*st;x+=2.6*Math.cos(m);y+=2.6*Math.sin(m)}
+    if(gs){const g=gs.find(g=>i>=g.ini&&i<g.fim),m=-Math.PI/2+((g.ini+g.fim)/2)*st;x+=4.5*Math.cos(m);y+=4.5*Math.sin(m)}
+    res.push([x,y])}
+  return res;
+}
+let UID=0;
+function svgPizza(cfg,{camada=false,off=offsets(cfg),cortes=false}={}){
+  const n=cfg.n,st=TAU/n,crua=!cfg.sabores.length,id='pz'+(++UID);
+  const k=cfg.sabores.length,gs=k?grupos(n,k):[];
+  const borda=BORDAS.find(b=>b.id===cfg.borda)||BORDAS[0],ex=new Set(cfg.extras||[]);
+  const corLado=crua?'#d4b07a':'#b4773a';
+  const costura=crua?'#ecd3a2':'#d9a35a';
+  let h=`<svg xmlns="http://www.w3.org/2000/svg" viewBox="-112 -112 224 224">`;
+  if(!camada)h+=`<defs><radialGradient id="${id}" gradientUnits="userSpaceOnUse" cx="0" cy="0" r="100">${crua
+      ?'<stop offset="0" stop-color="#f6e7c8"/><stop offset=".8" stop-color="#efd8a8"/><stop offset=".93" stop-color="#e4c18a"/><stop offset="1" stop-color="#d3ad74"/>'
+      :'<stop offset="0" stop-color="#f2d49a"/><stop offset=".8" stop-color="#e8b664"/><stop offset=".9" stop-color="#cf8f42"/><stop offset="1" stop-color="#a9692b"/>'}</radialGradient>
+    <radialGradient id="${id}b" gradientUnits="userSpaceOnUse" cx="0" cy="0" r="86"><stop offset="0" stop-color="#fff" stop-opacity=".22"/><stop offset=".7" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#5a2a08" stop-opacity=".18"/></radialGradient></defs>`;
+  for(let i=0;i<n;i++){
+    const a0=-Math.PI/2+i*st,a1=a0+st,o=off[i];
+    const semCorte=cfg.cortada?'':` stroke="${camada?corLado:costura}" stroke-width=".9"`;
+    let c=`<path d="${setor(100,a0,a1)}" fill="${camada?corLado:`url(#${id})`}"${semCorte}/>`;
+    if(!camada){
+      const gi=gs.findIndex(g=>i>=g.ini&&i<g.fim),s=gi>=0?SAB[cfg.sabores[gi]]:null;
+      if(s){
+        c+=`<path d="${setor(86,a0,a1)}" fill="${s.base}"${cfg.cortada?'':` stroke="${s.base}" stroke-width=".9"`}/><path d="${setor(86,a0,a1)}" fill="url(#${id}b)"/>`;
+        const salg=s.tier!=='doce';
+        for(const p of PONTOS){
+          const rel=((p.a-a0)%TAU+TAU)%TAU;
+          if(rel>=st||Math.min(rel,st-rel)*p.r<8)continue;
+          const tipos=[];
+          if(salg&&ex.has('queijo')&&p.i%4===1)tipos.push('qextra');
+          let t=s.pat[p.i%s.pat.length];
+          if(salg&&ex.has('bacon')&&p.i%5===2)t='bacon';
+          if(salg&&ex.has('azeitona')&&p.i%6===4)t='azeit';
+          if(t)tipos.push(t);
+          for(const t of tipos)c+=`<g transform="translate(${f2(p.x)} ${f2(p.y)}) rotate(${p.rot|0}) scale(${f2(p.s)})">${ING[t]}</g>`;
+        }
+      }
+      if(borda.id)c+=`<path d="${arco(93,a0+.03,a1-.03)}" fill="none" stroke="${borda.cor}" stroke-width="7" stroke-linecap="round"/><path d="${arco(94.5,a0+.05,a1-.05)}" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="1.6" stroke-linecap="round"/>`;
+    }
+    h+=`<g data-i="${i}" style="transform:translate(${f2(o[0])}px,${f2(o[1])}px)">${c}</g>`;
+  }
+  if(cortes){h+='<g class="cortes">';for(let i=0;i<n;i++){const a=-Math.PI/2+i*st;h+=`<line x1="0" y1="0" x2="${f2(101*Math.cos(a))}" y2="${f2(101*Math.sin(a))}" pathLength="1" style="animation-delay:${i*70}ms"/>`}h+='</g>'}
+  return h+'</svg>';
+}
+
+/* tábua de madeira 3D: várias lâminas empilhadas dão a espessura */
+$('tabua').innerHTML=Array.from({length:12},(_,i)=>`<div class="lam${i?'':' topo'}" style="transform:translateZ(${-i}px)"><div class="disco"></div><div class="cabo"></div></div>`).join('');
+
+/* arte da seção no cardápio */
+$('monte-mini').innerHTML='<div class="disco"></div>'+svgPizza({n:8,cortada:true,sabores:['calabresa','frango'],borda:'catupiry',extras:[]});
+
+/* estado do montador */
+let cfg,passo=1,ocupado=false,ultimo=null,riscar=false;
+function desenhar(animar){
+  const nova=offsets(cfg),ini=animar&&ultimo&&ultimo.n===cfg.n?ultimo.off:nova;
+  let h='';for(let z=1;z<=5;z++)h+=`<div class="pz-l" style="transform:translateZ(${z}px)">${svgPizza(cfg,{camada:true,off:ini})}</div>`;
+  h+=`<div class="pz-l" style="transform:translateZ(6px)">${svgPizza(cfg,{off:ini,cortes:riscar})}</div>`;
+  $('pz').innerHTML=h;ultimo={n:cfg.n,off:nova};
+  if(ini!==nova){void $('pz').offsetWidth;requestAnimationFrame(()=>$('pz').querySelectorAll('[data-i]').forEach(g=>{const o=nova[g.dataset.i];g.style.transform=`translate(${f2(o[0])}px,${f2(o[1])}px)`}))}
+  $('pz-tag').innerHTML=cfg.cortada?`<b>${cfg.n}</b> pedaços${cfg.sabores.length?` · <b>${cfg.sabores.length}</b> sabor${cfg.sabores.length>1?'es':''}`:''}`:'Massa artesanal';
+  resumo();
+}
+function preco(){
+  if(!cfg.cortada)return 0;
+  let p=cfg.sabores.length?Math.max(...cfg.sabores.map(s=>TIERS[SAB[s].tier][cfg.n])):TIERS.trad[cfg.n];
+  p+=BORDAS.find(b=>b.id===cfg.borda).preco;
+  cfg.extras.forEach(e=>p+=EXTRAS.find(x=>x.id===e).preco);
+  return p;
+}
+function descricao(){
+  const k=cfg.sabores.length,partes=[`${cfg.n} pedaços`];
+  if(k)partes.push(cfg.sabores.map(s=>FRAC[k]+SAB[s].nome).join(' + '));
+  if(cfg.borda)partes.push('Borda de '+BORDAS.find(b=>b.id===cfg.borda).nome.toLowerCase());
+  if(cfg.extras.length)partes.push(cfg.extras.map(e=>EXTRAS.find(x=>x.id===e).nome).join(', '));
+  return partes.join(' · ');
+}
+function resumo(){
+  $('mt-desc').textContent=cfg.cortada?descricao():'Escolha quantos pedaços para começar';
+  $('mt-preco').textContent=cfg.cortada?brl(preco()):'';
+}
+function irPara(n){
+  passo=n;
+  $('passos').querySelectorAll('li').forEach((li,i)=>{li.className=i+1===n?'on':i+1<n?'feito':''});
+  const c=$('mt-conteudo');
+  if(n===1){
+    c.innerHTML=`<h3 class="mt-h">Quantos pedaços?</h3><p class="mt-p">Escolha e a gente corta a massa na hora.</p>
+      <div class="opc-ped">${[8,10,12].map(q=>`<button class="ped${cfg.cortada&&cfg.n===q?' on':''}" data-n="${q}"><b>${q}</b><span>pedaços</span><small>até ${MAX[q]} sabores · a partir de ${brl(TIERS.trad[q])}</small></button>`).join('')}</div>`;
+  }else if(n===2){
+    const k=cfg.sabores.length,mx=MAX[cfg.n];
+    c.innerHTML=`<h3 class="mt-h">Escolha até ${mx} sabores</h3><p class="mt-p">${k}/${mx} escolhido${k===1?'':'s'}${k>1?' · cada sabor fica com uma parte da pizza':''}. Vale o preço do sabor mais caro.</p>
+      ${Object.keys(TIER_NOME).map(t=>`<p class="sab-tit">${TIER_NOME[t]}</p><div class="sab-grid">${SABORES.filter(s=>s.tier===t).map(s=>{const o=cfg.sabores.indexOf(s.id);
+        return`<button class="sab${o>=0?' on':''}" data-s="${s.id}" aria-pressed="${o>=0}">${svgPizza({n:4,cortada:false,sabores:[s.id],borda:'',extras:[]})}<span><strong>${s.nome}</strong><small>${s.ing}</small><em>${brl(TIERS[t][cfg.n])}</em></span><i>${o+1}</i></button>`}).join('')}</div>`).join('')}`;
+  }else{
+    c.innerHTML=`<h3 class="mt-h">Adicionais</h3><p class="mt-p">Deixe do seu jeito. Tudo opcional.</p>
+      <p class="sab-tit">Borda recheada</p><div class="chips">${BORDAS.map(b=>`<button class="chip${cfg.borda===b.id?' on':''}" data-b="${b.id}" aria-pressed="${cfg.borda===b.id}">${b.cor?`<span class="bola" style="background:${b.cor}"></span>`:''}${b.nome}${b.preco?` <small>+${brl(b.preco)}</small>`:''}</button>`).join('')}</div>
+      <p class="sab-tit">Extras</p><div class="chips">${EXTRAS.map(x=>{const on=cfg.extras.includes(x.id);return`<button class="chip${on?' on':''}" data-x="${x.id}" aria-pressed="${on}">${on?'✓ ':'+ '}${x.nome} <small>${brl(x.preco)}</small></button>`}).join('')}</div>`;
+  }
+  c.scrollTop=0;
+  $('mt-voltar').disabled=n===1;
+  $('mt-avancar').innerHTML=n===3?'<svg class="i"><use href="#cart"/></svg>Colocar na caixa':'Avançar<svg class="i"><use href="#seta"/></svg>';
+  travar();
+}
+function travar(){$('mt-avancar').disabled=ocupado||(passo===1&&!cfg.cortada)||(passo===2&&!cfg.sabores.length);$('mt-voltar').disabled=ocupado||passo===1}
+async function carregar(txt,ms){$('carr-txt').textContent=txt;$('carregando').classList.add('on');await sleep(ms);$('carregando').classList.remove('on')}
+
+async function cortar(n){
+  ocupado=true;
+  cfg.n=n;cfg.cortada=false;cfg.sabores=cfg.sabores.slice(0,MAX[n]);ultimo=null;
+  irPara(1);desenhar(false);
+  await carregar(`Cortando em ${n} pedaços…`,1000);
+  riscar=true;desenhar(false);
+  await sleep(n*70+450);
+  riscar=false;cfg.cortada=true;desenhar(true);
+  await sleep(900);
+  ocupado=false;irPara(2);
+}
+$('mt-conteudo').addEventListener('click',e=>{
+  if(ocupado)return;
+  const b=e.target.closest('button');if(!b)return;
+  if(b.dataset.n){cortar(+b.dataset.n);return}
+  if(b.dataset.s){
+    const s=b.dataset.s,i=cfg.sabores.indexOf(s);
+    if(i>=0)cfg.sabores.splice(i,1);
+    else if(cfg.sabores.length<MAX[cfg.n])cfg.sabores.push(s);
+    else{toast(`Com ${cfg.n} pedaços, são até ${MAX[cfg.n]} sabores`);return}
+    desenhar(true);irPara(2);return;
+  }
+  if(b.dataset.b!==undefined){cfg.borda=b.dataset.b;desenhar(false);irPara(3);return}
+  if(b.dataset.x){const i=cfg.extras.indexOf(b.dataset.x);if(i>=0)cfg.extras.splice(i,1);else cfg.extras.push(b.dataset.x);desenhar(false);irPara(3)}
+});
+$('mt-voltar').onclick=()=>{if(!ocupado&&passo>1)irPara(passo-1)};
+$('mt-avancar').onclick=async()=>{
+  if(ocupado)return;
+  if(passo===1)return irPara(2);
+  if(passo===2){ocupado=true;travar();await carregar('Preparando os sabores…',900);ocupado=false;return irPara(3)}
+  embalar();
+};
+async function embalar(){
+  ocupado=true;travar();
+  $('tabua').classList.add('fora');
+  await sleep(450);
+  $('caixa').classList.add('on');
+  await sleep(650);
+  $('caixa').classList.add('fechada');
+  await sleep(1250);
+  const item={k:'m|'+Date.now(),nome:'Pizza montada',det:descricao(),preco:preco(),qtd:1,obs:'',
+    img:'data:image/svg+xml;charset=utf-8,'+encodeURIComponent(svgPizza(cfg))};
+  const r=$('caixa').getBoundingClientRect(),lado=Math.min(r.width,r.height)*.85;
+  const voo=document.createElement('div');voo.className='voo voo-caixa';voo.innerHTML='<img src="img/logo.png" alt="">';
+  $('montar').classList.add('saindo');
+  await voar({left:r.left+(r.width-lado)/2,top:r.top+(r.height-lado)/2,width:lado,height:lado},voo);
+  addItem(item);
+  fecharMontar();
+  toast('Sua pizza está no carrinho!');
+}
+function abrirMontar(){
+  cfg={n:8,cortada:false,sabores:[],borda:'',extras:[]};ultimo=null;riscar=false;ocupado=false;
+  $('tabua').classList.remove('fora');$('caixa').classList.remove('on','fechada');$('montar').classList.remove('saindo');
+  desenhar(false);irPara(1);
+  ultimoFoco=document.activeElement;
+  $('montar').classList.add('on');$('montar').setAttribute('aria-hidden','false');
+  document.body.style.overflow='hidden';$('fab').classList.remove('on');
+  setTimeout(()=>$('mt-fechar').focus(),50);
+}
+function fecharMontar(){
+  $('montar').classList.remove('on');$('montar').setAttribute('aria-hidden','true');
+  document.body.style.overflow='';ocupado=false;atualizar();
+  ultimoFoco&&ultimoFoco.focus();
+}
+$('abrir-montar').onclick=abrirMontar;
+$('mt-fechar').onclick=()=>{if(!ocupado)fecharMontar()};
 
 atualizar();
 </script>
