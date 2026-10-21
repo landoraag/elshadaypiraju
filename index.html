@@ -277,9 +277,9 @@ footer{background:var(--carvao);color:#fff;padding:26px 0 24px}
 .tabua{position:absolute;inset:0;filter:drop-shadow(0 18px 26px rgba(0,0,0,.6));transition:transform .7s cubic-bezier(.5,0,.8,.4)}
 .tabua.fora{transform:translateY(700px)}
 .tabua img{width:100%;height:100%;display:block}
-.pz{position:absolute;left:34px;top:34px;width:332px;height:332px;transform:translateZ(3px);filter:drop-shadow(0 1px 1.5px rgba(20,8,0,.7)) drop-shadow(3px 6px 5px rgba(0,0,0,.55))}
+.pz{position:absolute;left:34px;top:34px;width:332px;height:332px;transform:translateZ(3px);}
 .pz-l{position:absolute;inset:0}
-.pz-sombra{position:absolute;left:52px;top:52px;width:296px;height:296px;border-radius:50%;background:rgba(5,2,0,.92);transform:translate3d(15px,24px,1.5px);filter:blur(7px);transition:opacity .4s}
+.pz-sombra{position:absolute;left:52px;top:52px;width:296px;height:296px;border-radius:50%;background:rgba(5,2,0,.6);transform:translate3d(15px,24px,1.5px);filter:blur(7px);transition:opacity .4s}
 .tabua.fora~.pz-sombra{opacity:0}
 .pz-l svg{width:100%;height:100%;display:block;overflow:visible}
 .pz [data-i]{transition:transform .8s cubic-bezier(.3,.7,.3,1)}
@@ -724,7 +724,8 @@ const f2=n=>n.toFixed(2);
 function setor(r,a0,a1){const g=a1-a0>Math.PI?1:0;return`M0 0L${f2(r*Math.cos(a0))} ${f2(r*Math.sin(a0))}A${r} ${r} 0 ${g} 1 ${f2(r*Math.cos(a1))} ${f2(r*Math.sin(a1))}Z`}
 function arco(r,a0,a1){return`M${f2(r*Math.cos(a0))} ${f2(r*Math.sin(a0))}A${r} ${r} 0 0 1 ${f2(r*Math.cos(a1))} ${f2(r*Math.sin(a1))}`}
 function grupos(n,k){const g=[];let i=0;const b=Math.floor(n/k),x=n%k;for(let j=0;j<k;j++){const t=b+(j<x?1:0);g.push({ini:i,fim:i+t});i+=t}return g}
-function offsets(cfg){return Array.from({length:cfg.n},()=>[0,0])} // fatias não se afastam: o corte é desenhado
+/* depois de cortada, cada fatia se afasta um pouquinho do centro (fresta fina, como pizza cortada de verdade) */
+function offsets(cfg){const st=TAU/cfg.n;return Array.from({length:cfg.n},(_,i)=>{if(!cfg.cortada)return[0,0];const m=-Math.PI/2+(i+.5)*st;return[1.9*Math.cos(m),1.9*Math.sin(m)]})}
 const EXTRAS_IMG=['queijo','bacon','azeitona']; // ketchup e maionese vão em sachê
 let UID=0;
 /* corte de faca: sulco escuro fino + brilho do lado oposto, como pizza cortada de verdade */
@@ -737,20 +738,31 @@ function faca(n,animar){
   }
   return h+'</g>';
 }
-function svgPizza(cfg,{cortes=false}={}){
+function svgPizza(cfg,{cortes=false,off=offsets(cfg)}={}){
   const n=cfg.n,st=TAU/n,id='pz'+Date.now().toString(36)+(++UID);
   const k=cfg.sabores.length,gs=k?grupos(n,k):[];
   const ex=EXTRAS_IMG.filter(e=>(cfg.extras||[]).includes(e));
   const IMG=src=>`<image href="${src}" x="-101" y="-101" width="202" height="202"/>`;
-  let h=`<svg xmlns="http://www.w3.org/2000/svg" viewBox="-112 -112 224 224">${IMG('img/massa.webp')}`;
-  /* cada sabor recorta a parte dele da pizza inteira do sabor */
-  gs.forEach((g,gi)=>{
-    const s=SAB[cfg.sabores[gi]],a0=-Math.PI/2+g.ini*st,a1=-Math.PI/2+g.fim*st;
-    const ex2=s.tier!=='doce'?ex.map(e=>IMG(`img/sabores/extra-${e}.webp`)).join(''):'';
-    h+=`<clipPath id="${id}s${gi}"><path d="${k===1?'M-102-102H102V102H-102Z':setor(102,a0,a1)}"/></clipPath><g clip-path="url(#${id}s${gi})">${IMG(`img/sabores/${s.id}.webp`)}${ex2}</g>`;
-  });
-  if(cfg.borda)h+=IMG(`img/borda-${cfg.borda}.webp`);
-  if(cfg.cortada||cortes)h+=faca(n,cortes);
+  /* bisel: sombra interna nas bordas de cada fatia + sombrinha projetada na fresta */
+  let h=`<svg xmlns="http://www.w3.org/2000/svg" viewBox="-112 -112 224 224"><defs>
+    <filter id="${id}f" x="-10%" y="-10%" width="120%" height="120%"><feDropShadow dx=".35" dy=".6" stdDeviation=".7" flood-color="#1a0a02" flood-opacity=".38"/></filter>
+    <linearGradient id="${id}g" gradientUnits="objectBoundingBox" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#5a3010" stop-opacity=".5"/><stop offset=".22" stop-color="#7a4818" stop-opacity=".22"/>
+      <stop offset=".34" stop-color="#fff6e2" stop-opacity=".38"/><stop offset=".6" stop-color="#fff6e2" stop-opacity="0"/>
+    </linearGradient></defs>`;
+  /* faixa de bisel ao longo de uma borda (reta pelo centro, ângulo a), entrando na fatia pelo lado 'lado' */
+  const bisel=(a,lado)=>{const w=3.4;return `<rect x="0" y="${lado>0?0:-w}" width="103" height="${w}" fill="url(#${id}g${lado>0?'p':'n'})" transform="rotate(${f2(a*DEG)})"/>`};
+  h=h.replace('</defs>',`<linearGradient id="${id}gp" href="#${id}g" x1="0" y1="0" x2="0" y2="1"/><linearGradient id="${id}gn" href="#${id}g" x1="0" y1="1" x2="0" y2="0"/></defs>`);
+  const inteira=!cfg.cortada&&!cortes;
+  for(let i=0;i<(inteira?1:n);i++){
+    const a0=-Math.PI/2+i*st,a1=a0+st,o=off[i]||[0,0];
+    const gi=gs.findIndex(g=>i>=g.ini&&i<g.fim),s=gi>=0?SAB[cfg.sabores[gi]]:null;
+    let c=s?IMG(`img/sabores/${s.id}.webp`)+(s.tier!=='doce'?ex.map(e=>IMG(`img/sabores/extra-${e}.webp`)).join(''):''):IMG('img/massa.webp');
+    if(cfg.borda)c+=IMG(`img/borda-${cfg.borda}.webp`);
+    if(inteira){h+=c;break}
+    h+=`<clipPath id="${id}c${i}"><path d="${setor(103,a0,a1)}"/></clipPath><mask id="${id}m${i}" maskUnits="userSpaceOnUse" x="-110" y="-110" width="220" height="220"><g clip-path="url(#${id}c${i})">${IMG(s?`img/sabores/${s.id}.webp`:'img/massa.webp').replace('<image','<image style="filter:brightness(0) invert(1)"')}</g></mask><g data-i="${i}" style="transform:translate(${f2(o[0])}px,${f2(o[1])}px)" filter="url(#${id}f)"><g clip-path="url(#${id}c${i})">${c}<g mask="url(#${id}m${i})">${bisel(a0,1)}${bisel(a1,-1)}</g></g></g>`;
+  }
+  if(cortes)h+=faca(n,true);
   return h+'</svg>';
 }
 
@@ -763,7 +775,7 @@ $('tabua').innerHTML='<img src="img/tabua.webp" alt="">';
 let cfg,passo=1,ocupado=false,ultimo=null,riscar=false;
 function desenhar(animar){
   const nova=offsets(cfg),ini=animar&&ultimo&&ultimo.n===cfg.n?ultimo.off:nova;
-  const h=`<div class="pz-l">${svgPizza(cfg,{cortes:riscar})}</div>`;
+  const h=`<div class="pz-l">${svgPizza(cfg,{cortes:riscar,off:ini})}</div>`;
   $('pz').innerHTML=h;ultimo={n:cfg.n,off:nova};
   if(ini!==nova){void $('pz').offsetWidth;requestAnimationFrame(()=>$('pz').querySelectorAll('[data-i]').forEach(g=>{const o=nova[g.dataset.i];g.style.transform=`translate(${f2(o[0])}px,${f2(o[1])}px)`}))}
   $('pz-tag').innerHTML=cfg.cortada?`<b>${cfg.n}</b> pedaços${cfg.sabores.length?` · <b>${cfg.sabores.length}</b> sabor${cfg.sabores.length>1?'es':''}`:''}`:'Massa artesanal';
