@@ -318,13 +318,8 @@ footer{background:var(--carvao);color:#fff;padding:26px 0 24px}
 .pz-sombra{position:absolute;left:52px;top:52px;width:296px;height:296px;border-radius:50%;background:rgba(5,2,0,.6);transform:translate3d(15px,24px,1.5px);filter:blur(7px);transition:opacity .4s}
 .tabua.fora~.pz-sombra{opacity:0}
 .pz-l svg{width:100%;height:100%;display:block;overflow:visible}
-.pz [data-i]{transition:transform .8s cubic-bezier(.3,.7,.3,1)}
-.faca line{stroke-linecap:round}
-.faca .f-som{stroke:#2a1406;stroke-opacity:.28;stroke-width:1.6}
-.faca .f-sulco{stroke:#3a1c08;stroke-opacity:.7;stroke-width:.55}
-.faca .f-luz{stroke:#fff3d6;stroke-opacity:.42;stroke-width:.45}
-.faca.anima line{stroke-dasharray:1;stroke-dashoffset:1;animation:risca .35s ease forwards}
-@keyframes risca{to{stroke-dashoffset:0}}
+.pz-l.revela{animation:corte-revela .7s cubic-bezier(.3,.7,.3,1)}
+@keyframes corte-revela{from{opacity:0;transform:scale(1.035);filter:brightness(1.18)}to{opacity:1;transform:none;filter:none}}
 .caixa{position:absolute;left:5px;top:5px;width:390px;height:390px;transform-style:preserve-3d;visibility:hidden;opacity:0;transform:translateZ(1px) scale(1.08);transition:opacity .45s,transform .55s cubic-bezier(.3,.7,.3,1)}
 .caixa.on{visibility:visible;opacity:1;transform:translateZ(1px)}
 .cx-base{position:absolute;inset:0;width:100%;height:100%;filter:drop-shadow(10px 18px 16px rgba(0,0,0,.6))}
@@ -790,49 +785,25 @@ const f2=n=>n.toFixed(2);
 function setor(r,a0,a1){const g=a1-a0>Math.PI?1:0;return`M0 0L${f2(r*Math.cos(a0))} ${f2(r*Math.sin(a0))}A${r} ${r} 0 ${g} 1 ${f2(r*Math.cos(a1))} ${f2(r*Math.sin(a1))}Z`}
 function arco(r,a0,a1){return`M${f2(r*Math.cos(a0))} ${f2(r*Math.sin(a0))}A${r} ${r} 0 0 1 ${f2(r*Math.cos(a1))} ${f2(r*Math.sin(a1))}`}
 function grupos(n,k){const g=[];let i=0;const b=Math.floor(n/k),x=n%k;for(let j=0;j<k;j++){const t=b+(j<x?1:0);g.push({ini:i,fim:i+t});i+=t}return g}
-/* depois de cortada, cada fatia se afasta um pouquinho do centro (fresta fina, como pizza cortada de verdade) */
-function offsets(cfg){const st=TAU/cfg.n;return Array.from({length:cfg.n},(_,i)=>{if(!cfg.cortada)return[0,0];const m=-Math.PI/2+(i+.5)*st;return[.9*Math.cos(m),.9*Math.sin(m)]})}
 const EXTRAS_IMG=['queijo','bacon','azeitona']; // ketchup e maionese vão em sachê
 let UID=0;
-/* corte de faca: sulco escuro fino + brilho do lado oposto, como pizza cortada de verdade */
-/* massa[i]=true quando a fatia i é só massa. O risco só aparece onde encosta em massa;
-   fatias com sabor já têm o corte natural na própria foto. */
-function faca(n,animar,massa){
-  const st=TAU/n;let h=`<g class="faca${animar?' anima':''}">`;
-  for(let i=0;i<n;i++){
-    if(massa&&!(massa[i]||massa[(i+n-1)%n]))continue;
-    const a=-Math.PI/2+i*st,c=Math.cos(a),s=Math.sin(a),px=-s*.55,py=c*.55,r0=2.2,r1=100.6;
-    const L=(dx,dy,cls)=>`<line class="${cls}" x1="${f2(r0*c+dx)}" y1="${f2(r0*s+dy)}" x2="${f2(r1*c+dx)}" y2="${f2(r1*s+dy)}" pathLength="1" style="animation-delay:${i*70}ms"/>`;
-    h+=L(-px,-py,'f-som')+L(0,0,'f-sulco')+L(px,py,'f-luz');
-  }
-  return h+'</g>';
-}
-function svgPizza(cfg,{cortes=false,off=offsets(cfg)}={}){
+/* O corte vem pronto nas fotos (massa-8/10/12 e sabores/*-8/10/12). Nada é riscado por cima:
+   massa inteira = massa.webp; cortada = foto cortada; com sabores, cada fatia recebe a foto do seu sabor
+   e as fatias sem sabor recebem a foto da massa cortada. */
+function svgPizza(cfg){
   const n=cfg.n,st=TAU/n,id='pz'+Date.now().toString(36)+(++UID);
   const k=cfg.sabores.length,gs=k?grupos(n,k):[];
   const ex=EXTRAS_IMG.filter(e=>(cfg.extras||[]).includes(e));
   const IMG=src=>`<image href="${src}" x="-101" y="-101" width="202" height="202"/>`;
-  /* bisel: sombra interna nas bordas de cada fatia + sombrinha projetada na fresta */
-  let h=`<svg xmlns="http://www.w3.org/2000/svg" viewBox="-112 -112 224 224"><defs>
-    <filter id="${id}f" x="-10%" y="-10%" width="120%" height="120%"><feDropShadow dx=".35" dy=".6" stdDeviation=".7" flood-color="#1a0a02" flood-opacity=".38"/></filter>
-    <linearGradient id="${id}g" gradientUnits="objectBoundingBox" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0" stop-color="#5a3010" stop-opacity=".28"/><stop offset=".22" stop-color="#7a4818" stop-opacity=".1"/>
-      <stop offset=".34" stop-color="#fff6e2" stop-opacity=".25"/><stop offset=".6" stop-color="#fff6e2" stop-opacity="0"/>
-    </linearGradient></defs>`;
-  /* faixa de bisel ao longo de uma borda (reta pelo centro, ângulo a), entrando na fatia pelo lado 'lado' */
-  const bisel=(a,lado)=>{const w=3.4;return `<rect x="0" y="${lado>0?0:-w}" width="103" height="${w}" fill="url(#${id}g${lado>0?'p':'n'})" transform="rotate(${f2(a*DEG)})"/>`};
-  h=h.replace('</defs>',`<linearGradient id="${id}gp" href="#${id}g" x1="0" y1="0" x2="0" y2="1"/><linearGradient id="${id}gn" href="#${id}g" x1="0" y1="1" x2="0" y2="0"/></defs>`);
-  const inteira=!cfg.cortada&&!cortes;
-  for(let i=0;i<(inteira?1:n);i++){
-    const a0=-Math.PI/2+i*st,a1=a0+st,o=off[i]||[0,0];
+  const borda=cfg.borda?IMG(`img/borda-${cfg.borda}.webp`):'';
+  let h='<svg xmlns="http://www.w3.org/2000/svg" viewBox="-112 -112 224 224">';
+  if(!cfg.cortada||!k)return h+IMG(cfg.cortada?`img/massa-${n}.webp`:'img/massa.webp')+borda+'</svg>';
+  for(let i=0;i<n;i++){
+    const a0=-Math.PI/2+i*st,a1=a0+st;
     const gi=gs.findIndex(g=>i>=g.ini&&i<g.fim),s=gi>=0?SAB[cfg.sabores[gi]]:null;
-    let c=s?IMG(`img/sabores/${s.id}${inteira?'':'-'+n}.webp`)+(s.tier!=='doce'?ex.map(e=>IMG(`img/sabores/extra-${e}.webp`)).join(''):''):IMG('img/massa.webp');
-    if(cfg.borda)c+=IMG(`img/borda-${cfg.borda}.webp`);
-    if(inteira){h+=c;break}
-    if(s){h+=`<clipPath id="${id}c${i}"><path d="${setor(103,a0,a1)}"/></clipPath><g data-i="${i}" clip-path="url(#${id}c${i})">${c}</g>`;continue}
-    h+=`<clipPath id="${id}c${i}"><path d="${setor(103,a0,a1)}"/></clipPath><mask id="${id}m${i}" maskUnits="userSpaceOnUse" x="-110" y="-110" width="220" height="220"><g clip-path="url(#${id}c${i})">${IMG(s?`img/sabores/${s.id}.webp`:'img/massa.webp').replace('<image','<image style="filter:brightness(0) invert(1)"')}</g></mask><g data-i="${i}" style="transform:translate(${f2(o[0])}px,${f2(o[1])}px)" filter="url(#${id}f)"><g clip-path="url(#${id}c${i})">${c}<g mask="url(#${id}m${i})">${bisel(a0,1)}${bisel(a1,-1)}</g></g></g>`;
+    const c=(s?IMG(`img/sabores/${s.id}-${n}.webp`)+(s.tier!=='doce'?ex.map(e=>IMG(`img/sabores/extra-${e}.webp`)).join(''):''):IMG(`img/massa-${n}.webp`))+borda;
+    h+=`<clipPath id="${id}c${i}"><path d="${setor(103,a0,a1)}"/></clipPath><g data-i="${i}" clip-path="url(#${id}c${i})">${c}</g>`;
   }
-  if(cortes)h+=faca(n,true,Array.from({length:n},(_,i)=>!gs.some(g=>i>=g.ini&&i<g.fim)));
   return h+'</svg>';
 }
 
@@ -842,25 +813,27 @@ $('tabua').innerHTML='<img src="img/tabua.webp" alt="">';
 /* arte da seção no cardápio */
 
 /* estado do montador */
-let cfg,passo=1,ocupado=false,ultimo=null,riscar=false;
+let cfg,passo=1,ocupado=false;
 /* carrega imagens antes de mostrar (sem fatias em branco) */
 const CACHE={};
-function carregar(urls){return Promise.all(urls.map(u=>CACHE[u]||(CACHE[u]=new Promise(r=>{const i=new Image();i.onload=i.onerror=()=>(i.decode?i.decode().catch(()=>{}):Promise.resolve()).then(r);i.src=u})))) }
-function urlsDe(c){const u=['img/massa.webp','img/tabua.webp'];const cort=c.cortada||riscar;
-  c.sabores.forEach(id=>u.push(`img/sabores/${id}${cort?'-'+c.n:''}.webp`));
+function precarregar(urls){return Promise.all(urls.map(u=>CACHE[u]||(CACHE[u]=new Promise(r=>{const i=new Image();i.onload=i.onerror=()=>(i.decode?i.decode().catch(()=>{}):Promise.resolve()).then(r);i.src=u})))) }
+function urlsDe(c){const u=['img/massa.webp','img/tabua.webp'];if(c.cortada)u.push(`img/massa-${c.n}.webp`);
+  c.sabores.forEach(id=>c.cortada&&u.push(`img/sabores/${id}-${c.n}.webp`));
   if(c.borda)u.push(`img/borda-${c.borda}.webp`);(c.extras||[]).filter(e=>EXTRAS_IMG.includes(e)).forEach(e=>u.push(`img/sabores/extra-${e}.webp`));return u}
-function preSabores(n){carregar(SABORES.map(s=>`img/sabores/${s.id}-${n}.webp`))}
+function preSabores(n){precarregar([`img/massa-${n}.webp`,...SABORES.map(s=>`img/sabores/${s.id}-${n}.webp`)])}
 let tokDes=0;
-function desenhar(animar){const t=++tokDes;carregar(urlsDe(cfg)).then(()=>{if(t===tokDes)desenharJa(animar)})}
-function desenharJa(animar){
-  const nova=offsets(cfg),ini=animar&&ultimo&&ultimo.n===cfg.n?ultimo.off:nova;
+function desenhar(revela){const t=++tokDes;precarregar(urlsDe(cfg)).then(()=>{if(t===tokDes)desenharJa(revela)})}
+function desenharJa(revela){
   /* monta a nova pizza escondida e só troca quando todas as imagens dela carregaram */
   const nv=document.createElement('div');nv.className='pz-l';nv.style.opacity='0';
-  nv.innerHTML=svgPizza(cfg,{cortes:riscar,off:ini});$('pz').appendChild(nv);ultimo={n:cfg.n,off:nova};
+  nv.innerHTML=svgPizza(cfg);$('pz').appendChild(nv);
   const imgs=[...nv.querySelectorAll('image')];
   Promise.race([Promise.all(imgs.map(im=>new Promise(r=>{im.addEventListener('load',r,{once:true});im.addEventListener('error',r,{once:true})}))),sleep(4000)])
-    .then(()=>requestAnimationFrame(()=>{nv.style.opacity='';[...$('pz').children].forEach(c=>{if(c!==nv)c.remove()})}));
-  if(ini!==nova){void $('pz').offsetWidth;requestAnimationFrame(()=>nv.querySelectorAll('[data-i]').forEach(g=>{const o=nova[g.dataset.i];g.style.transform=`translate(${f2(o[0])}px,${f2(o[1])}px)`}))}
+    .then(()=>requestAnimationFrame(()=>{
+      nv.style.opacity='';
+      if(revela){nv.classList.add('revela');const velhos=[...$('pz').children].filter(c=>c!==nv);setTimeout(()=>velhos.forEach(c=>c.remove()),750)}
+      else [...$('pz').children].forEach(c=>{if(c!==nv)c.remove()});
+    }));
   $('pz-tag').innerHTML=cfg.cortada?`<b>${cfg.n}</b> pedaços${cfg.sabores.length?` · <b>${cfg.sabores.length}</b> sabor${cfg.sabores.length>1?'es':''}`:''}`:'Massa artesanal';
   resumo();
 }
@@ -909,12 +882,11 @@ async function carregar(txt,ms){$('carr-txt').textContent=txt;$('carregando').cl
 
 async function cortar(n){
   ocupado=true;
-  cfg.n=n;cfg.cortada=false;cfg.sabores=cfg.sabores.slice(0,MAX[n]);ultimo=null;
+  cfg.n=n;cfg.cortada=false;cfg.sabores=cfg.sabores.slice(0,MAX[n]);
   irPara(1);desenhar(false);
   await carregar(`Cortando em ${n} pedaços…`,1000);
-  preSabores(n);riscar=true;desenharJa(false);
-  await sleep(n*70+450);
-  riscar=false;cfg.cortada=true;desenharJa(true);
+  await precarregar([`img/massa-${n}.webp`,...cfg.sabores.map(id=>`img/sabores/${id}-${n}.webp`)]);preSabores(n);
+  cfg.cortada=true;desenharJa(true);
   await sleep(900);
   ocupado=false;irPara(2);
 }
@@ -941,7 +913,7 @@ $('mt-avancar').onclick=async()=>{
 };
 async function embalar(){
   ocupado=true;travar();
-  await carregar(['img/caixa-base.webp','img/caixa-tampa.webp','img/caixa-dentro.webp']);
+  await precarregar(['img/caixa-base.webp','img/caixa-tampa.webp','img/caixa-dentro.webp']);
   const mesa=$('mesa');
   $('tabua').classList.add('fora');
   mesa.classList.add('embalando');            // câmera se afasta
@@ -963,10 +935,10 @@ async function embalar(){
   toast('Sua pizza está no carrinho!');
 }
 function abrirMontar(){
-  cfg={n:8,cortada:false,sabores:[],borda:'',extras:[]};ultimo=null;riscar=false;ocupado=false;
+  cfg={n:8,cortada:false,sabores:[],borda:'',extras:[]};ocupado=false;
   $('tabua').classList.remove('fora');$('caixa').classList.remove('on','fechada');$('caixa').style.visibility='';$('mesa').classList.remove('embalando','zoom');$('montar').classList.remove('saindo');
   $('mesa').classList.remove('pronta');
-  carregar(['img/tabua.webp','img/massa.webp']).then(()=>{desenharJa(false);requestAnimationFrame(()=>$('mesa').classList.add('pronta'))});
+  precarregar(['img/tabua.webp','img/massa.webp']).then(()=>{desenharJa(false);requestAnimationFrame(()=>$('mesa').classList.add('pronta'))});
   irPara(1);
   ultimoFoco=document.activeElement;
   $('montar').classList.add('on');$('montar').setAttribute('aria-hidden','false');
@@ -982,7 +954,7 @@ $('abrir-montar').onclick=abrirMontar;
 $('mt-fechar').onclick=()=>{if(!ocupado)fecharMontar()};
 
 atualizar();
-(window.requestIdleCallback||setTimeout)(()=>carregar(['img/tabua.webp','img/massa.webp','img/bancada.webp']));
+(window.requestIdleCallback||setTimeout)(()=>precarregar(['img/tabua.webp','img/massa.webp','img/bancada.webp']));
 </script>
 </body>
 </html>
