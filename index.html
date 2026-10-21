@@ -795,9 +795,12 @@ function offsets(cfg){const st=TAU/cfg.n;return Array.from({length:cfg.n},(_,i)=
 const EXTRAS_IMG=['queijo','bacon','azeitona']; // ketchup e maionese vão em sachê
 let UID=0;
 /* corte de faca: sulco escuro fino + brilho do lado oposto, como pizza cortada de verdade */
-function faca(n,animar){
+/* massa[i]=true quando a fatia i é só massa. O risco só aparece onde encosta em massa;
+   fatias com sabor já têm o corte natural na própria foto. */
+function faca(n,animar,massa){
   const st=TAU/n;let h=`<g class="faca${animar?' anima':''}">`;
   for(let i=0;i<n;i++){
+    if(massa&&!(massa[i]||massa[(i+n-1)%n]))continue;
     const a=-Math.PI/2+i*st,c=Math.cos(a),s=Math.sin(a),px=-s*.55,py=c*.55,r0=2.2,r1=100.6;
     const L=(dx,dy,cls)=>`<line class="${cls}" x1="${f2(r0*c+dx)}" y1="${f2(r0*s+dy)}" x2="${f2(r1*c+dx)}" y2="${f2(r1*s+dy)}" pathLength="1" style="animation-delay:${i*70}ms"/>`;
     h+=L(-px,-py,'f-som')+L(0,0,'f-sulco')+L(px,py,'f-luz');
@@ -829,7 +832,7 @@ function svgPizza(cfg,{cortes=false,off=offsets(cfg)}={}){
     if(s){h+=`<clipPath id="${id}c${i}"><path d="${setor(103,a0,a1)}"/></clipPath><g data-i="${i}" clip-path="url(#${id}c${i})">${c}</g>`;continue}
     h+=`<clipPath id="${id}c${i}"><path d="${setor(103,a0,a1)}"/></clipPath><mask id="${id}m${i}" maskUnits="userSpaceOnUse" x="-110" y="-110" width="220" height="220"><g clip-path="url(#${id}c${i})">${IMG(s?`img/sabores/${s.id}.webp`:'img/massa.webp').replace('<image','<image style="filter:brightness(0) invert(1)"')}</g></mask><g data-i="${i}" style="transform:translate(${f2(o[0])}px,${f2(o[1])}px)" filter="url(#${id}f)"><g clip-path="url(#${id}c${i})">${c}<g mask="url(#${id}m${i})">${bisel(a0,1)}${bisel(a1,-1)}</g></g></g>`;
   }
-  if(cortes)h+=faca(n,true);
+  if(cortes)h+=faca(n,true,Array.from({length:n},(_,i)=>!gs.some(g=>i>=g.ini&&i<g.fim)));
   return h+'</svg>';
 }
 
