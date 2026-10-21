@@ -851,9 +851,13 @@ let tokDes=0;
 function desenhar(animar){const t=++tokDes;carregar(urlsDe(cfg)).then(()=>{if(t===tokDes)desenharJa(animar)})}
 function desenharJa(animar){
   const nova=offsets(cfg),ini=animar&&ultimo&&ultimo.n===cfg.n?ultimo.off:nova;
-  const h=`<div class="pz-l">${svgPizza(cfg,{cortes:riscar,off:ini})}</div>`;
-  $('pz').innerHTML=h;ultimo={n:cfg.n,off:nova};
-  if(ini!==nova){void $('pz').offsetWidth;requestAnimationFrame(()=>$('pz').querySelectorAll('[data-i]').forEach(g=>{const o=nova[g.dataset.i];g.style.transform=`translate(${f2(o[0])}px,${f2(o[1])}px)`}))}
+  /* monta a nova pizza escondida e só troca quando todas as imagens dela carregaram */
+  const nv=document.createElement('div');nv.className='pz-l';nv.style.opacity='0';
+  nv.innerHTML=svgPizza(cfg,{cortes:riscar,off:ini});$('pz').appendChild(nv);ultimo={n:cfg.n,off:nova};
+  const imgs=[...nv.querySelectorAll('image')];
+  Promise.race([Promise.all(imgs.map(im=>new Promise(r=>{im.addEventListener('load',r,{once:true});im.addEventListener('error',r,{once:true})}))),sleep(4000)])
+    .then(()=>requestAnimationFrame(()=>{nv.style.opacity='';[...$('pz').children].forEach(c=>{if(c!==nv)c.remove()})}));
+  if(ini!==nova){void $('pz').offsetWidth;requestAnimationFrame(()=>nv.querySelectorAll('[data-i]').forEach(g=>{const o=nova[g.dataset.i];g.style.transform=`translate(${f2(o[0])}px,${f2(o[1])}px)`}))}
   $('pz-tag').innerHTML=cfg.cortada?`<b>${cfg.n}</b> pedaços${cfg.sabores.length?` · <b>${cfg.sabores.length}</b> sabor${cfg.sabores.length>1?'es':''}`:''}`:'Massa artesanal';
   resumo();
 }
