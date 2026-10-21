@@ -296,7 +296,18 @@ footer{background:var(--carvao);color:#fff;padding:26px 0 24px}
 .passos li.feito::before{content:"✓"}
 .montar .x{color:#cbb9a8}
 .mt-corpo{flex:1;min-height:0;display:grid;grid-template-columns:1.15fr minmax(360px,1fr)}
-.palco{position:relative;overflow:hidden;perspective:1100px;background:radial-gradient(ellipse at 50% 62%,rgba(242,106,27,.32),rgba(242,106,27,0) 55%),radial-gradient(ellipse at 50% 120%,#3a1a08,transparent 60%),#160d07}
+.palco{position:relative;overflow:hidden;perspective:1100px;background:radial-gradient(ellipse 45% 50% at 50% 50%,rgba(255,170,90,.16),rgba(255,170,90,0) 70%),url(img/bancada.webp) center/cover no-repeat #15110f}
+/* entrada: tábua aparece, pizza cai com a sombra */
+.mesa .tabua,.mesa .pz,.mesa .pz-sombra{opacity:0}
+.mesa.pronta .tabua{animation:tabua-in .45s ease-out forwards}
+.mesa.pronta .pz{animation:pz-cai .75s cubic-bezier(.3,.6,.35,1) .25s forwards}
+.mesa.pronta .pz-sombra{animation:sombra-cai .75s cubic-bezier(.3,.6,.35,1) .25s forwards}
+@keyframes tabua-in{from{opacity:0;transform:scale(.96)}to{opacity:1;transform:none}}
+@keyframes pz-cai{0%{opacity:0;transform:translate3d(0,-40px,3px) scale(1.35)}55%{opacity:1;transform:translate3d(0,0,3px) scale(.985)}75%{transform:translate3d(0,0,3px) scale(1.012)}100%{opacity:1;transform:translate3d(0,0,3px) scale(1)}}
+@keyframes sombra-cai{0%{opacity:0;transform:translate3d(40px,60px,1.5px) scale(1.25);filter:blur(22px)}55%{opacity:1;transform:translate3d(15px,24px,1.5px) scale(1);filter:blur(7px)}100%{opacity:1;transform:translate3d(15px,24px,1.5px) scale(1);filter:blur(7px)}}
+.carregando-img{position:absolute;inset:0;display:grid;place-items:center;z-index:4;pointer-events:none;transition:opacity .3s}
+.carregando-img .roda{width:40px;height:40px}
+.mesa.pronta~.carregando-img{opacity:0}
 .mesa{--esc:1.15;position:absolute;left:50%;top:50%;width:400px;height:400px;margin:-200px 0 0 -200px;transform-style:preserve-3d;transform:scale(var(--esc,1))}
 @keyframes balanco{from{transform:scale(var(--esc,1)) rotateX(56deg) rotateZ(-26deg)}to{transform:scale(var(--esc,1)) rotateX(54deg) rotateZ(-2deg)}}
 .tabua{position:absolute;inset:0;filter:drop-shadow(0 18px 26px rgba(0,0,0,.6));transition:transform .7s cubic-bezier(.5,0,.8,.4)}
@@ -578,6 +589,7 @@ footer{background:var(--carvao);color:#fff;padding:26px 0 24px}
           <div class="cx-tampa"><div class="cx-logo"><img src="img/logo.png" alt=""><span>El Shaday</span></div></div>
         </div>
       </div>
+      <div class="carregando-img" aria-hidden="true"><div class="roda"></div></div>
       <div class="pz-tag" id="pz-tag"></div>
       <div class="carregando" id="carregando"><div class="roda"></div><p id="carr-txt"></p></div>
     </div>
@@ -828,7 +840,16 @@ $('tabua').innerHTML='<img src="img/tabua.webp" alt="">';
 
 /* estado do montador */
 let cfg,passo=1,ocupado=false,ultimo=null,riscar=false;
-function desenhar(animar){
+/* carrega imagens antes de mostrar (sem fatias em branco) */
+const CACHE={};
+function carregar(urls){return Promise.all(urls.map(u=>CACHE[u]||(CACHE[u]=new Promise(r=>{const i=new Image();i.onload=i.onerror=()=>(i.decode?i.decode().catch(()=>{}):Promise.resolve()).then(r);i.src=u})))) }
+function urlsDe(c){const u=['img/massa.webp','img/tabua.webp'];const cort=c.cortada||riscar;
+  c.sabores.forEach(id=>u.push(`img/sabores/${id}${cort?'-'+c.n:''}.webp`));
+  if(c.borda)u.push(`img/borda-${c.borda}.webp`);(c.extras||[]).filter(e=>EXTRAS_IMG.includes(e)).forEach(e=>u.push(`img/sabores/extra-${e}.webp`));return u}
+function preSabores(n){carregar(SABORES.map(s=>`img/sabores/${s.id}-${n}.webp`))}
+let tokDes=0;
+function desenhar(animar){const t=++tokDes;carregar(urlsDe(cfg)).then(()=>{if(t===tokDes)desenharJa(animar)})}
+function desenharJa(animar){
   const nova=offsets(cfg),ini=animar&&ultimo&&ultimo.n===cfg.n?ultimo.off:nova;
   const h=`<div class="pz-l">${svgPizza(cfg,{cortes:riscar,off:ini})}</div>`;
   $('pz').innerHTML=h;ultimo={n:cfg.n,off:nova};
@@ -884,9 +905,9 @@ async function cortar(n){
   cfg.n=n;cfg.cortada=false;cfg.sabores=cfg.sabores.slice(0,MAX[n]);ultimo=null;
   irPara(1);desenhar(false);
   await carregar(`Cortando em ${n} pedaços…`,1000);
-  riscar=true;desenhar(false);
+  preSabores(n);riscar=true;desenharJa(false);
   await sleep(n*70+450);
-  riscar=false;cfg.cortada=true;desenhar(true);
+  riscar=false;cfg.cortada=true;desenharJa(true);
   await sleep(900);
   ocupado=false;irPara(2);
 }
@@ -932,7 +953,9 @@ async function embalar(){
 function abrirMontar(){
   cfg={n:8,cortada:false,sabores:[],borda:'',extras:[]};ultimo=null;riscar=false;ocupado=false;
   $('tabua').classList.remove('fora');$('caixa').classList.remove('on','fechada');$('montar').classList.remove('saindo');
-  desenhar(false);irPara(1);
+  $('mesa').classList.remove('pronta');
+  carregar(['img/tabua.webp','img/massa.webp']).then(()=>{desenharJa(false);requestAnimationFrame(()=>$('mesa').classList.add('pronta'))});
+  irPara(1);
   ultimoFoco=document.activeElement;
   $('montar').classList.add('on');$('montar').setAttribute('aria-hidden','false');
   document.body.style.overflow='hidden';$('fab').classList.remove('on');
@@ -947,6 +970,7 @@ $('abrir-montar').onclick=abrirMontar;
 $('mt-fechar').onclick=()=>{if(!ocupado)fecharMontar()};
 
 atualizar();
+(window.requestIdleCallback||setTimeout)(()=>carregar(['img/tabua.webp','img/massa.webp','img/bancada.webp']));
 </script>
 </body>
 </html>
