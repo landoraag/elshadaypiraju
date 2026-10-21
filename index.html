@@ -270,8 +270,8 @@ footer{background:var(--carvao);color:#fff;padding:26px 0 24px}
 .precos .tchip.on b{background:var(--laranja);color:#fff}
 .voo{position:fixed;left:0;top:0;z-index:95;pointer-events:none;transform-origin:center}
 .voo-img{object-fit:cover;border-radius:50%;box-shadow:0 10px 30px rgba(0,0,0,.35)}
-.voo-caixa{background:linear-gradient(160deg,#ddb47c,#c18f55);border-radius:8px;box-shadow:0 14px 34px rgba(0,0,0,.45),inset 0 0 0 2px rgba(120,70,25,.25);display:grid;place-items:center}
-.voo-caixa img{width:55%;border-radius:50%}
+.voo-caixa{filter:drop-shadow(0 14px 22px rgba(0,0,0,.5))}
+.voo-caixa img{width:100%;height:100%;display:block}
 @keyframes pulo{40%{transform:scale(1.3)}}
 .pulo{animation:pulo .45s ease}
 
@@ -302,7 +302,7 @@ footer{background:var(--carvao);color:#fff;padding:26px 0 24px}
 .mesa.pronta .tabua{animation:tabua-in .45s ease-out forwards}
 .mesa.pronta .pz{animation:pz-cai .75s cubic-bezier(.3,.6,.35,1) .25s forwards}
 .mesa.pronta .pz-sombra{animation:sombra-cai .75s cubic-bezier(.3,.6,.35,1) .25s forwards}
-@keyframes tabua-in{from{opacity:0;transform:scale(.96)}to{opacity:1;transform:none}}
+@keyframes tabua-in{from{opacity:0}to{opacity:1}}
 @keyframes pz-cai{0%{opacity:0;transform:translate3d(0,-40px,3px) scale(1.35)}55%{opacity:1;transform:translate3d(0,0,3px) scale(.985)}75%{transform:translate3d(0,0,3px) scale(1.012)}100%{opacity:1;transform:translate3d(0,0,3px) scale(1)}}
 @keyframes sombra-cai{0%{opacity:0;transform:translate3d(40px,60px,1.5px) scale(1.25);filter:blur(22px)}55%{opacity:1;transform:translate3d(15px,24px,1.5px) scale(1);filter:blur(7px)}100%{opacity:1;transform:translate3d(15px,24px,1.5px) scale(1);filter:blur(7px)}}
 .carregando-img{position:absolute;inset:0;display:grid;place-items:center;z-index:4;pointer-events:none;transition:opacity .3s}
@@ -325,19 +325,20 @@ footer{background:var(--carvao);color:#fff;padding:26px 0 24px}
 .faca .f-luz{stroke:#fff3d6;stroke-opacity:.42;stroke-width:.45}
 .faca.anima line{stroke-dasharray:1;stroke-dashoffset:1;animation:risca .35s ease forwards}
 @keyframes risca{to{stroke-dashoffset:0}}
-.caixa{position:absolute;left:25px;top:25px;width:350px;height:350px;transform-style:preserve-3d;visibility:hidden;transform:translateZ(-80px);transition:transform .55s cubic-bezier(.3,.7,.3,1)}
-.caixa.on{visibility:visible;transform:none}
-.cx-fundo{position:absolute;inset:0;background:#c3935a;border-radius:4px;box-shadow:inset 0 0 0 12px #d7aa70,inset 0 0 0 14px rgba(90,50,15,.35),inset 0 0 30px rgba(90,50,15,.35),0 18px 30px rgba(0,0,0,.55)}
-.cx-p{position:absolute;background:linear-gradient(#c99760,#a87440)}
-.cx-frente{left:0;bottom:0;width:350px;height:44px;transform-origin:bottom;transform:rotateX(-90deg)}
-.cx-tras{left:0;top:0;width:350px;height:44px;transform-origin:top;transform:rotateX(90deg)}
-.cx-esq{left:0;top:0;width:44px;height:350px;transform-origin:left;transform:rotateY(-90deg)}
-.cx-dir{right:0;top:0;width:44px;height:350px;transform-origin:right;transform:rotateY(90deg)}
-.cx-tampa{position:absolute;inset:0;transform-origin:top;transform:translateZ(44px) rotateX(112deg);transition:transform 1.1s cubic-bezier(.6,0,.3,1);background:radial-gradient(circle,rgba(0,0,0,0) 60%,rgba(90,50,15,.25)),#d8ad75;box-shadow:inset 0 0 0 4px rgba(120,70,25,.3);display:grid;place-items:center;transform-style:preserve-3d}
-.caixa.fechada .cx-tampa{transform:translateZ(44px)}
-.cx-logo{text-align:center;backface-visibility:hidden;transform:translateZ(.5px)}
-.cx-logo img{width:120px;border-radius:50%;display:block;margin:auto}
-.cx-logo span{font-family:var(--script);font-size:30px;color:#5a2f12}
+.caixa{position:absolute;left:5px;top:5px;width:390px;height:390px;transform-style:preserve-3d;visibility:hidden;opacity:0;transform:translateZ(1px) scale(1.08);transition:opacity .45s,transform .55s cubic-bezier(.3,.7,.3,1)}
+.caixa.on{visibility:visible;opacity:1;transform:translateZ(1px)}
+.cx-base{position:absolute;inset:0;width:100%;height:100%;filter:drop-shadow(10px 18px 16px rgba(0,0,0,.6))}
+.cx-tampa{position:absolute;inset:0;transform-origin:50% 0;transform-style:preserve-3d;transform:translateZ(8px) rotateX(-180deg);transition:transform 1.15s cubic-bezier(.55,.05,.35,1)}
+.caixa.fechada .cx-tampa{transform:translateZ(8px) rotateX(0)}
+.cx-tampa img{position:absolute;inset:0;width:100%;height:100%;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.cx-tampa .dentro{transform:rotateX(180deg)}
+.caixa.fechada .cx-tampa .fora-img{filter:drop-shadow(8px 14px 14px rgba(0,0,0,.55))}
+/* enquanto embala: afasta a câmera para caber a caixa aberta */
+.mesa{transition:transform .7s cubic-bezier(.4,0,.2,1)}
+.mesa.embalando{transform:scale(calc(var(--esc,1)*.5)) translateY(205px)}
+.mesa.embalando.zoom{transform:scale(calc(var(--esc,1)*.8))}
+.mesa.embalando .pz{animation:none;opacity:1;transform:translate3d(0,0,3px) scale(.96)}
+.mesa.embalando .pz-sombra{animation:none;opacity:0}
 .pz-tag{position:absolute;left:18px;top:18px;background:rgba(18,11,7,.7);border:1px solid rgba(242,106,27,.5);border-radius:999px;padding:7px 14px;font-size:12px;letter-spacing:.06em;display:flex;align-items:center;gap:8px}
 .pz-tag b{color:var(--laranja);font-size:15px}
 .carregando{position:absolute;inset:0;display:grid;place-content:center;justify-items:center;gap:14px;background:rgba(18,11,7,.55);backdrop-filter:blur(2px);opacity:0;visibility:hidden;transition:.25s;z-index:5}
@@ -584,9 +585,8 @@ footer{background:var(--carvao);color:#fff;padding:26px 0 24px}
                 <div class="pz-sombra"></div>
         <div class="pz" id="pz"></div>
         <div class="caixa" id="caixa">
-          <div class="cx-fundo"></div>
-          <div class="cx-p cx-tras"></div><div class="cx-p cx-esq"></div><div class="cx-p cx-dir"></div><div class="cx-p cx-frente"></div>
-          <div class="cx-tampa"><div class="cx-logo"><img src="img/logo.png" alt=""><span>El Shaday</span></div></div>
+          <img class="cx-base" src="img/caixa-base.webp" alt="">
+          <div class="cx-tampa"><img class="fora-img" src="img/caixa-tampa.webp" alt=""><img class="dentro" src="img/caixa-dentro.webp" alt=""></div>
         </div>
       </div>
       <div class="carregando-img" aria-hidden="true"><div class="roda"></div></div>
@@ -938,25 +938,30 @@ $('mt-avancar').onclick=async()=>{
 };
 async function embalar(){
   ocupado=true;travar();
+  await carregar(['img/caixa-base.webp','img/caixa-tampa.webp','img/caixa-dentro.webp']);
+  const mesa=$('mesa');
   $('tabua').classList.add('fora');
-  await sleep(450);
-  $('caixa').classList.add('on');
-  await sleep(650);
-  $('caixa').classList.add('fechada');
+  mesa.classList.add('embalando');            // câmera se afasta
+  await sleep(350);
+  $('caixa').classList.add('on');             // caixa aberta aparece por baixo da pizza
+  await sleep(900);
+  $('caixa').classList.add('fechada');        // tampa vira e fecha
   await sleep(1250);
-  const item={k:'m|'+Date.now(),nome:'Pizza montada',det:descricao(),preco:preco(),qtd:1,obs:'',
-    svg:svgPizza(cfg)};
-  const r=$('caixa').getBoundingClientRect(),lado=Math.min(r.width,r.height)*.85;
-  const voo=document.createElement('div');voo.className='voo voo-caixa';voo.innerHTML='<img src="img/logo.png" alt="">';
+  mesa.classList.add('zoom');
+  await sleep(600);
+  const item={k:'m|'+Date.now(),nome:'Pizza montada',det:descricao(),preco:preco(),qtd:1,obs:'',svg:svgPizza(cfg)};
+  const r=$('caixa').getBoundingClientRect();
+  const voo=document.createElement('div');voo.className='voo voo-caixa';voo.innerHTML='<img src="img/caixa-tampa.webp" alt="">';
+  $('caixa').style.visibility='hidden';
   $('montar').classList.add('saindo');
-  await voar({left:r.left+(r.width-lado)/2,top:r.top+(r.height-lado)/2,width:lado,height:lado},voo);
+  await voar({left:r.left,top:r.top,width:r.width,height:r.height},voo);
   addItem(item);
   fecharMontar();
   toast('Sua pizza está no carrinho!');
 }
 function abrirMontar(){
   cfg={n:8,cortada:false,sabores:[],borda:'',extras:[]};ultimo=null;riscar=false;ocupado=false;
-  $('tabua').classList.remove('fora');$('caixa').classList.remove('on','fechada');$('montar').classList.remove('saindo');
+  $('tabua').classList.remove('fora');$('caixa').classList.remove('on','fechada');$('caixa').style.visibility='';$('mesa').classList.remove('embalando','zoom');$('montar').classList.remove('saindo');
   $('mesa').classList.remove('pronta');
   carregar(['img/tabua.webp','img/massa.webp']).then(()=>{desenharJa(false);requestAnimationFrame(()=>$('mesa').classList.add('pronta'))});
   irPara(1);
