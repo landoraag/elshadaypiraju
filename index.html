@@ -779,7 +779,7 @@ function setor(r,a0,a1){const g=a1-a0>Math.PI?1:0;return`M0 0L${f2(r*Math.cos(a0
 function arco(r,a0,a1){return`M${f2(r*Math.cos(a0))} ${f2(r*Math.sin(a0))}A${r} ${r} 0 0 1 ${f2(r*Math.cos(a1))} ${f2(r*Math.sin(a1))}`}
 function grupos(n,k){const g=[];let i=0;const b=Math.floor(n/k),x=n%k;for(let j=0;j<k;j++){const t=b+(j<x?1:0);g.push({ini:i,fim:i+t});i+=t}return g}
 /* depois de cortada, cada fatia se afasta um pouquinho do centro (fresta fina, como pizza cortada de verdade) */
-function offsets(cfg){const st=TAU/cfg.n;return Array.from({length:cfg.n},(_,i)=>{if(!cfg.cortada)return[0,0];const m=-Math.PI/2+(i+.5)*st;return[1.9*Math.cos(m),1.9*Math.sin(m)]})}
+function offsets(cfg){const st=TAU/cfg.n;return Array.from({length:cfg.n},(_,i)=>{if(!cfg.cortada)return[0,0];const m=-Math.PI/2+(i+.5)*st;return[.9*Math.cos(m),.9*Math.sin(m)]})}
 const EXTRAS_IMG=['queijo','bacon','azeitona']; // ketchup e maionese vão em sachê
 let UID=0;
 /* corte de faca: sulco escuro fino + brilho do lado oposto, como pizza cortada de verdade */
@@ -801,8 +801,8 @@ function svgPizza(cfg,{cortes=false,off=offsets(cfg)}={}){
   let h=`<svg xmlns="http://www.w3.org/2000/svg" viewBox="-112 -112 224 224"><defs>
     <filter id="${id}f" x="-10%" y="-10%" width="120%" height="120%"><feDropShadow dx=".35" dy=".6" stdDeviation=".7" flood-color="#1a0a02" flood-opacity=".38"/></filter>
     <linearGradient id="${id}g" gradientUnits="objectBoundingBox" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0" stop-color="#5a3010" stop-opacity=".5"/><stop offset=".22" stop-color="#7a4818" stop-opacity=".22"/>
-      <stop offset=".34" stop-color="#fff6e2" stop-opacity=".38"/><stop offset=".6" stop-color="#fff6e2" stop-opacity="0"/>
+      <stop offset="0" stop-color="#5a3010" stop-opacity=".28"/><stop offset=".22" stop-color="#7a4818" stop-opacity=".1"/>
+      <stop offset=".34" stop-color="#fff6e2" stop-opacity=".25"/><stop offset=".6" stop-color="#fff6e2" stop-opacity="0"/>
     </linearGradient></defs>`;
   /* faixa de bisel ao longo de uma borda (reta pelo centro, ângulo a), entrando na fatia pelo lado 'lado' */
   const bisel=(a,lado)=>{const w=3.4;return `<rect x="0" y="${lado>0?0:-w}" width="103" height="${w}" fill="url(#${id}g${lado>0?'p':'n'})" transform="rotate(${f2(a*DEG)})"/>`};
@@ -811,9 +811,10 @@ function svgPizza(cfg,{cortes=false,off=offsets(cfg)}={}){
   for(let i=0;i<(inteira?1:n);i++){
     const a0=-Math.PI/2+i*st,a1=a0+st,o=off[i]||[0,0];
     const gi=gs.findIndex(g=>i>=g.ini&&i<g.fim),s=gi>=0?SAB[cfg.sabores[gi]]:null;
-    let c=s?IMG(`img/sabores/${s.id}.webp`)+(s.tier!=='doce'?ex.map(e=>IMG(`img/sabores/extra-${e}.webp`)).join(''):''):IMG('img/massa.webp');
+    let c=s?IMG(`img/sabores/${s.id}${inteira?'':'-'+n}.webp`)+(s.tier!=='doce'?ex.map(e=>IMG(`img/sabores/extra-${e}.webp`)).join(''):''):IMG('img/massa.webp');
     if(cfg.borda)c+=IMG(`img/borda-${cfg.borda}.webp`);
     if(inteira){h+=c;break}
+    if(s){h+=`<clipPath id="${id}c${i}"><path d="${setor(103,a0,a1)}"/></clipPath><g data-i="${i}" clip-path="url(#${id}c${i})">${c}</g>`;continue}
     h+=`<clipPath id="${id}c${i}"><path d="${setor(103,a0,a1)}"/></clipPath><mask id="${id}m${i}" maskUnits="userSpaceOnUse" x="-110" y="-110" width="220" height="220"><g clip-path="url(#${id}c${i})">${IMG(s?`img/sabores/${s.id}.webp`:'img/massa.webp').replace('<image','<image style="filter:brightness(0) invert(1)"')}</g></mask><g data-i="${i}" style="transform:translate(${f2(o[0])}px,${f2(o[1])}px)" filter="url(#${id}f)"><g clip-path="url(#${id}c${i})">${c}<g mask="url(#${id}m${i})">${bisel(a0,1)}${bisel(a1,-1)}</g></g></g>`;
   }
   if(cortes)h+=faca(n,true);
