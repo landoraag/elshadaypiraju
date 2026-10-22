@@ -92,6 +92,28 @@ nav a:hover,nav a.on{color:var(--laranja);border-color:var(--laranja)}
 .oferta h2 em{font-style:normal;color:var(--laranja);font-weight:500;margin:0 8px}
 .oferta .sc{font-family:var(--script);font-size:50px;line-height:1.1;margin:8px 0 22px;display:block;color:#f3e6d6}
 
+/* sobre nós */
+.sobre{background:url(img/fundo.jpg?v=4) center/100% 100% no-repeat #f4ede2;padding:56px 0 60px}
+.sobre-in{display:grid;grid-template-columns:1.1fr 1fr;gap:48px;align-items:center}
+.sobre-foto{margin:0;position:relative}
+.sobre-foto img{width:100%;height:auto;aspect-ratio:16/10;object-fit:cover;display:block;border-radius:10px;box-shadow:0 14px 34px rgba(60,35,15,.28);background:#1c110a}
+.sobre-foto::before{content:"";position:absolute;inset:14px -14px -14px 14px;border:2px solid var(--laranja);border-radius:10px;z-index:-1;opacity:.55}
+.sobre-txt .titulo h2{font-size:54px}
+.sobre-txt p{margin-top:16px;font-size:15px;line-height:1.75;color:var(--suave);max-width:520px}
+.sobre-dest{display:flex;flex-wrap:wrap;gap:10px;margin:22px 0 4px}
+.sobre-dest span{display:inline-flex;align-items:center;gap:8px;padding:8px 16px;border-radius:999px;background:#faf6ef;border:1px solid rgba(242,106,27,.4);font-size:12.5px;font-weight:500;color:var(--texto)}
+.sobre-dest svg{color:var(--laranja);width:16px;height:16px}
+.sobre-txt .cta{display:flex;gap:14px;flex-wrap:wrap;margin-top:24px}
+.sobre-txt .btn-line{border-color:var(--laranja);color:var(--laranja)}
+.sobre-txt .btn-line:hover{background:rgba(242,106,27,.08)}
+@media (max-width:900px){
+  .sobre{padding:40px 0 44px}
+  .sobre-in{grid-template-columns:1fr;gap:34px}
+  .sobre-foto::before{inset:10px -8px -10px 8px}
+  .sobre-txt .titulo h2{font-size:42px}
+  .sobre-txt p{font-size:14px}
+}
+
 /* avaliações */
 .aval{background:url(img/fundo.jpg?v=4) center/100% 100% no-repeat #f4ede2;padding:44px 0 48px}
 .aval .titulo h2{font-size:54px}
@@ -437,7 +459,7 @@ footer{background:var(--carvao);color:#fff;padding:26px 0 24px}
     </div>
   </header>
 
-  <div class="wrap hero-in" id="sobre">
+  <div class="wrap hero-in">
     <div>
       <p class="eyebrow">Tradição, sabor e qualidade</p>
       <h1>A pizza perfeita <span>para cada momento</span></h1>
@@ -489,6 +511,30 @@ footer{background:var(--carvao);color:#fff;padding:26px 0 24px}
     <h2>Pizza <em>+</em> Refrigerante</h2>
     <span class="sc">A combinação perfeita!</span>
     <a class="btn btn-line" href="#cardapio">Ver Promoções<svg class="i"><use href="#seta"/></svg></a>
+  </div>
+</section>
+
+<!-- SOBRE NÓS -->
+<section class="sobre" id="sobre">
+  <div class="wrap sobre-in">
+    <figure class="sobre-foto">
+      <img src="img/fachada.jpg?v=1" alt="Fachada da El Shaday Pizzaria e Esfiharia à noite, com letreiros iluminados" width="1400" height="788" loading="lazy">
+    </figure>
+    <div class="sobre-txt">
+      <div class="titulo"><small>Conheça a El Shaday</small><h2>Sobre nós</h2></div>
+      <p>A El Shaday é uma pizzaria e esfiharia em Piraju, no interior de São Paulo, feita para quem gosta de comida de verdade: ingredientes selecionados, massa artesanal e muito carinho em cada pedido.</p>
+      <p>Nossas pizzas saem do forno à lenha, com aquela casquinha dourada e o cheirinho que só o fogo de lenha dá. São 12 sabores entre tradicionais, especiais e doces, e você ainda pode montar a sua do seu jeito, combinando até 3 sabores.</p>
+      <p>Venha comer com a família e os amigos no nosso salão ou peça pelo delivery e receba em casa. Abrimos de terça a domingo, das 18:30 às 00:00.</p>
+      <div class="sobre-dest">
+        <span><svg class="i"><use href="#pizza"/></svg>Forno à lenha</span>
+        <span><svg class="i"><use href="#pizza"/></svg>Massa artesanal</span>
+        <span><svg class="i"><use href="#moto"/></svg>Delivery</span>
+      </div>
+      <div class="cta">
+        <a class="btn btn-or" href="#cardapio"><svg class="i"><use href="#moto"/></svg>Pedir Agora<svg class="i"><use href="#seta"/></svg></a>
+        <a class="btn btn-line" href="#cardapio">Ver Cardápio<svg class="i"><use href="#seta"/></svg></a>
+      </div>
+    </div>
   </div>
 </section>
 
