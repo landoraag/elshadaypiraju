@@ -320,10 +320,10 @@ footer{background:var(--carvao);color:#fff;padding:26px 0 24px}
 .pz-l svg{width:100%;height:100%;display:block;overflow:visible}
 .pz-l.revela{animation:corte-revela .7s cubic-bezier(.3,.7,.3,1)}
 @keyframes corte-revela{from{opacity:0;transform:scale(1.035);filter:brightness(1.18)}to{opacity:1;transform:none;filter:none}}
-.caixa{position:absolute;left:5px;top:5px;width:390px;height:390px;transform-style:preserve-3d;visibility:hidden;opacity:0;transform:translateZ(1px) scale(1.08);transition:opacity .45s,transform .55s cubic-bezier(.3,.7,.3,1)}
+.caixa{position:absolute;left:0;top:0;width:400px;height:400px;transform-style:preserve-3d;visibility:hidden;opacity:0;transform:translateZ(1px) scale(1.08);transition:opacity .45s,transform .55s cubic-bezier(.3,.7,.3,1)}
 .caixa.on{visibility:visible;opacity:1;transform:translateZ(1px)}
 .cx-base{position:absolute;inset:0;width:100%;height:100%;filter:drop-shadow(10px 18px 16px rgba(0,0,0,.6))}
-.cx-tampa{position:absolute;inset:0;transform-origin:50% 0;transform-style:preserve-3d;transform:translateZ(8px) rotateX(-180deg);transition:transform 1.15s cubic-bezier(.55,.05,.35,1)}
+.cx-tampa{position:absolute;inset:0;transform-origin:50% 0;transform-style:preserve-3d;transform:translateZ(8px) rotateX(180deg);transition:transform 1.15s cubic-bezier(.55,.05,.35,1)}
 .caixa.fechada .cx-tampa{transform:translateZ(8px) rotateX(0)}
 .cx-tampa img{position:absolute;inset:0;width:100%;height:100%;backface-visibility:hidden;-webkit-backface-visibility:hidden}
 .cx-tampa .dentro{transform:rotateX(180deg)}
@@ -331,7 +331,7 @@ footer{background:var(--carvao);color:#fff;padding:26px 0 24px}
 /* enquanto embala: afasta a câmera para caber a caixa aberta */
 .mesa{transition:transform .7s cubic-bezier(.4,0,.2,1)}
 .mesa.embalando{transform:scale(calc(var(--esc,1)*.5)) translateY(205px)}
-.mesa.embalando.zoom{transform:scale(calc(var(--esc,1)*.8))}
+.mesa.embalando.zoom{transform:scale(var(--esc,1))}
 .mesa.embalando .pz{animation:none;opacity:1;transform:translate3d(0,0,3px) scale(.96)}
 .mesa.embalando .pz-sombra{animation:none;opacity:0}
 .pz-tag{position:absolute;left:18px;top:18px;background:rgba(18,11,7,.7);border:1px solid rgba(242,106,27,.5);border-radius:999px;padding:7px 14px;font-size:12px;letter-spacing:.06em;display:flex;align-items:center;gap:8px}
