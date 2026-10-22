@@ -77,6 +77,7 @@ nav a:hover,nav a.on{color:var(--laranja);border-color:var(--laranja)}
 .card{background:#faf6ef;border-radius:8px;box-shadow:0 4px 14px rgba(60,35,15,.12);overflow:hidden;display:flex;flex-direction:column;transition:transform .25s}
 .card:hover{transform:translateY(-4px)}
 .card img{width:100%;aspect-ratio:16/9.5;object-fit:cover;display:block;background:#7a3b1a}
+.card img[data-sq]{aspect-ratio:4/3}
 .card .c{padding:16px 18px 18px;display:flex;flex-direction:column;gap:8px;flex:1}
 .card h3{font-family:var(--serif);font-size:19px;font-weight:700;letter-spacing:.12em;text-transform:uppercase}
 .card p{font-size:12px;font-weight:300;color:var(--suave);line-height:1.5;min-height:38px}
@@ -618,29 +619,29 @@ const CATS=[['tradicionais','Pizzas Tradicionais'],['especiais','Pizzas Especiai
 const PIZZAS=[
   {id:'marguerita',cat:'tradicionais',nome:'Marguerita',img:'img/marguerita.jpg?v=4',resumo:'Molho de tomate, mussarela, tomate e manjericão.',
    desc:'A clássica italiana: molho de tomate artesanal, mussarela derretida, rodelas de tomate fresco e folhas de manjericão.',precos:{M:49.90,G:64.90}},
-  {id:'rucula',cat:'tradicionais',nome:'Rúcula',img:'img/cardapio/rucula.jpg?v=5',resumo:'Mussarela, rúcula, tomate-cereja e parmesão.',
+  {id:'rucula',cat:'tradicionais',nome:'Rúcula',img:'img/cardapio/rucula.jpg?v=6',resumo:'Mussarela, rúcula, tomate-cereja e parmesão.',
    desc:'Mussarela derretida coberta com rúcula fresquinha, tomate-cereja e lascas de parmesão sobre nossa massa artesanal.',precos:{M:49.90,G:64.90}},
-  {id:'alho-oleo',cat:'tradicionais',nome:'Alho e Óleo',img:'img/cardapio/alho-oleo.jpg?v=5',resumo:'Mussarela, alho dourado, azeite e salsinha.',
+  {id:'alho-oleo',cat:'tradicionais',nome:'Alho e Óleo',img:'img/cardapio/alho-oleo.jpg?v=6',resumo:'Mussarela, alho dourado, azeite e salsinha.',
    desc:'Mussarela com alho dourado crocante, um fio de azeite e salsinha picada. Simples e cheia de sabor.',precos:{M:49.90,G:64.90}},
-  {id:'presunto',cat:'tradicionais',nome:'Presunto e Mussarela',img:'img/cardapio/presunto.jpg?v=5',resumo:'Presunto cozido e mussarela gratinada.',
+  {id:'presunto',cat:'tradicionais',nome:'Presunto e Mussarela',img:'img/cardapio/presunto.jpg?v=6',resumo:'Presunto cozido e mussarela gratinada.',
    desc:'Fatias de presunto cozido e bastante mussarela gratinada no forno à lenha.',precos:{M:49.90,G:64.90}},
-  {id:'calabresa-mussarela',cat:'tradicionais',nome:'Calabresa c/ Mussarela',img:'img/cardapio/calabresa-mussarela.jpg?v=5',resumo:'Calabresa fatiada, mussarela e orégano.',
+  {id:'calabresa-mussarela',cat:'tradicionais',nome:'Calabresa c/ Mussarela',img:'img/cardapio/calabresa-mussarela.jpg?v=6',resumo:'Calabresa fatiada, mussarela e orégano.',
    desc:'Calabresa fatiada, mussarela derretida e orégano, o sabor que todo mundo pede.',precos:{M:49.90,G:64.90}},
-  {id:'calabresa-cebola',cat:'tradicionais',nome:'Calabresa c/ Cebola',img:'img/cardapio/calabresa-cebola.jpg?v=5',resumo:'Calabresa, cebola em rodelas e orégano.',
+  {id:'calabresa-cebola',cat:'tradicionais',nome:'Calabresa c/ Cebola',img:'img/cardapio/calabresa-cebola.jpg?v=6',resumo:'Calabresa, cebola em rodelas e orégano.',
    desc:'Calabresa fatiada com cebola em rodelas, mussarela e orégano.',precos:{M:49.90,G:64.90}},
-  {id:'pepperoni',cat:'especiais',nome:'Pepperoni',img:'img/pepperoni.jpg?v=4',resumo:'Molho de tomate, mussarela e pepperoni.',
+  {id:'pepperoni',cat:'especiais',nome:'Pepperoni',img:'img/cardapio/pepperoni.jpg?v=6',resumo:'Molho de tomate, mussarela e pepperoni.',
    desc:'Molho de tomate, muita mussarela e fatias generosas de pepperoni levemente apimentado.',precos:{M:54.90,G:69.90}},
-  {id:'quatro-queijos',cat:'especiais',nome:'Quatro Queijos',img:'img/quatro-queijos-2.jpg?v=4',resumo:'Mussarela, provolone, parmesão e gorgonzola.',
+  {id:'quatro-queijos',cat:'especiais',nome:'Quatro Queijos',img:'img/cardapio/quatro-queijos.jpg?v=6',resumo:'Mussarela, provolone, parmesão e gorgonzola.',
    desc:'Combinação cremosa de mussarela, provolone, parmesão e gorgonzola sobre nossa massa artesanal.',precos:{M:56.90,G:71.90}},
-  {id:'frango',cat:'especiais',nome:'Frango c/ Catupiry',img:'img/cardapio/frango.jpg?v=5',resumo:'Frango desfiado temperado e catupiry.',
+  {id:'frango',cat:'especiais',nome:'Frango c/ Catupiry',img:'img/cardapio/frango.jpg?v=6',resumo:'Frango desfiado temperado e catupiry.',
    desc:'Frango desfiado e bem temperado com catupiry cremoso por cima da mussarela.',precos:{M:54.90,G:69.90}},
-  {id:'strogonoff',cat:'especiais',nome:'Strogonoff de Frango',img:'img/cardapio/strogonoff.jpg?v=5',resumo:'Strogonoff cremoso de frango e mussarela.',
+  {id:'strogonoff',cat:'especiais',nome:'Strogonoff de Frango',img:'img/cardapio/strogonoff.jpg?v=6',resumo:'Strogonoff cremoso de frango e mussarela.',
    desc:'Strogonoff de frango cremoso com mussarela, uma pizza que é refeição completa.',precos:{M:54.90,G:69.90}},
-  {id:'brigadeiro',cat:'doces',nome:'Chocolate c/ Granulado',img:'img/cardapio/brigadeiro.jpg?v=5',resumo:'Chocolate ao leite e granulado de brigadeiro.',
+  {id:'brigadeiro',cat:'doces',nome:'Chocolate c/ Granulado',img:'img/cardapio/brigadeiro.jpg?v=6',resumo:'Chocolate ao leite e granulado de brigadeiro.',
    desc:'Chocolate ao leite cremoso coberto com granulado, o gostinho de brigadeiro em forma de pizza.',precos:{M:49.90,G:64.90}},
-  {id:'branco-preto',cat:'doces',nome:'Chocolate Branco e Preto',img:'img/cardapio/branco-preto.jpg?v=5',resumo:'Chocolate ao leite e chocolate branco.',
+  {id:'branco-preto',cat:'doces',nome:'Chocolate Branco e Preto',img:'img/cardapio/branco-preto.jpg?v=6',resumo:'Chocolate ao leite e chocolate branco.',
    desc:'Metade chocolate ao leite, metade chocolate branco, para quem não quer escolher só um.',precos:{M:49.90,G:64.90}},
-  {id:'kitkat',cat:'doces',nome:'Chocolate c/ Kit Kat',img:'img/cardapio/kitkat.jpg?v=5',resumo:'Chocolate ao leite e pedaços de Kit Kat.',
+  {id:'kitkat',cat:'doces',nome:'Chocolate c/ Kit Kat',img:'img/cardapio/kitkat.jpg?v=6',resumo:'Chocolate ao leite e pedaços de Kit Kat.',
    desc:'Chocolate ao leite derretido com pedaços crocantes de Kit Kat.',precos:{M:49.90,G:64.90}},
   {id:'coca-cola',cat:'bebidas',nome:'Coca-Cola',img:'img/coca-cola-2.jpg?v=4',resumo:'Refrigerante gelado, para acompanhar sua pizza.',
    desc:'Coca-Cola bem gelada, em lata ou garrafa de 2 litros.',precos:{Lata:6.00,'2L':14.00},nomes:{Lata:'Lata 350ml','2L':'Garrafa 2L'},padrao:'Lata'},
@@ -651,7 +652,7 @@ const nomeTam=(p,t)=>(p.nomes||TAM)[t];
 const padrao=p=>p.padrao||'G';
 const cardHTML=p=>`
   <article class="card" data-id="${p.id}">
-    <img src="${p.img}" alt="${p.cat==='bebidas'?'':'Pizza '}${p.nome}" data-det loading="lazy">
+    <img src="${p.img}"${p.img.includes('/cardapio/')?' data-sq':''} alt="${p.cat==='bebidas'?'':'Pizza '}${p.nome}" data-det loading="lazy">
     <div class="c"><h3 data-det>${p.nome}</h3><p>${p.resumo}</p>
       <div class="precos" role="group" aria-label="Tamanho">${Object.keys(p.precos).map(t=>`<button class="tchip${t===padrao(p)?' on':''}" data-t="${t}" aria-pressed="${t===padrao(p)}" title="${nomeTam(p,t)}"><b>${t}</b>${brl(p.precos[t])}</button>`).join('')}</div>
       <div class="acoes"><button class="btn btn-det" data-det>Detalhes</button><button class="btn btn-or" data-add><svg class="i"><use href="#cart"/></svg>Adicionar</button></div>
