@@ -94,10 +94,10 @@ nav a:hover,nav a.on{color:var(--laranja);border-color:var(--laranja)}
 
 /* sobre nós */
 .sobre{background:url(img/fundo.jpg?v=4) center/100% 100% no-repeat #f4ede2;padding:56px 0 60px}
-.sobre-in{display:grid;grid-template-columns:1.1fr 1fr;gap:48px;align-items:center}
-.sobre-foto{margin:0;position:relative}
-.sobre-foto img{width:100%;height:auto;aspect-ratio:16/10;object-fit:cover;display:block;border-radius:10px;box-shadow:0 14px 34px rgba(60,35,15,.28);background:#1c110a}
-.sobre-foto::before{content:"";position:absolute;inset:14px -14px -14px 14px;border:2px solid var(--laranja);border-radius:10px;z-index:-1;opacity:.55}
+.sobre-in{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center}
+.sobre-foto{margin:0;order:2}
+.sobre-foto img{width:100%;height:auto;aspect-ratio:10/11;object-fit:cover;object-position:25% center;display:block;border-radius:22px;box-shadow:0 16px 38px rgba(60,35,15,.3);background:#1c110a}
+.sobre-txt{order:1}
 .sobre-txt .titulo h2{font-size:54px}
 .sobre-txt p{margin-top:16px;font-size:15px;line-height:1.75;color:var(--suave);max-width:520px}
 .sobre-dest{display:flex;flex-wrap:wrap;gap:10px;margin:22px 0 4px}
@@ -108,8 +108,10 @@ nav a:hover,nav a.on{color:var(--laranja);border-color:var(--laranja)}
 .sobre-txt .btn-line:hover{background:rgba(242,106,27,.08)}
 @media (max-width:900px){
   .sobre{padding:40px 0 44px}
-  .sobre-in{grid-template-columns:1fr;gap:34px}
-  .sobre-foto::before{inset:10px -8px -10px 8px}
+  .sobre-in{grid-template-columns:1fr;gap:30px}
+  .sobre-foto{order:0}
+  .sobre-foto img{aspect-ratio:16/10;object-position:center;border-radius:16px}
+  .sobre-txt{order:0}
   .sobre-txt .titulo h2{font-size:42px}
   .sobre-txt p{font-size:14px}
 }
@@ -518,7 +520,7 @@ footer{background:var(--carvao);color:#fff;padding:26px 0 24px}
 <section class="sobre" id="sobre">
   <div class="wrap sobre-in">
     <figure class="sobre-foto">
-      <img src="img/fachada.jpg?v=1" alt="Fachada da El Shaday Pizzaria e Esfiharia à noite, com letreiros iluminados" width="1400" height="788" loading="lazy">
+      <img src="img/fachada.jpg?v=2" alt="Fachada da El Shaday Pizzaria e Esfiharia à noite, com letreiros iluminados" width="1672" height="941" loading="lazy">
     </figure>
     <div class="sobre-txt">
       <div class="titulo"><small>Conheça a El Shaday</small><h2>Sobre nós</h2></div>
